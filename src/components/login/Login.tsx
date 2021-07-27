@@ -14,11 +14,11 @@ type Inputs = {
 export const Login: FC<Props> = () => {
     const {register, handleSubmit, watch, formState: {errors}} = useForm<Inputs>();
     const onSubmit: SubmitHandler<Inputs> = async user => {
+
         console.log(JSON.stringify(user))
         await fetch('/login',
             {
                 method: 'POST',
-                mode: "no-cors",
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(user)
             }).then(res => console.log("Status: " + res.status));
