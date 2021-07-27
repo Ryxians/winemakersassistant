@@ -1,5 +1,6 @@
 import express, {Application, Request, Response} from 'express';
 import bcrypt from 'bcrypt';
+import {CreateUser} from "./user/CreateUser";
 
 
 const app: Application = express();
@@ -12,16 +13,8 @@ app.get('/users', ((req: Request, res: Response) => {
     res.json(users);
 }));
 
-app.post('/users', (async (req: Request, res: Response) => {
-    try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const user = {username: req.body.username, password: hashedPassword};
-        users.push(user);
-        res.status(201).send();
-    } catch {
-        res.status(500).send();
-    }
-}));
+CreateUser({app});
+
 
 app.post('/login',
     async (req: Request, res: Response) => {
