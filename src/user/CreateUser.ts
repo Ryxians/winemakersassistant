@@ -8,7 +8,7 @@ interface Args {
     app:Application
 }
 
-export const CreateUser = ({app}:Args):boolean => {
+export const CreateUser = ({app}:Args):void => {
 
     app.post('/users', (async (req: Request, res: Response) => {
         try {
@@ -20,6 +20,4 @@ export const CreateUser = ({app}:Args):boolean => {
             res.status(500).send();
         }
     }));
-
-    return true;
 }

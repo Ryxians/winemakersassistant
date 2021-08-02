@@ -1,39 +1,31 @@
 import express, {Application, Request, Response} from 'express';
 import bcrypt from 'bcrypt';
 import {CreateUser} from "./user/CreateUser";
+import {LoginUser} from "./user/LoginUser";
 
-
+// Initialize Express App
 const app: Application = express();
+
+// To be removed in favor of Users.ts
 const users: { username:string, password: string }[] = [
     {username: "root", password: "$2b$10$jCweHL510g5Gku1NKuSbVuTJY.ZjVUGcbMAXrl9ll/g1WiOzSYFD2"}
 ]
 
+// Specify json use
 app.use(express.json());
+
+// Get list of users TOBE MOVED
 app.get('/users', ((req: Request, res: Response) => {
     res.json(users);
 }));
 
+// Create a new user, passes the express app
 CreateUser({app});
 
-
-app.post('/login',
-    async (req: Request, res: Response) => {
-    const user = users.find(user => user.username === req.body.username);
-    console.log(req.body)
-    if (user == null) {
-        return res.status(400).send();
-    }
-    try {
-        if (await bcrypt.compare(req.body.password, user.password)) {
-            res.status(200).send("Success");
-        }
-    } catch {
-        res.status(500).send();
-    }
-    });
-app.post('/user', (req: Request, res: Response) => {
-    console.log("hello");
-});
+// Authenticates provided username and password
+// TOBE MOVED
+LoginUser({app});
 
 
+// Listen to port 5000 for requests
 app.listen(5000, () => console.log("Hello from express!"))
