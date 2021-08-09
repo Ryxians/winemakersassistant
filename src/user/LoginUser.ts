@@ -15,7 +15,8 @@ export const LoginUser = ({app}:Args):void => {
             }
             try {
                 if (await bcrypt.compare(req.body.password, user.password)) {
-                    res.status(200).send("Success");
+                    const hashedUser = await bcrypt.hash(user.username, 10);
+                    res.status(200).send({hashedUser: hashedUser});
                 }
             } catch {
                 res.status(500).send();
