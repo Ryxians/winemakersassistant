@@ -4,13 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {BootStrapLogin} from "./components/login/BootStrapLogin";
-import {Login} from "./components/login/Login";
 
 ReactDOM.render(
   <React.StrictMode>
-    {/*<App />*/}
-      <BootStrapLogin />
+      <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
