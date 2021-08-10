@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import './App.css';
 import {Navbar} from "./components/navbar/Navbar";
 import {Start} from "./components/form/start/Start";
-import {Login} from "./components/login/Login";
 import {BootStrapLogin} from "./components/login/BootStrapLogin";
 import {Route, BrowserRouter as Router, Link, Redirect} from 'react-router-dom';
 
