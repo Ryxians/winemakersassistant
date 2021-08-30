@@ -2,7 +2,7 @@ import './signin.css'
 import React, {FC} from 'react';
 import wineglass from './glass-with-wine.svg';
 import {useForm, SubmitHandler} from "react-hook-form";
-import {InputRequiredAlert} from "../form/InputRequiredAlert";
+import {InputRequiredAlert} from "../InputRequiredAlert";
 import {Redirect} from 'react-router-dom';
 
 interface Props {
@@ -72,7 +72,7 @@ export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleLoggin, handleHashe
                 <a href="https://www.flaticon.com/"
                    title="Flaticon">www.flaticon.com</a>
             </div>
-            {isLoggedIn && (<Redirect to={{pathname: '/start'}} />)}
+            {isLoggedIn && (<Redirect to={{pathname: '/'}} />)}
         </div>
     );
 };
