@@ -1,6 +1,7 @@
 import express, {Application, Request, Response} from 'express';
 import {CreateUser} from "./user/CreateUser";
 import {LoginUser} from "./user/LoginUser";
+import "reflect-metadata";
 
 // Initialize Express App
 const app: Application = express();
