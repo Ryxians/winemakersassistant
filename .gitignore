@@ -2,3 +2,4 @@
 ./dist/
 ./winemakersassistant-client/
 ./winemakersassistant-client/*
+.env
