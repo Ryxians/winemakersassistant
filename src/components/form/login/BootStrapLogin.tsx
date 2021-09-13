@@ -19,7 +19,7 @@ type Inputs = {
 // I used the bootstrap sign-in example
 // Aug 1, 2021
 export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleLoggin, handleHashedUser}) => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+    const { register, handleSubmit, setError, watch, formState: { errors } } = useForm<Inputs>();
     const onSubmit: SubmitHandler<Inputs> = async user => {
         await fetch('/login',
             {
@@ -28,9 +28,28 @@ export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleLoggin, handleHashe
                 body: JSON.stringify(user)
             }).then(async res => {
             console.log("Status: " + res.status);
-            res.status === 200 && handleLoggin(true);
-            const responseJSON = await res.json();
-            handleHashedUser(responseJSON.hashedUser);
+            if (res.status === 200) {
+                handleLoggin(true);
+                const responseJSON = await res.json();
+                handleHashedUser(responseJSON.hashedUser);
+            } else {
+                switch (res.status) {
+                    case 403:
+                        setError("password", {
+                            type: "manual",
+                            message: "Incorrect Password"
+                        });
+                        break;
+                    case 400:
+                        setError("username", {
+                            type: "manual",
+                            message: "Username not found."
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            }
         });
     };
 
@@ -49,7 +68,9 @@ export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleLoggin, handleHashe
                                {...register("username", {required: true})}/>
                         <label htmlFor="floatingInput">Username</label>
                     </div>
-                    {errors.username && <InputRequiredAlert>Username Required</InputRequiredAlert>}
+                    {errors.username && <InputRequiredAlert>
+                        {errors.username.message ? errors.username.message : "Username Required"}
+                    </InputRequiredAlert>}
                     <div className="form-floating">
                         <input type="password"
                                className="form-control"
@@ -59,7 +80,9 @@ export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleLoggin, handleHashe
                         />
                         <label htmlFor="floatingPassword">Password</label>
                     </div>
-                    {errors.password && <InputRequiredAlert>Password Required</InputRequiredAlert>}
+                    {errors.password && <InputRequiredAlert>
+                        {errors.password.message ? errors.password.message : "Password Required"}
+                    </InputRequiredAlert>}
 
                     <button className="w-100 btn btn-lg btn-primary mt-1" type="submit">Sign in</button>
                 </form>
