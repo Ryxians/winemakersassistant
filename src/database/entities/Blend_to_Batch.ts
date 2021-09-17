@@ -6,14 +6,19 @@ import {Blended_Batch} from "./Blended_Batch";
 export class Blend_to_Batch {
 
     @PrimaryColumn()
-    @ManyToOne(type => Blended_Batch)
-    @JoinColumn({name: "blend_id"})
     blend_id!:number;
 
     @PrimaryColumn()
-    @ManyToOne(type => Batch)
-    @JoinColumn({name: "batch_id"})
     batch_id!:number;
+
+
+    @ManyToOne(type => Blended_Batch, blend => blend.blend_to_batch, {primary: true})
+    @JoinColumn({name: "blend_id"})
+    blend!:Blended_Batch;
+
+    @ManyToOne(type => Batch, batch => batch.blend_to_batch, {primary: true})
+    @JoinColumn({name:"batch_id"})
+    batch!:Batch;
 
     @Column()
     gallons_used!:number;

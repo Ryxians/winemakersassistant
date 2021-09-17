@@ -7,9 +7,12 @@ export class Racking {
     @PrimaryColumn()
     racking_date!:Date;
 
-    @ManyToOne(type => Batch)
+    @Column()
+    batch_id!:number
+
+    @ManyToOne(type => Batch, batch => batch.fermentations)
     @JoinColumn({name: "batch_id"})
-    batch_id!:number;
+    batch!:Batch;
 
     @Column()
     sg!:number;

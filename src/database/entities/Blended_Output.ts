@@ -7,9 +7,12 @@ export class Blended_Output {
     @PrimaryColumn()
     output_date!:Date;
 
-    @ManyToOne(type => Blended_Batch)
-    @JoinColumn({name: "blend_id"})
+    @Column()
     blend_id!:number;
+
+    @ManyToOne(type => Blended_Batch, blend => blend.blended_output)
+    @JoinColumn({name: "blend_id"})
+    blend!:Blended_Batch;
 
     @Column()
     numberOfContainer!:number;

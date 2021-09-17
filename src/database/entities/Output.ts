@@ -6,9 +6,12 @@ export class Output {
     @PrimaryColumn()
     output_date!:Date;
 
-    @ManyToOne(type => Batch)
+    @Column()
+    batch_id!:number
+
+    @ManyToOne(type => Batch, batch => batch.outputs)
     @JoinColumn({name: "batch_id"})
-    batch_id!:number;
+    batch!:Batch;
 
     @Column()
     numberOfContainer!:number;

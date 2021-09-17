@@ -7,9 +7,12 @@ export class Filtering {
     @PrimaryColumn()
     filtering_date!:Date;
 
-    @ManyToOne(type => Batch)
+    @Column()
+    batch_id!:number
+
+    @ManyToOne(type => Batch, batch => batch.filterings)
     @JoinColumn({name: "batch_id"})
-    batch_id!:number;
+    batch!:Batch;
 
     @Column()
     sg!:number;

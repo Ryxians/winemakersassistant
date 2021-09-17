@@ -1,13 +1,21 @@
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Wine} from "./Wine";
+import {Fermentation} from "./Fermentation";
+import {Racking} from "./Racking";
+import {Filtering} from "./Filtering";
+import {Output} from "./Output";
+import {Blend_to_Batch} from "./Blend_to_Batch";
 
 @Entity({name: "Batch"})
 export class Batch {
     @PrimaryGeneratedColumn()
     batch_id!: number;
 
+    @Column()
+    wine_id!:number
+
     @ManyToOne(() => Wine, wine => wine.batchs)
-    // @JoinColumn({name: 'wine_id'})
+    @JoinColumn({name: 'wine_id'})
     wine!: Wine;
 
     @Column({type: "datetime", nullable: false})
@@ -30,4 +38,19 @@ export class Batch {
 
     @Column({length: 100})
     notes!:string;
+
+    @OneToMany(() => Fermentation, ferm => ferm.batch)
+    fermentations!: Fermentation[];
+
+    @OneToMany(() => Racking, rack => rack.batch)
+    rackings!: Racking[];
+
+    @OneToMany(() => Filtering, filter => filter.batch)
+    filterings!: Filtering[];
+
+    @OneToMany(() => Output, out => out.batch)
+    outputs!: Output[];
+
+    @OneToMany(() => Blend_to_Batch, blends => blends.batch)
+    blend_to_batch!: Blend_to_Batch[];
 }

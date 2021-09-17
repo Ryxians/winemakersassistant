@@ -6,9 +6,12 @@ export class Fermentation {
     @PrimaryColumn()
     fermentation_date!:Date;
 
-    @ManyToOne(type => Batch)
-    @JoinColumn({name: 'batch_id'})
-    batch_id!:number;
+    @Column()
+    batch_id!:number
+
+    @ManyToOne(type => Batch, batch => batch.fermentations)
+    @JoinColumn({name: "batch_id"})
+    batch!:Batch;
 
     @Column()
     sg!:number;
@@ -18,4 +21,6 @@ export class Fermentation {
 
     @Column({length: 100})
     notes!:string;
+
+
 }
