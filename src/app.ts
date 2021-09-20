@@ -21,6 +21,9 @@ dotenv.config();
 const app: Application = express();
 const PORT = process.env.PORT || 5000;
 
+// Specify json use
+app.use(express.json());
+
 // Connect to database
 createConnection({
     type: "mysql",
@@ -48,12 +51,8 @@ createConnection({
 
     // Authenticates provided username and password
     LoginUser({app, connection});
+
+    // Listen to port 5000 for requests
+    app.listen(PORT, () => console.log(`Hello from express! Listening to ${PORT}`));
 }).catch(error => console.log(error))
 
-// Specify json use
-app.use(express.json());
-
-
-
-// Listen to port 5000 for requests
-app.listen(PORT, () => console.log(`Hello from express! Listening to ${PORT}`));
