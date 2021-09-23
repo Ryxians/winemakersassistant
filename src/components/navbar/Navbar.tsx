@@ -1,15 +1,13 @@
 import React, {FC} from 'react';
 import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/js/dist/collapse';
-import {Redirect} from 'react-router-dom';
-import {NewKit} from "../form/winecreation/NewKit";
 
 interface Props {
     changeRoute: React.Dispatch<React.SetStateAction<string>>,
-
+    logout: any
 }
 
-export const Navbar : FC<Props> = ({changeRoute}) => {
+export const Navbar : FC<Props> = ({changeRoute, logout}) => {
     const newRouteFromHref = (event:React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         event.preventDefault();
         changeRoute(event.currentTarget.pathname);
@@ -35,7 +33,7 @@ export const Navbar : FC<Props> = ({changeRoute}) => {
                      </li>
                      <li className="nav-item dropdown">
                          <a className="nav-link active dropdown-toggle" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false"
+                            data-bs-toggle="dropdown" aria-expanded="false" href="/"
                          >
                              New Wine
                          </a>
@@ -64,6 +62,22 @@ export const Navbar : FC<Props> = ({changeRoute}) => {
                          >
                              Wine Logs
                          </a>
+                     </li>
+                     <li className="nav-item dropdown">
+                         <a className="nav-link active dropdown-toggle" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false" href="/"
+                         >
+                             Account Management
+                         </a>
+                         <ul className="dropdown-menu">
+                             <li className="dropdown-item">
+                                 <a className="nav-link active btn-danger rounded-3" aria-current="page" href="/"
+                                    onClick={logout}
+                                 >
+                                     Logout
+                                 </a>
+                             </li>
+                         </ul>
                      </li>
                  </ul>
              </div>

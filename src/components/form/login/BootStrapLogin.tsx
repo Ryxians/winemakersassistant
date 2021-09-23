@@ -6,9 +6,8 @@ import {InputRequiredAlert} from "../InputRequiredAlert";
 import {Redirect} from 'react-router-dom';
 
 interface Props {
-    handleLoggin:  React.Dispatch<React.SetStateAction<boolean>>
     isLoggedIn: boolean
-    handleHashedUser: React.Dispatch<React.SetStateAction<string>>
+    handleHashedUser: any
 }
 
 type Inputs = {
@@ -18,7 +17,7 @@ type Inputs = {
 
 // I used the bootstrap sign-in example
 // Aug 1, 2021
-export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleLoggin, handleHashedUser}) => {
+export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleHashedUser}) => {
     const { register, handleSubmit, setError, watch, formState: { errors } } = useForm<Inputs>();
     const onSubmit: SubmitHandler<Inputs> = async user => {
         await fetch('/login',
@@ -29,7 +28,6 @@ export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleLoggin, handleHashe
             }).then(async res => {
             console.log("Status: " + res.status);
             if (res.status === 200) {
-                handleLoggin(true);
                 const responseJSON = await res.json();
                 handleHashedUser(responseJSON.hashedUser);
             } else {
