@@ -1,6 +1,6 @@
 import express, {Application, Request, Response} from 'express';
-import {CreateUser} from "./user/CreateUser";
-import {LoginUser} from "./user/LoginUser";
+import {CreateUser} from "./users/CreateUser";
+import {LoginUser} from "./users/LoginUser";
 import "reflect-metadata";
 import {Connection, createConnection} from "typeorm";
 import dotenv from "dotenv";
@@ -14,6 +14,7 @@ import {Output} from "./database/entities/Output";
 import {Blended_Batch} from "./database/entities/Blended_Batch";
 import {Blend_to_Batch} from "./database/entities/Blend_to_Batch";
 import {Blended_Output} from "./database/entities/Blended_Output";
+import {CreateDatabasePosts} from "./wine/CreateDatabasePosts";
 
 dotenv.config();
 
@@ -25,6 +26,8 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 
 // Connect to database
+// Grabs the credentials from the .env
+// Loads up the individual entites as tables
 createConnection({
     type: "mysql",
     host: process.env.DB_HOST,
@@ -46,13 +49,21 @@ createConnection({
     synchronize: true,
     logging: false
 }).then(connection => {
-    // Create a new user, passes the express app
-    CreateUser({app, connection});
+    if (connection) {
+        // Create a new users, passes the express app
+        CreateUser({app, connection});
 
-    // Authenticates provided username and password
-    LoginUser({app, connection});
+        // Authenticates provided username and password
+        LoginUser({app, connection});
 
-    // Listen to port 5000 for requests
-    app.listen(PORT, () => console.log(`Hello from express! Listening to ${PORT}`));
+        // Load database creation post requests
+        CreateDatabasePosts({app, connection});
+
+        // Listen to port 5000 for requests
+        app.listen(PORT, () => console.log(`Hello from express! Listening to ${PORT}`));
+    }
+    else {
+        console.log("No Database Present!")
+    }
 }).catch(error => console.log(error))
 
