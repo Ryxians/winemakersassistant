@@ -20,7 +20,7 @@ type Inputs = {
 export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleHashedUser}) => {
     const { register, handleSubmit, setError, watch, formState: { errors } } = useForm<Inputs>();
     const onSubmit: SubmitHandler<Inputs> = async user => {
-        await fetch('/login',
+        await fetch('/users/login',
             {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
