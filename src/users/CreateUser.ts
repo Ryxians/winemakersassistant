@@ -6,16 +6,17 @@ import {User} from "../database/entities/User";
 
 interface Args {
     app:Application
-    connection:Connection | undefined
+    connection:Connection
 }
 
 export const CreateUser = ({app, connection}:Args):void => {
-    if (!connection) {
-        console.log("No Database, Cannot implement User Creation");
-        return;
-    }
+    // Create a root users if one isn't already present.
     const initRoot = async () => {
         let count = await connection.getRepository(User).count();
+
+        // If count is 0 then a root users needs to be declared.
+        // Username: root
+        // Password: root
         if (count === 0) {
             let root = new User();
             root.username = 'root';
@@ -27,18 +28,21 @@ export const CreateUser = ({app, connection}:Args):void => {
         }
     }
     initRoot();
-    app.post('/users', (async (req: Request, res: Response) => {
+
+    // Post new users to users
+    app.post('/users/new', (async (req: Request, res: Response) => {
         try {
+            // Hash the password
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
+            // Create the new User
             let user = new User();
+            // Set the new users to the information present.
             user.username = req.body.username;
             user.password = hashedPassword;
             await connection.manager.save(user).then(usr => {
                 console.log(usr.username, " has been created!");
                 }
             )
-            // const user:UserInterface = {username: req.body.username, password: hashedPassword, id: uuid()};
-            // Users.push(user);
             res.status(201).send();
         } catch {
             res.status(500).send();

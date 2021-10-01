@@ -8,18 +8,18 @@ interface Args {
 }
 
 export const LoginUser = ({app, connection}:Args):void => {
-    if (!connection) {
-        console.log("No Database, Cannot implement User Login");
-    }
-    app.post('/login',
+    // Declare post for the login path
+    app.post('/users/login',
         async (req: Request, res: Response) => {
+            // Grab all the users from the Database and see if the users loging in exists
             let users = connection.getRepository(User);
             let user = await users.findOne({username: req.body.username});
-            // const user = Users.find(user => user.username === req.body.username);
-            console.log(req.body)
+            // const users = Users.find(users => users.username === req.body.username);
+            // If there is no users, send a 400 error
             if (user == null) {
                 return res.status(400).send();
             }
+            // If the User does exist, check to see if the correct password has been provided.
             try {
                 if (await bcrypt.compare(req.body.password, user.password)) {
                     const hashedUser = await bcrypt.hash(user.username, 10);
