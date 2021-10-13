@@ -18,8 +18,11 @@ export class Batch {
     @JoinColumn({name: 'wine_id'})
     wine!: Wine;
 
+    @Column()
+    active!:boolean;
+
     @Column({type: "datetime", nullable: false})
-    batch_start_date!: Date
+    batch_start_date!: Date;
 
     @Column({type: "int"})
     kit_amount!:number;
