@@ -22,7 +22,7 @@ export class Batch {
     active!:boolean;
 
     @Column({type: "datetime", nullable: false})
-    batch_start_date!: Date;
+    start_date!: Date;
 
     @Column({type: "int"})
     kit_amount!:number;
