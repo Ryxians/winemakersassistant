@@ -1,6 +1,6 @@
 import {Batch} from "../../database/entities/Batch";
 import {Application, Request, Response} from "express";
-import {Connection, Entity, EntityTarget} from "typeorm";
+import {Connection, EntityTarget} from "typeorm";
 
 interface ns {
     batch: Batch;

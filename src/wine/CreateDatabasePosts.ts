@@ -1,5 +1,5 @@
 import {Application} from "express";
-import {Connection} from "typeorm";
+import {Connection, EntityTarget} from "typeorm";
 import {WaKit} from "./add/waKit";
 import {wgKit} from "./get/wgKit";
 import {WaBatch} from "./add/waBatch";
@@ -8,11 +8,24 @@ import {Filtering} from "../database/entities/Filtering";
 import {Fermentation} from "../database/entities/Fermentation";
 import {Racking} from "../database/entities/Racking";
 import {Output} from "../database/entities/Output";
-import {createAddPost} from "./add/weStage";
+import {createAddPost} from "./add/waStage";
+import {CreateGetPost} from "./get/wgStages";
+import {Batch} from "../database/entities/Batch";
 
 interface Args {
     app:Application
     connection:Connection
+}
+interface ns {
+    batch: Batch;
+}
+
+function CreateGetAndAdd<Entity extends ns>(obj: EntityTarget<Entity>, path: string, args:Args) {
+    //wine/add/Entity
+    createAddPost(obj, path, args);
+
+    //wine/get/Entity
+    CreateGetPost(obj, path, args);
 }
 
 export const CreateDatabasePosts = (args:Args) => {
@@ -31,16 +44,16 @@ export const CreateDatabasePosts = (args:Args) => {
     // Destructure
     const {app, connection} = args;
 
-    //wine/add/fermentation
-    createAddPost(Fermentation, Fermentation.name, args);
+    // Fermentation
+    CreateGetAndAdd(Fermentation, Fermentation.name, args);
 
-    //wine/add/filtering
-    createAddPost(Filtering, Filtering.name, args);
+    // Filtering
+    CreateGetAndAdd(Filtering, Filtering.name, args);
 
-    //wine/add/racking
-    createAddPost(Racking, Racking.name, args);
+    // Racking
+    CreateGetAndAdd(Racking, Racking.name, args);
 
-    //wine/add/output
-    createAddPost(Output, Output.name, args);
+    // Output
+    CreateGetAndAdd(Output, Output.name, args);
 
 }
