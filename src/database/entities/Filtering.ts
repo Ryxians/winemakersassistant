@@ -10,7 +10,7 @@ export class Filtering {
     @Column()
     batch_id!:number
 
-    @ManyToOne(type => Batch, batch => batch.filterings)
+    @ManyToOne(type => Batch, batch => batch.filtering)
     @JoinColumn({name: "batch_id"})
     batch!:Batch;
 

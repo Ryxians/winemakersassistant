@@ -43,16 +43,16 @@ export class Batch {
     notes!:string;
 
     @OneToMany(() => Fermentation, ferm => ferm.batch)
-    fermentations!: Fermentation[];
+    fermentation!: Fermentation[];
 
     @OneToMany(() => Racking, rack => rack.batch)
-    rackings!: Racking[];
+    racking!: Racking[];
 
     @OneToMany(() => Filtering, filter => filter.batch)
-    filterings!: Filtering[];
+    filtering!: Filtering[];
 
     @OneToMany(() => Output, out => out.batch)
-    outputs!: Output[];
+    output!: Output[];
 
     @OneToMany(() => Blend_to_Batch, blends => blends.batch)
     blend_to_batch!: Blend_to_Batch[];
