@@ -9,10 +9,6 @@ interface Props {
 }
 
 export const Navbar : FC<Props> = ({changeRoute, logout}) => {
-    const newRouteFromHref = (event:React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        event.preventDefault();
-        changeRoute(event.currentTarget.pathname);
-    }
 
  return (
      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -35,7 +31,7 @@ export const Navbar : FC<Props> = ({changeRoute, logout}) => {
                          <a className="nav-link active dropdown-toggle" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false" href="/"
                          >
-                             New Wine
+                             Manage Wine
                          </a>
                          <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                              <li><Link className="dropdown-item" to="/start"
@@ -43,7 +39,7 @@ export const Navbar : FC<Props> = ({changeRoute, logout}) => {
                                  From Existing
                              </Link></li>
                              <li><Link className="dropdown-item"
-                                    to="/newkit"
+                                    to="/new"
                              >New Wine</Link></li>
                          </ul>
                      </li>

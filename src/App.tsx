@@ -6,6 +6,7 @@ import {BootStrapLogin} from "./components/form/login/BootStrapLogin";
 import {Route, BrowserRouter as Router, Link, Redirect, useLocation} from 'react-router-dom';
 import {Start} from "./components/form/winecreation/Start";
 import {GeneralForm} from "./components/form/GeneralForm";
+import {NewBatchC} from "./components/form/form-inputs/NewBatchC";
 
 function App() {
     const [isLoggedIn, setLoggedIn] = useState(false);
@@ -48,13 +49,12 @@ function App() {
                     (
                         <>
                             <Navbar changeRoute={changeRoute} logout={logout}/>
-                            <Redirect to={{pathname: route}}/>
                         </>
 
                     )
                 }
                 <Route path="/start" exact component={Start}/>
-                <Route path="/newkit" exact component={NewKit}/>
+                <Route path="/new" exact component={NewBatchC}/>
                 <Route path="/login" exact render={props =>
                     (<BootStrapLogin isLoggedIn={isLoggedIn}
                                      handleHashedUser={handleHashedUser}/>)
