@@ -30,7 +30,7 @@ export const NewKitC: FC<Props> = () => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="">
 
-            <h2>Phase One: Wine Creation</h2>
+            <h3>Add Kit</h3>
 
             <div className="input-group m-1 form-check form-check-inline">
                 <span className="input-group-text">Kit Style: </span>
