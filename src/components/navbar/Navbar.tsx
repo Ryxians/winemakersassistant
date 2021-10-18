@@ -34,21 +34,21 @@ export const Navbar : FC<Props> = ({changeRoute, logout}) => {
                              Manage Wine
                          </a>
                          <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                             <li><Link className="dropdown-item" to="/start"
+                             <li><Link className="dropdown-item" to="/continue"
                              >
-                                 From Existing
+                                 Continue
                              </Link></li>
                              <li><Link className="dropdown-item"
                                     to="/new"
                              >New Wine</Link></li>
                          </ul>
                      </li>
-                     <li className="nav-item">
-                         <Link className="nav-link active" aria-current="page" to="/"
-                         >
-                             Continue Wine
-                         </Link>
-                     </li>
+                     {/*<li className="nav-item">*/}
+                     {/*    <Link className="nav-link active" aria-current="page" to="/"*/}
+                     {/*    >*/}
+                     {/*        Continue Wine*/}
+                     {/*    </Link>*/}
+                     {/*</li>*/}
                      <li className="nav-item">
                          <Link className="nav-link active" aria-current="page" to="/"
                          >

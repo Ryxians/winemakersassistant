@@ -16,13 +16,13 @@ export const GeneralForm: FC<Props> = () => {
     return (
         <div className="container text-center g-5">
             <h1>Wine Log</h1>
-            <NewKitC />
+            {/*<NewKitC />*/}
 
             <h2>Phase Two: New Batch</h2>
             <NewBatchC />
 
             <h2>Phase 3: Fermentation Updates</h2>
-            <FermentationC />
+            {/*<FermentationC />*/}
 
             <h2>Phase Four: Racking</h2>
             <RackingC />

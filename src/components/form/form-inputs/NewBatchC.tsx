@@ -107,7 +107,7 @@ export const NewBatchC: FC<Props> = () => {
                 <span className="input-group-text">
                     Brix Amount
                 </span>
-                <input type="number"
+                <input type="number" step={.001}
                        className="form-control"
                        {...register("brix")}
                 />
@@ -116,7 +116,7 @@ export const NewBatchC: FC<Props> = () => {
                 <span className="input-group-text">
                     SG Amount
                 </span>
-                <input type="number"
+                <input type="number" step={.001}
                        className="form-control"
                        {...register("sg")}
                 />
@@ -134,7 +134,7 @@ export const NewBatchC: FC<Props> = () => {
                 <span className="input-group-text">
                     Temperature
                 </span>
-                <input type="number"
+                <input type="number" step={.01}
                        className="form-control"
                        {...register("temperature")}
                 />
@@ -148,7 +148,7 @@ export const NewBatchC: FC<Props> = () => {
                        {...register("notes")}
                 />
             </div>
-            <button type="submit" className="btn btn-primary m-1">Next</button>
+            <button type="submit" className="btn btn-primary m-1">Add</button>
         </form>
     );
 };
