@@ -11,6 +11,9 @@ import {Output} from "../database/entities/Output";
 import {createAddPost} from "./add/waStage";
 import {CreateGetPost} from "./get/wgStages";
 import {Batch} from "../database/entities/Batch";
+import {param} from "express-validator";
+import { waBlendedBatch } from "./add/blend/waBlendedBatch"
+import {wgBlendedBatch} from "./get/blend/wgBlendedBatch";
 
 interface Args {
     app:Application
@@ -41,8 +44,11 @@ export const CreateDatabasePosts = (args:Args) => {
     // Get Batch
     wgBatch(args)
 
-    // Destructure
-    const {app, connection} = args;
+    //wine/add/blend/batch
+    waBlendedBatch(args)
+
+    //wine/get/blend/batch
+    wgBlendedBatch(args)
 
     // Fermentation
     CreateGetAndAdd(Fermentation, Fermentation.name, args);
@@ -55,5 +61,30 @@ export const CreateDatabasePosts = (args:Args) => {
 
     // Output
     CreateGetAndAdd(Output, Output.name, args);
+
+    // Destructure
+    const {app, connection} = args;
+
+    // Get a complete wine
+    app.get('/wine/get/batchlog/:batchid', async (req, res) => {
+
+        const {params} = req;
+
+        let batch;
+
+        try {
+            batch = await connection.manager.findOne(Batch, {
+                where: {batch_id: params.batchid},
+                relations: ["Fermentation", "Filtering", "Racking", "Output"]
+            });
+
+        } catch (e) {
+            batch = e;
+        }
+
+
+
+        res.status(batch ? 200 : 400).send(batch);
+    })
 
 }

@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
 import {Batch} from "./Batch";
 import {Wine} from "./Wine";
 import {Blend_to_Batch} from "./Blend_to_Batch";
@@ -7,15 +7,21 @@ import {Blended_Output} from "./Blended_Output";
 @Entity({name: "Blended_Batch"})
 export class Blended_Batch {
 
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     blend_id!:number;
 
     @Column()
     blending_date!:Date;
 
-    @ManyToOne(type => Wine)
-    @JoinColumn({name: "wine_id"})
-    wine_id!:number;
+    @Column()
+    active!:boolean;
+
+    @Column()
+    wine_id!:number
+
+    @ManyToOne(() => Wine, wine => wine.blends)
+    @JoinColumn({name: 'wine_id'})
+    wine!: Wine;
 
     @Column()
     brix!:number;
