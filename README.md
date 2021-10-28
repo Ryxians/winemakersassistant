@@ -1,3 +1,8 @@
+# Wine Maker's Assistant
+
+# The Client must be present within the Server
+./winemakersassistant-server/winemakersassistant-client
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
