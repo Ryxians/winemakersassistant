@@ -1,11 +1,5 @@
 import React, {FC} from 'react';
-import {NewKitC} from "./form-inputs/NewKitC";
-import {NewBatchC} from "./form-inputs/NewBatchC";
-import {FermentationC} from "./form-inputs/FermentationC";
-import {RackingC} from "./form-inputs/RackingC";
-import {FilteringC} from "./form-inputs/FilteringC";
-import {OutputC} from "./form-inputs/OutputC";
-import {useForm} from "react-hook-form";
+import {NewBatchC} from "./stage-components/NewBatchC";
 
 interface Props {
 
@@ -25,13 +19,13 @@ export const GeneralForm: FC<Props> = () => {
             {/*<FermentationC />*/}
 
             <h2>Phase Four: Racking</h2>
-            <RackingC />
+            {/*<RackingC />*/}
 
             <h2>Phase Five: Filtering</h2>
-            <FilteringC />
+            {/*<FilteringC />*/}
 
             <h2>Completion: Bottle or Kegging</h2>
-            <OutputC />
+            {/*<OutputC />*/}
         </div>
     );
 };
