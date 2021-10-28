@@ -56,13 +56,28 @@ createConnection({
         // Authenticates provided username and password
         LoginUser({app, connection});
 
+        app.get('/users/get',
+            async (req, res) => {
+                const users = await connection.manager.find(User);
+
+                if (users != undefined) {
+                    const cleaned = users.map(user => {
+                        user.password = '';
+                        return user;
+                    })
+                    res.status(200).send(cleaned)
+                } else {
+                    console.log(users)
+                    res.status(400).send();
+                }
+            })
+
         // Load database creation post requests
         CreateDatabasePosts({app, connection});
 
         // Listen to port 5000 for requests
         app.listen(PORT, () => console.log(`Hello from express! Listening to ${PORT}`));
-    }
-    else {
+    } else {
         console.log("No Database Present!")
     }
 }).catch(error => console.log(error))
