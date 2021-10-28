@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import {Batch} from '@server/database/entities/Batch'
 import {Redirect} from "react-router-dom";
 import {useForm} from "react-hook-form";
@@ -16,7 +16,7 @@ interface Props {
 }
 
 export const FermentationC : FC<Props> = ({ batch }) => {
-    const {handleSubmit, register, setValue, getValues, watch, trigger} = useForm<Fermentation>();
+    const {handleSubmit, register} = useForm<Fermentation>();
 
     const onSubmit = (ferment:Fermentation) => {
         // @ts-ignore

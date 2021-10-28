@@ -2,7 +2,7 @@ import './signin.css'
 import React, {FC} from 'react';
 import wineglass from './glass-with-wine.svg';
 import {useForm, SubmitHandler} from "react-hook-form";
-import {InputRequiredAlert} from "../InputRequiredAlert";
+import {InputRequiredAlert} from "../sections/InputRequiredAlert";
 import {Redirect} from 'react-router-dom';
 
 interface Props {
@@ -18,7 +18,7 @@ type Inputs = {
 // I used the bootstrap sign-in example
 // Aug 1, 2021
 export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleHashedUser}) => {
-    const { register, handleSubmit, setError, watch, formState: { errors } } = useForm<Inputs>();
+    const { register, handleSubmit, setError, formState: { errors } } = useForm<Inputs>();
     const onSubmit: SubmitHandler<Inputs> = async user => {
         await fetch('/users/login',
             {

@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react';
-import {Batch} from '@server/database/entities/Batch'
-import {Link, Redirect} from "react-router-dom";
+import {Batch} from '@entities/Batch'
+import {Link} from "react-router-dom";
 
 interface Props {
     batch: Batch
@@ -24,16 +24,27 @@ export const BatchListC: FC<Props> = ({batch, setBatch}) => {
             </tr>
             {isSelected && (
                 <tr className="table-info list-group">
+                    <td>
                     <ul>
+                        <li className={optionStyles}>
+                            <Link onClick={() => setBatch(batch)} to={{pathname: "/winelog"}} >
+                                Complete Log
+                            </Link>
+                        </li>
                         <li className={optionStyles} >
                             <Link onClick={() => setBatch(batch)} to={{pathname: "/fermentation"}}>
                                 Fermenting
                             </Link>
                         </li>
-                        <li className={optionStyles}>Racking</li>
-                        <li className={optionStyles}>Filtering</li>
+                        <li className={optionStyles}>
+                            <Link onClick={() => setBatch(batch)} to={{pathname: "/racking"}} >Racking</Link>
+                        </li>
+                        <li className={optionStyles}>
+                            <Link onClick={() => setBatch(batch)} to={{pathname: "/filtering"}}>Filtering </Link>
+                        </li>
                         <li className={optionStyles}>Output</li>
                     </ul>
+                    </td>
                 </tr>
             )}
         </>

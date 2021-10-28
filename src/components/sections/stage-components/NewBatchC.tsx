@@ -28,7 +28,7 @@ export const NewBatchC: FC<Props> = () => {
     const [wines, setWines] = useState<wine[]>([]);
     const [isNew, setNew] = useState(false);
 
-    const {handleSubmit, register, setValue, getValues, watch, trigger} = useForm<Inputs>();
+    const {handleSubmit, register, watch} = useForm<Inputs>();
     const onSubmit:SubmitHandler<Inputs> = async newBatch => {
         await fetch(
             '/wine/add/batch',
@@ -70,8 +70,8 @@ export const NewBatchC: FC<Props> = () => {
         }
 
         let wineid = watch("wine_id");
-        !isNew && (wineid == -1 && setNew(true));
-        isNew && (wineid != -1 && setNew(false));
+        !isNew && (wineid === -1 && setNew(true));
+        isNew && (wineid !== -1 && setNew(false));
     })
     return (
         <form className="container" onSubmit={handleSubmit(onSubmit)}>
@@ -82,7 +82,7 @@ export const NewBatchC: FC<Props> = () => {
                         {...register("wine_id")}>
                     <option selected>Choose a wine!</option>
                     <option value="-1">New Wine</option>
-                    {wines.map(({wine_id, wine_style, fancy_name}) =>
+                    {wines.map(({wine_id, fancy_name}) =>
                         (<option value={wine_id} key={wine_id}> {fancy_name} </option>)
                     )}
                 </select>

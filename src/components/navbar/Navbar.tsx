@@ -4,11 +4,10 @@ import 'bootstrap/js/dist/collapse';
 import {Link} from "react-router-dom";
 
 interface Props {
-    changeRoute: React.Dispatch<React.SetStateAction<string>>,
     logout: any
 }
 
-export const Navbar : FC<Props> = ({changeRoute, logout}) => {
+export const Navbar : FC<Props> = ({logout}) => {
 
  return (
      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">

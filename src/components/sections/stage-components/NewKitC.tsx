@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 
 interface Props {
@@ -36,7 +36,7 @@ export const NewKitC: FC<Props> = () => {
                 <span className="input-group-text">Kit Style: </span>
                 <input type="text" className="form-control"
                        {...register("style", { required: true})}/>
-                <input type="checkbox" className="form-check-input p-1 m-1" id="WineStyleCheck" onChange={e => {
+                <input type="checkbox" className="form-check-input p-1 m-1" id="WineStyleCheck" onChange={() => {
                     setValue("style", "BLENDED");
                 }}/>
                 <label className="form-check-label" htmlFor="WineStyleCheck">Blended</label>
