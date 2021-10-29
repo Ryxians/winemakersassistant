@@ -20,7 +20,7 @@ dotenv.config();
 
 // Initialize Express App
 const app: Application = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
 // Specify json use
 app.use(express.json());
