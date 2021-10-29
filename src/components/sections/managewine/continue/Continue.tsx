@@ -2,6 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import {Batch} from '@entities/Batch'
 import {Blended_Batch} from "@entities/Blended_Batch"
 import {BatchListC} from "./BatchListC";
+import {BlendListC} from "./BlendListC";
 
 interface Props {
     setBatch:  React.Dispatch<React.SetStateAction<Batch | Blended_Batch | undefined>>
@@ -66,7 +67,7 @@ export const Continue: FC<Props> = ({setBatch}) => {
                 <tbody>
                 {
                     (blends && blends.length > 0) ?
-                        (blends.map((wine) => <h1>{wine.notes}</h1>))
+                        (blends.map((wine) => <BlendListC key={wine.blend_id} blend={wine} setBatch={setBatch} />))
                         :
                         <tr><td>No wines</td></tr>
                 }
