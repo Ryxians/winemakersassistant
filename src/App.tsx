@@ -67,7 +67,7 @@ function App() {
                 }/>
 
                 <Route path="/winelog" exact render={
-                    () => (<WineLog wine={currentBatch!.wine} />)
+                    () => (currentBatch ? <WineLog batch={currentBatch} /> : <Redirect to={'/'} />)
                 } />
 
                 <Route path="/fermentation" exact render={
