@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {Batch} from '@server/database/entities/Batch'
+import {Blended_Batch} from '@entities/Blended_Batch'
 import {Redirect} from "react-router-dom";
 import {useForm} from "react-hook-form";
 
@@ -15,7 +16,7 @@ interface Racking {
 }
 
 interface Props {
-    batch: Batch | undefined
+    batch: Batch | Blended_Batch | undefined
 }
 
 export const RackingC : FC<Props> = ({batch}) => {

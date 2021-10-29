@@ -10,11 +10,12 @@ import { Batch } from "@server/database/entities/Batch"
 import {RackingC} from "./components/sections/stage-components/RackingC";
 import {FilteringC} from "./components/sections/stage-components/FilteringC";
 import {WineLog} from "./components/sections/winelog/WineLog";
+import {Blended_Batch} from "@entities/Blended_Batch"
 
 function App() {
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [hashedUser, setHashedUser] = useState("");
-    const [currentBatch, setBatch] = useState<Batch>()
+    const [currentBatch, setBatch] = useState<Batch | Blended_Batch>()
 
     const savedHash = localStorage.getItem("hashedUser");
     const saveProgress = true;

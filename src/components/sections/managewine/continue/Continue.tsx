@@ -4,7 +4,7 @@ import {Blended_Batch} from "@entities/Blended_Batch"
 import {BatchListC} from "./BatchListC";
 
 interface Props {
-    setBatch:  React.Dispatch<React.SetStateAction<Batch | undefined>>
+    setBatch:  React.Dispatch<React.SetStateAction<Batch | Blended_Batch | undefined>>
 }
 
 export const Continue: FC<Props> = ({setBatch}) => {

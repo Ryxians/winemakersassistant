@@ -1,10 +1,11 @@
 import React, {FC, useState} from 'react';
 import {Batch} from '@entities/Batch'
+import {Blended_Batch} from "@entities/Blended_Batch"
 import {Link} from "react-router-dom";
 
 interface Props {
     batch: Batch
-    setBatch:  React.Dispatch<React.SetStateAction<Batch | undefined>>
+    setBatch:  React.Dispatch<React.SetStateAction<Batch | Blended_Batch | undefined>>
 }
 
 export const BatchListC: FC<Props> = ({batch, setBatch}) => {
