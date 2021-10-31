@@ -1,8 +1,5 @@
 import {Application} from "express";
 import {Connection} from "typeorm";
-import {Wine} from "../../../database/entities/Wine";
-import {Batch} from "../../../database/entities/Batch";
-import {param} from "express-validator";
 import {Blended_Batch} from "../../../database/entities/Blended_Batch";
 
 interface Args {
@@ -11,12 +8,10 @@ interface Args {
 }
 
 const getBlendsFromKit = async (connection: Connection, wineid: string | number) => {
-    const wines = connection.manager.getRepository(Wine);
+    // const wines = connection.manager.getRepository(Wine);
 
-    const wine = await wines.findOne(wineid, {relations: ["blends"]});
-    const batchs = wine?.blends;
-
-    return batchs;
+    // const wine = await wines.findOne(wineid, {relations: ["blends"]});
+    return connection.manager.find(Blended_Batch, {where: {wine_id: wineid}, relations: ["wine", "blend_to_batch"]});
 }
 
 export const wgBlendedBatch = ({app, connection}:Args):void => {
@@ -53,7 +48,7 @@ export const wgBlendedBatch = ({app, connection}:Args):void => {
             const {params} = req;
             const isActive = params.active == 'true';
 
-            const blends = await connection.manager.find(Blended_Batch, {where: {active: isActive}, relations: ["wine"]});
+            const blends = await connection.manager.find(Blended_Batch, {where: {active: isActive}, relations: ["wine", "blend_to_batch"]});
             res.status( blends ? 200 : 400).send(JSON.stringify(blends));
         });
 
