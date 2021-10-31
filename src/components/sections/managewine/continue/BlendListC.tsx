@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const BlendListC: FC<Props> = ({blend, setBatch}) => {
-    const {blend_id, wine, blending_date} = blend;
+    const {blend_id, wine, blending_date, blend_to_batch} = blend;
     const [isSelected, setSelected] = useState(false);
     let date = new Date(blending_date);
     let newDate = "" + date.getMonth() + "/" + date.getDay() + "/" + date.getFullYear()
