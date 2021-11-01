@@ -11,6 +11,7 @@ import {RackingC} from "./components/sections/stage-components/RackingC";
 import {FilteringC} from "./components/sections/stage-components/FilteringC";
 import {WineLog} from "./components/sections/winelog/WineLog";
 import {Blended_Batch} from "@entities/Blended_Batch"
+import {UsersList} from "./components/sections/manageusers/UsersList";
 
 function App() {
     const [isLoggedIn, setLoggedIn] = useState(false);
@@ -65,6 +66,7 @@ function App() {
                     (<BootStrapLogin isLoggedIn={isLoggedIn}
                                      handleHashedUser={handleHashedUser}/>)
                 }/>
+                <Route path={"/users"} exact component={UsersList} />
 
                 <Route path="/winelog" exact render={
                     () => (currentBatch ? <WineLog batch={currentBatch} /> : <Redirect to={'/'} />)

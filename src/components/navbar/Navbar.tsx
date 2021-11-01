@@ -62,6 +62,12 @@ export const Navbar : FC<Props> = ({logout}) => {
                          </Link>
                          <ul className="dropdown-menu">
                              <li className="dropdown-item">
+                                 <Link className="nav-link active btn-info rounded-3" aria-current="page" to="/users"
+                                 >
+                                     Manage Users
+                                 </Link>
+                             </li>
+                             <li className="dropdown-item">
                                  <a className="nav-link active btn-danger rounded-3" aria-current="page" href="/"
                                     onClick={logout}
                                  >
