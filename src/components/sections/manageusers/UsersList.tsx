@@ -1,6 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import {User} from '@entities/User'
 import Axios from "axios";
+import {CreateUser} from "./CreateUser";
 
 interface Props {
 
@@ -18,6 +19,7 @@ export const UsersList: FC<Props> = () => {
     }, []);
     return (
         <div className={"container"}>
+            <CreateUser />
             <table className="table">
                 <thead>
                 <tr>

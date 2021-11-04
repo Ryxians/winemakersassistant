@@ -31,9 +31,11 @@ function App() {
     }, [])
 
     const logout = () => {
-        setLoggedIn(false);
+        Axios.post('/users/logout').then(res => {
+            setLoggedIn(false);
+            localStorage.clear();
+        });
         // setHashedUser("");
-        localStorage.clear();
     }
 
     const handleLogin = () => {
