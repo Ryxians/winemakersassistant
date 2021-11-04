@@ -12,50 +12,50 @@ import {FilteringC} from "./components/sections/stage-components/FilteringC";
 import {WineLog} from "./components/sections/winelog/WineLog";
 import {Blended_Batch} from "@entities/Blended_Batch"
 import {UsersList} from "./components/sections/manageusers/UsersList";
+import Axios from "axios";
 
 function App() {
+    Axios.defaults.withCredentials = true;
+
     const [isLoggedIn, setLoggedIn] = useState(false);
-    const [hashedUser, setHashedUser] = useState("");
+    // const [hashedUser, setHashedUser] = useState("");
     const [currentBatch, setBatch] = useState<Batch | Blended_Batch>()
 
     const savedHash = localStorage.getItem("hashedUser");
     const saveProgress = true;
 
     useEffect(() => {
-        if (savedHash && saveProgress) {
-            // console.log("Saved Hash: ", savedHash);
-            setHashedUser(savedHash);
-            setLoggedIn(true);
-            // changeRoute(window.location.pathname);
-        }
-
-
-    })
+        Axios.get('/users/login').then(res => {
+            res.status === 200 ? setLoggedIn(true) : setLoggedIn(false);
+        });
+    }, [])
 
     const logout = () => {
         setLoggedIn(false);
-        setHashedUser("");
+        // setHashedUser("");
         localStorage.clear();
     }
 
-    const handleHashedUser = (hashedUsr: string) => {
-        setHashedUser(hashedUsr);
-        localStorage.setItem("hashedUser", hashedUsr);
+    const handleLogin = () => {
+        // setHashedUser(hashedUsr);
+        // localStorage.setItem("hashedUser", hashedUsr);
         setLoggedIn(true);
     }
 
     return (
         <Router>
             <div className="App text-center">
-                {!isLoggedIn ?
+                {isLoggedIn ?
 
-                    (<Redirect to={{pathname: '/login'}}/>)
-                    :
+
                     (
                         <>
                             <Navbar logout={logout}/>
                         </>
 
+                    ) :
+                    (
+                        <BootStrapLogin isLoggedIn={isLoggedIn} handleLogin={handleLogin} />
                     )
                 }
                 <Route path="/continue" exact render={ () =>
@@ -64,7 +64,7 @@ function App() {
                 <Route path="/new" exact component={NewBatchC}/>
                 <Route path="/login" exact render={() =>
                     (<BootStrapLogin isLoggedIn={isLoggedIn}
-                                     handleHashedUser={handleHashedUser}/>)
+                                     handleLogin={handleLogin}/>)
                 }/>
                 <Route path={"/users"} exact component={UsersList} />
 
@@ -82,7 +82,7 @@ function App() {
                     () => (<FilteringC batch={currentBatch}/>)
                 } />
 
-                <Route path="/" exact render={() => (<h1>Use the navbar</h1>)}/>
+                <Route path="/" exact render={() => (isLoggedIn && <h1>Use the navbar</h1>)}/>
             </div>
         </Router>
     );

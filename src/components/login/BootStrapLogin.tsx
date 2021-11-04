@@ -4,10 +4,11 @@ import wineglass from './glass-with-wine.svg';
 import {useForm, SubmitHandler} from "react-hook-form";
 import {InputRequiredAlert} from "../sections/InputRequiredAlert";
 import {Redirect} from 'react-router-dom';
+import Axios from "axios";
 
 interface Props {
     isLoggedIn: boolean
-    handleHashedUser: any
+    handleLogin: any
 }
 
 type Inputs = {
@@ -17,38 +18,33 @@ type Inputs = {
 
 // I used the bootstrap sign-in example
 // Aug 1, 2021
-export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleHashedUser}) => {
+export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleLogin}) => {
     const { register, handleSubmit, setError, formState: { errors } } = useForm<Inputs>();
     const onSubmit: SubmitHandler<Inputs> = async user => {
-        await fetch('/users/login',
-            {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(user)
-            }).then(async res => {
-            console.log("Status: " + res.status);
-            if (res.status === 200) {
-                const responseJSON = await res.json();
-                handleHashedUser(responseJSON.hashedUser);
-            } else {
-                switch (res.status) {
-                    case 403:
-                        setError("password", {
-                            type: "manual",
-                            message: "Incorrect Password"
-                        });
-                        break;
-                    case 400:
-                        setError("username", {
-                            type: "manual",
-                            message: "Username not found."
-                        });
-                        break;
-                    default:
-                        break;
+        await Axios.post('/users/login', user)
+            .then(res => {
+                console.log("Status: " + res.status);
+                if (res.status === 200) {
+                    handleLogin();
+                } else {
+                    switch (res.status) {
+                        case 403:
+                            setError("password", {
+                                type: "manual",
+                                message: "Incorrect Password"
+                            });
+                            break;
+                        case 400:
+                            setError("username", {
+                                type: "manual",
+                                message: "Username not found."
+                            });
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
-        });
+            });
     };
 
     return (
@@ -93,7 +89,7 @@ export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleHashedUser}) => {
                 <a href="https://www.flaticon.com/"
                    title="Flaticon">www.flaticon.com</a>
             </div>
-            {isLoggedIn && (<Redirect to={{pathname: '/'}} />)}
+            {/*{isLoggedIn && (<Redirect to={{pathname: '/'}} />)}*/}
         </div>
     );
 };
