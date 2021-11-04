@@ -2,6 +2,7 @@ import {Application} from "express";
 import {Connection} from "typeorm";
 import {Wine} from "../../database/entities/Wine";
 import {Batch} from "../../database/entities/Batch";
+import {isAuth} from "../../middleware/isAuth";
 
 interface Args {
     app:Application
@@ -11,7 +12,7 @@ interface Args {
 export const WaBatch = ({app, connection}:Args):void => {
 
     // When someone posts to the path
-    app.post('/wine/add/batch',
+    app.post('/wine/add/batch', isAuth,
         async (req, res) => {
             // Grab the wine object and get the details from the request
             const wine_id = req.body.wine_id;

@@ -13,7 +13,11 @@ declare module 'express-session' {
 
 export const isAuth = (req: Request, res: Response, next: NextFunction) => {
     if (req.session.isAuth) {
-        next();
+        if (req.session.role === -1) {
+            res.status(200).send();
+        } else {
+            next();
+        }
     } else {
         res.status(403).send();
     }

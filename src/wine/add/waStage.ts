@@ -1,6 +1,7 @@
 import {Batch} from "../../database/entities/Batch";
 import {Application, Request, Response} from "express";
 import {Connection, EntityTarget} from "typeorm";
+import {isAuth} from "../../middleware/isAuth";
 
 interface ns {
     batch: Batch;
@@ -39,7 +40,7 @@ const nsBatch = async (ns: ns, res: Response, req: Request, connection: Connecti
 export function createAddPost<Entity extends ns> (obj:EntityTarget<Entity>, path:string, {app, connection}:Args){
 
     // Generate post with with path name
-    app.post('/wine/add/' + path,
+    app.post('/wine/add/' + path, isAuth,
         async (req, res) => {
             // Grab filtering object
             await nsBatch(connection.manager.create(obj, req.body), res, req, connection);

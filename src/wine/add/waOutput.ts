@@ -1,6 +1,7 @@
 import {Application} from "express";
 import {Connection} from "typeorm";
 import {Wine} from "../../database/entities/Wine";
+import {isAuth} from "../../middleware/isAuth";
 
 interface Args {
     app:Application
@@ -9,7 +10,7 @@ interface Args {
 
 export const WaKit = ({app, connection}:Args):void => {
     // When someone posts to the path
-    app.post('/wine/add/kit',
+    app.post('/wine/add/kit', isAuth,
         async (req, res) => {
             // Declare the new wine object and get the details from the request
             const wine = new Wine();
