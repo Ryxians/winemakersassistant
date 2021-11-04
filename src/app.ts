@@ -15,12 +15,24 @@ import {Blended_Batch} from "./database/entities/Blended_Batch";
 import {Blend_to_Batch} from "./database/entities/Blend_to_Batch";
 import {Blended_Output} from "./database/entities/Blended_Output";
 import {CreateDatabasePosts} from "./wine/CreateDatabasePosts";
+import ESession, {SessionData} from 'express-session';
+import {TypeormStore} from "connect-typeorm";
+import {Session} from "./database/entities/Session";
+import {cookie} from "express-validator";
+import {NextFunction} from "express/ts4.0";
+import {GetUsers} from "./users/GetUsers";
+import cookieParser from 'cookie-parser';
+import bodyParser from "body-parser";
+import {LogoutUser} from "./users/LogoutUser";
 
 dotenv.config();
 
 // Initialize Express App
 const app: Application = express();
 const PORT = process.env.PORT || 3001;
+
+//
+
 
 // Specify json use
 app.use(express.json());
@@ -44,33 +56,40 @@ createConnection({
         Output,
         Blended_Batch,
         Blend_to_Batch,
-        Blended_Output
+        Blended_Output,
+        Session
     ],
     synchronize: true,
     logging: false
 }).then(connection => {
     if (connection) {
+        // Express Session
+        let sessionRep = connection.getRepository(Session);
+        const store = new TypeormStore({
+            cleanupLimit: 2,
+            limitSubquery: false,
+            ttl: 86400
+        }).connect(sessionRep);
+
+        app.use(cookieParser());
+        app.use(bodyParser.urlencoded({extended: true}))
+
+        app.use(ESession({
+            secret: 'taco',
+            saveUninitialized: false,
+            resave: true,
+            store
+        }));
+
         // Create a new users, passes the express app
         CreateUser({app, connection});
 
         // Authenticates provided username and password
         LoginUser({app, connection});
 
-        app.get('/users/get',
-            async (req, res) => {
-                const users = await connection.manager.find(User);
+        GetUsers({app, connection});
 
-                if (users != undefined) {
-                    const cleaned = users.map(user => {
-                        user.password = '';
-                        return user;
-                    })
-                    res.status(200).send(cleaned)
-                } else {
-                    console.log(users)
-                    res.status(400).send();
-                }
-            })
+        LogoutUser({app, connection});
 
         // Load database creation post requests
         CreateDatabasePosts({app, connection});

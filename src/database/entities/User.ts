@@ -18,4 +18,10 @@ export class User {
         }
     )
     password!: string;
+
+    @Column()
+    active!:boolean;
+
+    @Column()
+    role!:number;
 }

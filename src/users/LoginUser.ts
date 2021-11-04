@@ -2,6 +2,7 @@ import {Request, Response, Application} from "express";
 import bcrypt from "bcrypt";
 import {Connection} from "typeorm";
 import {User} from "../database/entities/User";
+import {isAuth} from "../middleware/isAuth";
 interface Args {
     app:Application
     connection:Connection
@@ -23,6 +24,8 @@ export const LoginUser = ({app, connection}:Args):void => {
             try {
                 if (await bcrypt.compare(req.body.password, user.password)) {
                     const hashedUser = await bcrypt.hash(user.username, 10);
+                    req.session.isAuth = true;
+                    req.session.role = user.role;
                     res.status(200).send({hashedUser: hashedUser});
                 } else {
                     res.status(403).send("Wrong Password");
@@ -31,4 +34,5 @@ export const LoginUser = ({app, connection}:Args):void => {
                 res.status(500).send();
             }
         });
+    app.get('/users/login', isAuth, (req, res) => {res.status(200).send()})
 }

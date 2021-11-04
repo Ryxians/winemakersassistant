@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import {v4 as uuid} from 'uuid'
 import {Connection} from "typeorm";
 import {User} from "../database/entities/User";
+import {isAdmin} from "../middleware/isAuth";
 
 interface Args {
     app:Application
@@ -21,6 +22,8 @@ export const CreateUser = ({app, connection}:Args):void => {
             let root = new User();
             root.username = 'root';
             root.password = await bcrypt.hash('root', 10);
+            root.active = true;
+            root.role = 1;
             await connection.manager.save(root).then(rt => {
                 console.log("Root Created with default login (root/root). " +
                     "\nCHANGE IMMEDIATELY!")
@@ -30,7 +33,7 @@ export const CreateUser = ({app, connection}:Args):void => {
     initRoot();
 
     // Post new users to users
-    app.post('/users/new', (async (req: Request, res: Response) => {
+    app.post('/users/new', isAdmin, (async (req: Request, res: Response) => {
         try {
             // Hash the password
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -39,13 +42,16 @@ export const CreateUser = ({app, connection}:Args):void => {
             // Set the new users to the information present.
             user.username = req.body.username;
             user.password = hashedPassword;
+            user.role = req.body.role;
+            user.active = true;
             await connection.manager.save(user).then(usr => {
                 console.log(usr.username, " has been created!");
                 }
             )
             res.status(201).send();
-        } catch {
-            res.status(500).send();
+        } catch (e) {
+            console.log(e)
+            res.status(500).send(e);
         }
     }));
 }
