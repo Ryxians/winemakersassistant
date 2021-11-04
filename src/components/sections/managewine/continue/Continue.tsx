@@ -3,6 +3,7 @@ import {Batch} from '@entities/Batch'
 import {Blended_Batch} from "@entities/Blended_Batch"
 import {BatchListC} from "./BatchListC";
 import {BlendListC} from "./BlendListC";
+import Axios from "axios";
 
 interface Props {
     setBatch:  React.Dispatch<React.SetStateAction<Batch | Blended_Batch | undefined>>
@@ -13,33 +14,13 @@ export const Continue: FC<Props> = ({setBatch}) => {
     const [blends, setBlends] = useState<Blended_Batch[]>();
 
     const getWines = () => {
-        fetch('/wine/get/batchs/true',
-            {
-                method: 'GET',
-                headers: {'Content-Type': 'application/json'}
-            }).then(async res => {
-            console.log("Status: " + res.status);
-            if (res.status === 200) {
-                const rWines: Batch[] = await res.json();
-                setWines(rWines);
-            } else {
-                setWines([]);
-            }
-        })
+        Axios.get('/wine/get/batchs/true').then(res => {
+            res.status === 200 ? setWines(res.data) : setWines([])
+        });
 
-        fetch('/wine/get/blend/batchs/true',
-            {
-                method: 'GET',
-                headers: {'Content-Type': 'application/json'}
-            }).then(async res => {
-            console.log("Status: " + res.status);
-            if (res.status === 200) {
-                const blends: Blended_Batch[] = await res.json();
-                setBlends(blends);
-            } else {
-                setBlends([]);
-            }
-        })
+        Axios.get('/wine/get/blend/batchs/true').then(res => {
+            res.status === 200 ? setBlends(res.data) : setBlends([]);
+        });
     }
 
     useEffect(() => {

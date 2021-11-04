@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
+import Axios from "axios";
 
 interface Props {
 
@@ -17,14 +18,15 @@ export const NewKitC: FC<Props> = () => {
 
     const onSubmit: SubmitHandler<Inputs> = async newKit => {
         console.log(newKit)
-        await fetch(
-            '/wine/add/kit',
-            {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(newKit)
-            }
-        );
+        Axios.post('/wine/add/kit', newKit);
+        // await fetch(
+        //     '/wine/add/kit',
+        //     {
+        //         method: 'POST',
+        //         headers: {'Content-Type': 'application/json'},
+        //         body: JSON.stringify(newKit)
+        //     }
+        // );
     }
 
     return (

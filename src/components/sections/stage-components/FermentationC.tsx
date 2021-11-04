@@ -3,6 +3,7 @@ import {Batch} from '@server/database/entities/Batch'
 import {Blended_Batch} from '@entities/Blended_Batch'
 import {Redirect} from "react-router-dom";
 import {useForm} from "react-hook-form";
+import Axios from "axios";
 
 interface Fermentation {
     batch_id:number
@@ -25,12 +26,14 @@ export const FermentationC : FC<Props> = ({ batch }) => {
         // However, if batch is undefined then the page is set to redirect.
         // So batch should never be undefined.
         ferment.batch_id = batch.batch_id;
-        fetch('/wine/add/fermentation',
-            {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(ferment)
-            });
+        Axios.post('/wine/add/fermentation', ferment);
+
+        // fetch('/wine/add/fermentation',
+        //     {
+        //         method: 'POST',
+        //         headers: {'Content-Type': 'application/json'},
+        //         body: JSON.stringify(ferment)
+        //     });
     }
 
  return (

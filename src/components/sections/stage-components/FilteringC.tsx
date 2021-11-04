@@ -3,6 +3,7 @@ import {Batch} from '@server/database/entities/Batch'
 import {Blended_Batch} from '@entities/Blended_Batch'
 import {Redirect} from "react-router-dom";
 import {useForm} from "react-hook-form";
+import Axios from "axios";
 
 interface Filtering {
     batch_id:number
@@ -25,12 +26,13 @@ export const FilteringC : FC<Props> = ({batch}) => {
         // However, if batch is undefined then the page is set to redirect.
         // So batch should never be undefined.
         filter.batch_id = batch.batch_id;
-        fetch('/wine/add/filtering',
-            {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(filter)
-            });
+        Axios.post('/wine/add/filtering', filter);
+        // fetch('/wine/add/filtering',
+        //     {
+        //         method: 'POST',
+        //         headers: {'Content-Type': 'application/json'},
+        //         body: JSON.stringify(filter)
+        //     });
     }
  return (
   <form onSubmit={handleSubmit(onSubmit)}>

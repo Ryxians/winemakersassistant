@@ -3,6 +3,7 @@ import {Batch} from '@server/database/entities/Batch'
 import {Blended_Batch} from '@entities/Blended_Batch'
 import {Redirect} from "react-router-dom";
 import {useForm} from "react-hook-form";
+import Axios from "axios";
 
 interface Racking {
     batch_id:number
@@ -28,12 +29,13 @@ export const RackingC : FC<Props> = ({batch}) => {
         // However, if batch is undefined then the page is set to redirect.
         // So batch should never be undefined.
         racking.batch_id = batch.batch_id;
-        fetch('/wine/add/racking',
-            {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(racking)
-            });
+        Axios.post('/wine/add/racking', racking);
+        // fetch('/wine/add/racking',
+        //     {
+        //         method: 'POST',
+        //         headers: {'Content-Type': 'application/json'},
+        //         body: JSON.stringify(racking)
+        //     });
     }
  return (
   <form onSubmit={handleSubmit(onSubmit)}>

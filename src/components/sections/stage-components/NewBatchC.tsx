@@ -1,6 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 import {NewKitC} from "./NewKitC";
+import Axios from "axios";
 
 interface Props {
 
@@ -30,26 +31,21 @@ export const NewBatchC: FC<Props> = () => {
 
     const {handleSubmit, register, watch} = useForm<Inputs>();
     const onSubmit:SubmitHandler<Inputs> = async newBatch => {
-        await fetch(
-            '/wine/add/batch',
-            {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(newBatch)
-            }
-        );
+        Axios.post('/wine/add/batch', newBatch);
+        // await fetch(
+        //     '/wine/add/batch',
+        //     {
+        //         method: 'POST',
+        //         headers: {'Content-Type': 'application/json'},
+        //         body: JSON.stringify(newBatch)
+        //     }
+        // );
     }
 
     const getWines = () => {
-        fetch('/wine/get/kit',
-            {
-                method: 'GET',
-                headers: {'Content-Type': 'application/json'}
-            }).then(async res => {
-            console.log("Status: " + res.status);
+        Axios.get('/wine/get/kit').then(res => {
             if (res.status === 200) {
-                const rWines: wine[] = await res.json();
-                setWines(rWines);
+                setWines(res.data);
             } else {
                 setWines([
                     {
@@ -60,6 +56,25 @@ export const NewBatchC: FC<Props> = () => {
                 ]);
             }
         })
+        // fetch('/wine/get/kit',
+        //     {
+        //         method: 'GET',
+        //         headers: {'Content-Type': 'application/json'}
+        //     }).then(async res => {
+        //     console.log("Status: " + res.status);
+        //     if (res.status === 200) {
+        //         const rWines: wine[] = await res.json();
+        //         setWines(rWines);
+        //     } else {
+        //         setWines([
+        //             {
+        //                 wine_id: 0,
+        //                 wine_style: "ERROR",
+        //                 fancy_name: "ERROR"
+        //             }
+        //         ]);
+        //     }
+        // })
     }
 
     useEffect( () => {
