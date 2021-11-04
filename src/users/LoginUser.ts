@@ -26,6 +26,7 @@ export const LoginUser = ({app, connection}:Args):void => {
                     const hashedUser = await bcrypt.hash(user.username, 10);
                     req.session.isAuth = true;
                     req.session.role = user.role;
+                    req.session.active = user.active;
                     res.status(200).send({hashedUser: hashedUser});
                 } else {
                     res.status(403).send("Wrong Password");

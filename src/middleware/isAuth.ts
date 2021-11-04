@@ -8,6 +8,7 @@ declare module 'express-session' {
     export interface SessionData {
         isAuth: boolean
         role: number
+        active: boolean
     }
 }
 
@@ -24,7 +25,7 @@ export const isAuth = (req: Request, res: Response, next: NextFunction) => {
 }
 
 export const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
-    if (req.session.isAuth) {
+    if (req.session.isAuth && req.session.active) {
         if (req.session.role === 1) {
             next();
         }
