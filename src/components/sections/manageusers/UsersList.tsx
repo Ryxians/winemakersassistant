@@ -9,17 +9,21 @@ interface Props {
 
 export const UsersList: FC<Props> = () => {
     const [users, setUsers] = useState<User[]>([]);
-    useEffect(() => {
+    const updateUsers = () => {
         Axios.get('/users/get')
             .then(res => {
                 if (res.status === 200) {
                     setUsers(res.data)
                 }
             })
+    }
+    useEffect(() => {
+        updateUsers();
     }, []);
     return (
         <div className={"container"}>
-            <CreateUser />
+            <CreateUser updateUsers={updateUsers()}/>
+
             <table className="table">
                 <thead>
                 <tr>
