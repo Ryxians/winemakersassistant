@@ -10,7 +10,7 @@ interface Props {
 export const Navbar : FC<Props> = ({logout}) => {
 
  return (
-     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+     <nav className="navbar navbar-expand-lg navbar-dark bg-primary d-print-none">
          <div className="container-fluid">
              <Link className="navbar-brand" to="/" >Wine Maker's Assistant</Link>
              <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
