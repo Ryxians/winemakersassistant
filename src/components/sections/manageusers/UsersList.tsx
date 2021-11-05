@@ -2,6 +2,8 @@ import React, {FC, useEffect, useState} from 'react';
 import {User} from '@entities/User'
 import Axios from "axios";
 import {CreateUser} from "./CreateUser";
+import {ModifyUser} from "./ModifyUser";
+import 'bootstrap/js/dist/modal';
 
 interface Props {
 
@@ -10,19 +12,25 @@ interface Props {
 export const UsersList: FC<Props> = () => {
     const [users, setUsers] = useState<User[]>([]);
     const updateUsers = () => {
+        try {
         Axios.get('/users/get')
             .then(res => {
                 if (res.status === 200) {
                     setUsers(res.data)
                 }
+                console.log("User Status: ", res.status);
             })
+        } catch (e) {
+
+        }
     }
     useEffect(() => {
         updateUsers();
     }, []);
     return (
-        <div className={"container"}>
-            <CreateUser updateUsers={updateUsers()}/>
+        <>
+        <div className={"container d-print-none"}>
+            <CreateUser updateUsers={updateUsers}/>
 
             <table className="table">
                 <thead>
@@ -34,13 +42,7 @@ export const UsersList: FC<Props> = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {users.length > 0 ? users.map(({id, username, role, active}) => (
-                    <tr key={id}>
-                        <td>{id}</td>
-                        <td>{username}</td>
-                        <td>{role}</td>
-                        <td>{active}</td>
-                    </tr>))
+                {users.length > 0 ? users.map((user) => (<ModifyUser key={user.id} user={user}/>))
                     :
                     <tr>
                         <td>?</td>
@@ -52,5 +54,7 @@ export const UsersList: FC<Props> = () => {
                 </tbody>
             </table>
         </div>
+            <div className="d-none d-print-block"><h1 className="text-danger">You aren't allowed to print users</h1></div>
+        </>
     );
 };

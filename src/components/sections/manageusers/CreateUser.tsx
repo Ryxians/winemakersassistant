@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
 import {useForm} from "react-hook-form";
 import Axios from "axios";
-import 'bootstrap/js/dist/modal'
+
 
 interface Props {
-    updateUsers: any
+    updateUsers: Function
 }
 
 interface Inputs {
@@ -39,18 +39,14 @@ export const CreateUser: FC<Props> = ({updateUsers}) => {
                                     />
                                 </div>
                                 <div className="input-group">
-                <span className="input-group-text">
-                    Password:
-                </span>
+                                    <span className="input-group-text">Password: </span>
                                     <input type="text"
                                            className="form-control"
                                            {...register("password")}
                                     />
                                 </div>
                                 <div className="input-group">
-                <span className="input-group-text">
-                    Role:
-                </span>
+                                    <span className="input-group-text">Role:</span>
                                     <select className="form-select"
                                             defaultValue="0"
                                             {...register("role")}
@@ -62,7 +58,8 @@ export const CreateUser: FC<Props> = ({updateUsers}) => {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="submit" className="btn btn-primary m-1" data-bs-dismiss="modal">Add</button>
+                                <button type="submit" className="btn btn-primary m-1" data-bs-dismiss="modal">Add
+                                </button>
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close
                                 </button>
                             </div>
