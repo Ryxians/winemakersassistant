@@ -27,11 +27,13 @@ function App() {
     useEffect(() => {
         Axios.get('/users/login').then(res => {
             res.status === 200 ? setLoggedIn(true) : setLoggedIn(false);
+            console.log("Login Status: ", res.status);
         });
     }, [])
 
     const logout = () => {
         Axios.post('/users/logout').then(res => {
+            console.log("Logout Status: ", res.status);
             setLoggedIn(false);
             localStorage.clear();
         });
@@ -72,16 +74,6 @@ function App() {
 
                 <Route path="/winelog" exact render={
                     () => (currentBatch ? <WineLog batch={currentBatch} /> : <Redirect to={'/'} />)
-                } />
-
-                <Route path="/fermentation" exact render={
-                    () => (<FermentationC batch={currentBatch}/>)
-                } />
-                <Route path="/racking" exact render={
-                    () => (<RackingC batch={currentBatch}/>)
-                } />
-                <Route path="/filtering" exact render={
-                    () => (<FilteringC batch={currentBatch}/>)
                 } />
 
                 <Route path="/" exact render={() => (isLoggedIn && <h1>Use the navbar</h1>)}/>

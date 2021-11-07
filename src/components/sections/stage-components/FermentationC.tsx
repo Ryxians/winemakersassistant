@@ -20,13 +20,13 @@ interface Props {
 export const FermentationC : FC<Props> = ({ batch }) => {
     const {handleSubmit, register} = useForm<Fermentation>();
 
-    const onSubmit = (ferment:Fermentation) => {
+    const onSubmit = async (ferment: Fermentation) => {
         // @ts-ignore
         // There is an error in which batch may be undefined
         // However, if batch is undefined then the page is set to redirect.
         // So batch should never be undefined.
         ferment.batch_id = batch.batch_id;
-        Axios.post('/wine/add/fermentation', ferment);
+        await Axios.post('/wine/add/fermentation', ferment);
 
         // fetch('/wine/add/fermentation',
         //     {

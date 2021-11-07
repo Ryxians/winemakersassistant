@@ -23,13 +23,13 @@ interface Props {
 export const RackingC : FC<Props> = ({batch}) => {
     const {handleSubmit, register} = useForm<Racking>();
 
-    const onSubmit = (racking:Racking) => {
+    const onSubmit = async (racking: Racking) => {
         // @ts-ignore
         // There is an error in which batch may be undefined
         // However, if batch is undefined then the page is set to redirect.
         // So batch should never be undefined.
         racking.batch_id = batch.batch_id;
-        Axios.post('/wine/add/racking', racking);
+        await Axios.post('/wine/add/racking', racking);
         // fetch('/wine/add/racking',
         //     {
         //         method: 'POST',

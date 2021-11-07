@@ -18,7 +18,7 @@ export const NewKitC: FC<Props> = () => {
 
     const onSubmit: SubmitHandler<Inputs> = async newKit => {
         console.log(newKit)
-        Axios.post('/wine/add/kit', newKit);
+        await Axios.post('/wine/add/kit', newKit);
         // await fetch(
         //     '/wine/add/kit',
         //     {

@@ -20,13 +20,13 @@ interface Props {
 export const FilteringC : FC<Props> = ({batch}) => {
     const {handleSubmit, register} = useForm<Filtering>();
 
-    const onSubmit = (filter:Filtering) => {
+    const onSubmit = async (filter: Filtering) => {
         // @ts-ignore
         // There is an error in which batch may be undefined
         // However, if batch is undefined then the page is set to redirect.
         // So batch should never be undefined.
         filter.batch_id = batch.batch_id;
-        Axios.post('/wine/add/filtering', filter);
+        await Axios.post('/wine/add/filtering', filter);
         // fetch('/wine/add/filtering',
         //     {
         //         method: 'POST',

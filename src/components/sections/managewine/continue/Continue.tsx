@@ -4,6 +4,7 @@ import {Blended_Batch} from "@entities/Blended_Batch"
 import {BatchListC} from "./BatchListC";
 import {BlendListC} from "./BlendListC";
 import Axios from "axios";
+import 'bootstrap/js/dist/modal';
 
 interface Props {
     setBatch:  React.Dispatch<React.SetStateAction<Batch | Blended_Batch | undefined>>
@@ -33,7 +34,7 @@ export const Continue: FC<Props> = ({setBatch}) => {
         } catch (e) {
             // Haha error :o
         }
-    })
+    }, [])
     return (
         <div className="container">
             <table className="table table-striped table-hover">
