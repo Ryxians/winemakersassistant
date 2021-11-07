@@ -20,8 +20,6 @@ export const ModifyUser : FC<Props> = ({user}) => {
         defaultValues: user
     });
     const {id, username, role, active} = user;
-    let btn: HTMLButtonElement | null;
-    const [isOpen, setOpen] = useState(false);
 
     const onSubmit = (updated:User) => {
         Axios.put(`/users/put/${updated.id}`, updated).then(
