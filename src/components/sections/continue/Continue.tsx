@@ -1,8 +1,8 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Batch} from '@entities/Batch'
 import {Blended_Batch} from "@entities/Blended_Batch"
-import {BatchListC} from "./BatchListC";
-import {BlendListC} from "./BlendListC";
+import {BatchListC} from "./listc/BatchListC";
+import {BlendListC} from "./listc/BlendListC";
 import Axios from "axios";
 import 'bootstrap/js/dist/modal';
 

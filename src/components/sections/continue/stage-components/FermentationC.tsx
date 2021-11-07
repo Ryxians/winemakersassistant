@@ -1,9 +1,10 @@
 import React, {FC} from 'react';
-import {Batch} from '@server/database/entities/Batch'
+import {Batch} from '@entities/Batch'
 import {Blended_Batch} from '@entities/Blended_Batch'
 import {Redirect} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import Axios from "axios";
+import {Modal} from "../modal/Modal";
 
 interface Fermentation {
     batch_id:number
@@ -14,7 +15,7 @@ interface Fermentation {
 }
 
 interface Props {
-    batch: Batch | Blended_Batch | undefined
+    batch: Batch | Blended_Batch
 }
 
 export const FermentationC : FC<Props> = ({ batch }) => {
@@ -40,7 +41,7 @@ export const FermentationC : FC<Props> = ({ batch }) => {
   <form onSubmit={handleSubmit(onSubmit)} className="container">
       {!batch && <Redirect to={{pathname: "/"}} /> }
 
-      <h3>Fermentation Update</h3>
+      {/*<h3>Fermentation Update</h3>*/}
       <div className="input-group">
                 <span className="input-group-text">
                     Date of Fermentation Check
