@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {NewBatchC} from "./stage-components/NewBatchC";
+import {NewBatchC} from "./continue/stage-components/NewBatchC";
 
 interface Props {
 
