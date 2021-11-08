@@ -21,7 +21,7 @@ export const ModalT: FC<Props> = ({modal_id, setSelected, isSelected, title, chi
         <>
             <td>
                 <div className="modal fade" id={modal_id} data-bs-backdrop="static" data-bs-keyboard="false">
-                    <div className="modal-dialog">
+                    <div className="modal-dialog modal-fullscreen-md-down">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">{title}</h5>
