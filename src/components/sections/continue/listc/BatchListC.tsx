@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import {Batch} from '@entities/Batch'
 import {Blended_Batch} from "@entities/Blended_Batch"
 import {Link} from "react-router-dom";
-import {Modal} from "../modal/Modal";
+import {ModalT} from "../modal/ModalT";
 
 interface Props {
     batch: Batch
@@ -27,8 +27,8 @@ export const BatchListC: FC<Props> = ({batch, setBatch}) => {
             </tr>
             {isSelected && (
                 <tr className="table-info list-group d-print-none">
-                    <Modal modal_id={`batchmod-${batch_id}`} setSelected={setSelected} isSelected={isSelected}
-                           title={wine.fancy_name}>
+                    <ModalT modal_id={`batchmod-${batch_id}`} setSelected={setSelected} isSelected={isSelected}
+                            title={wine.fancy_name}>
                         <ul>
                             <li className={optionStyles}>
                                 <Link onClick={() => setBatch(batch)} to={{pathname: "/winelog"}}>
@@ -48,7 +48,7 @@ export const BatchListC: FC<Props> = ({batch, setBatch}) => {
                             </li>
                             <li className={optionStyles}>Output</li>
                         </ul>
-                    </Modal>
+                    </ModalT>
                 </tr>
             )}
         </>

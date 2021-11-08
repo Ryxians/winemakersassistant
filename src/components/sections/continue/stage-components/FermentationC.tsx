@@ -4,7 +4,7 @@ import {Blended_Batch} from '@entities/Blended_Batch'
 import {Redirect} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import Axios from "axios";
-import {Modal} from "../modal/Modal";
+import {ModalT} from "../modal/ModalT";
 
 interface Fermentation {
     batch_id:number

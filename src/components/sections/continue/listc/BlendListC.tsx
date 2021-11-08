@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import {Blended_Batch} from "@entities/Blended_Batch"
 import {Batch} from "@entities/Batch"
 import {Link} from "react-router-dom";
-import {Modal} from "../modal/Modal";
+import {ModalT} from "../modal/ModalT";
 
 interface Props {
     blend: Blended_Batch
@@ -30,7 +30,7 @@ export const BlendListC: FC<Props> = ({blend, setBatch}) => {
             </tr>
             {isSelected && (
                 <tr className="d-print-none">
-                    <Modal modal_id={id} setSelected={setSelected} isSelected={isSelected} title={wine.fancy_name}>
+                    <ModalT modal_id={id} setSelected={setSelected} isSelected={isSelected} title={wine.fancy_name}>
                         <ul>
                             <li className={optionStyles}>
                                 <Link onClick={() => setBatch(blend)} to={{pathname: "/winelog"}}>
@@ -39,7 +39,7 @@ export const BlendListC: FC<Props> = ({blend, setBatch}) => {
                             </li>
                             <li className={optionStyles}>Output</li>
                         </ul>
-                    </Modal>
+                    </ModalT>
                 </tr>
             )}
         </>

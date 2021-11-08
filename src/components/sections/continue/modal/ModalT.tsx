@@ -9,7 +9,7 @@ interface Props {
     children: JSX.Element
 }
 
-export const Modal: FC<Props> = ({modal_id, setSelected, isSelected, title, children}) => {
+export const ModalT: FC<Props> = ({modal_id, setSelected, isSelected, title, children}) => {
     let button: HTMLButtonElement | null;
     useEffect(() => {
         if (isSelected) {
