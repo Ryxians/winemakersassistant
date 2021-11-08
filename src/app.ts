@@ -24,6 +24,8 @@ import {GetUsers} from "./users/GetUsers";
 import cookieParser from 'cookie-parser';
 import bodyParser from "body-parser";
 import {LogoutUser} from "./users/LogoutUser";
+import {UpdateUser} from "./users/UpdateUser";
+import path from "path";
 
 dotenv.config();
 
@@ -91,8 +93,19 @@ createConnection({
 
         LogoutUser({app, connection});
 
+        GetUsers({app, connection});
+
+        UpdateUser({app, connection});
+
         // Load database creation post requests
         CreateDatabasePosts({app, connection});
+
+        // This will have Express Serve the React App
+        // https://create-react-app.dev/docs/deployment/
+        app.use(express.static(path.join(__dirname, "build")));
+        app.get('/*', (req, res) => {
+            res.sendFile(path.join(__dirname, "build", "index.html"))
+        })
 
         // Listen to port 5000 for requests
         app.listen(PORT, () => console.log(`Hello from express! Listening to ${PORT}`));

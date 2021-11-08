@@ -41,14 +41,19 @@ export const CreateUser = ({app, connection}:Args):void => {
             let user = new User();
             // Set the new users to the information present.
             user.username = req.body.username;
-            user.password = hashedPassword;
-            user.role = req.body.role;
-            user.active = true;
-            await connection.manager.save(user).then(usr => {
-                console.log(usr.username, " has been created!");
-                }
-            )
-            res.status(201).send();
+            if (user.username === "" || user.username === " ") {
+                res.status(400).send();
+                return;
+            } else {
+                user.password = hashedPassword;
+                user.role = req.body.role;
+                user.active = true;
+                await connection.manager.save(user).then(usr => {
+                        console.log(usr.username, " has been created!");
+                    }
+                )
+                res.status(201).send();
+            }
         } catch (e) {
             console.log(e)
             res.status(500).send(e);

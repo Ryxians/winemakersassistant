@@ -3,6 +3,7 @@ import {Connection} from "typeorm";
 import {Wine} from "../../database/entities/Wine";
 import {Batch} from "../../database/entities/Batch";
 import {param} from "express-validator";
+import {isAuth} from "../../middleware/isAuth";
 
 interface Args {
     app:Application
@@ -20,7 +21,7 @@ const getBatchsFromKit = async (connection: Connection, wineid: string | number)
 
 export const wgBatch = ({app, connection}:Args):void => {
     // Get all the batches of a wine
-    app.get('/wine/get/batch/:wineid',
+    app.get('/wine/get/batch/:wineid', isAuth,
         async (req, res) => {
             // Declare the new wine object and get the details from the request
             const {params} = req;
