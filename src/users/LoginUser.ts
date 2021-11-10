@@ -27,6 +27,7 @@ export const LoginUser = ({app, connection}:Args):void => {
                     req.session.isAuth = true;
                     req.session.role = user.role;
                     req.session.active = user.active;
+                    req.session.user = user;
                     res.status(200).send({hashedUser: hashedUser});
                 } else {
                     res.status(403).send("Wrong Password");
