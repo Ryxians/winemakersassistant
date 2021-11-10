@@ -2,7 +2,7 @@ import express, {Application, Request, Response} from 'express';
 import {CreateUser} from "./users/CreateUser";
 import {LoginUser} from "./users/LoginUser";
 import "reflect-metadata";
-import {Connection, createConnection} from "typeorm";
+import {createConnection} from "typeorm";
 import dotenv from "dotenv";
 import {User} from "./database/entities/User";
 import {Wine} from "./database/entities/Wine";
@@ -15,17 +15,16 @@ import {Blended_Batch} from "./database/entities/Blended_Batch";
 import {Blend_to_Batch} from "./database/entities/Blend_to_Batch";
 import {Blended_Output} from "./database/entities/Blended_Output";
 import {CreateDatabasePosts} from "./wine/CreateDatabasePosts";
-import ESession, {SessionData} from 'express-session';
+import ESession from 'express-session';
 import {TypeormStore} from "connect-typeorm";
 import {Session} from "./database/entities/Session";
-import {cookie} from "express-validator";
-import {NextFunction} from "express/ts4.0";
 import {GetUsers} from "./users/GetUsers";
 import cookieParser from 'cookie-parser';
 import bodyParser from "body-parser";
 import {LogoutUser} from "./users/LogoutUser";
 import {UpdateUser} from "./users/UpdateUser";
 import path from "path";
+import {doLog} from "./middleware/isAuth";
 
 dotenv.config();
 
@@ -83,6 +82,8 @@ createConnection({
             store
         }));
 
+        app.use(doLog);
+
         // Create a new users, passes the express app
         CreateUser({app, connection});
 
@@ -106,6 +107,7 @@ createConnection({
         app.get('/*', (req, res) => {
             res.sendFile(path.join(__dirname, "build", "index.html"))
         })
+
 
         // Listen to port 5000 for requests
         app.listen(PORT, () => console.log(`Hello from express! Listening to ${PORT}`));

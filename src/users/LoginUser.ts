@@ -28,6 +28,7 @@ export const LoginUser = ({app, connection}:Args):void => {
                     req.session.role = user.role;
                     req.session.active = user.active;
                     req.session.user = user;
+                    res.statusMessage = user.username + " has been logged in!";
                     res.status(200).send({hashedUser: hashedUser});
                 } else {
                     res.status(403).send("Wrong Password");
@@ -36,5 +37,7 @@ export const LoginUser = ({app, connection}:Args):void => {
                 res.status(500).send();
             }
         });
-    app.get('/users/login', isAuth, (req, res) => {res.status(200).send()})
+    app.get('/users/login', isAuth, (req, res) => {
+        res.status(200).send();
+    })
 }

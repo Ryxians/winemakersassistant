@@ -24,7 +24,8 @@ export const UpdateUser = ({app, connection}: Args): void => {
                 req.body.password = password;
                 userRepository.merge(user, req.body);
                 const results = await userRepository.save(user);
-                return res.status(200).send(results);
+                res.statusMessage = user.username + " has been Updated!";
+                res.status(200).send(results);
             } else {
                 res.status(400).send();
             }

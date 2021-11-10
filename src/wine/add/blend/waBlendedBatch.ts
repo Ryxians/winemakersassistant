@@ -32,6 +32,7 @@ export const waBlendedBatch = ({app, connection}:Args):void => {
                 // If failed, send the error.
                 try {
                     await connection.manager.save(newBBatch);
+                    res.statusMessage = "Blend Created with id: " + newBBatch.blend_id;
                     res.status(200).send();
                 } catch (e) {
                     res.statusMessage = e;

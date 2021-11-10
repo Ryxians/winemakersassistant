@@ -1,7 +1,7 @@
 import {Application} from "express";
 import {Connection} from "typeorm";
 import {Wine} from "../../database/entities/Wine";
-import {isAuth} from "../../middleware/isAuth";
+import {doLog, isAuth} from "../../middleware/isAuth";
 
 interface Args {
     app:Application
@@ -29,7 +29,7 @@ export const WaKit = ({app, connection}:Args):void => {
             }
 
             await connection.manager.save(wine).then(wine => {
-                console.log("Wine: ", wine, " has been created!");
+                res.statusMessage = "Wine: " + wine + " has been created!";
                 res.status(200).send(wine);
             });
         });

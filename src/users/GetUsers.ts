@@ -17,7 +17,8 @@ export const GetUsers = ({app, connection}:Args):void => {
                 const cleaned = users.map(user => {
                     user.password = '';
                     return user;
-                })
+                });
+                res.statusMessage = "Users Requested";
                 res.status(200).send(cleaned)
             } else {
                 console.log(users)

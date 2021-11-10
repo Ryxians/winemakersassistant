@@ -5,3 +5,4 @@
 .env
 ./src/build/
 ./src/build/*
+/request_logs.txt

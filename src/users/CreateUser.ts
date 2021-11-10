@@ -6,11 +6,11 @@ import {User} from "../database/entities/User";
 import {isAdmin} from "../middleware/isAuth";
 
 interface Args {
-    app:Application
-    connection:Connection
+    app: Application
+    connection: Connection
 }
 
-export const CreateUser = ({app, connection}:Args):void => {
+export const CreateUser = ({app, connection}: Args): void => {
     // Create a root users if one isn't already present.
     const initRoot = async () => {
         let count = await connection.getRepository(User).count();
@@ -49,10 +49,11 @@ export const CreateUser = ({app, connection}:Args):void => {
                 user.role = req.body.role;
                 user.active = true;
                 await connection.manager.save(user).then(usr => {
-                        console.log(usr.username, " has been created!");
+                        res.statusMessage = usr.username + " has been created!";
+                        res.status(201).send();
                     }
                 )
-                res.status(201).send();
+
             }
         } catch (e) {
             console.log(e)

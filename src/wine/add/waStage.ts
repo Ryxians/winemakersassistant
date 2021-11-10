@@ -12,7 +12,7 @@ interface Args {
     connection:Connection
 }
 
-const nsBatch = async (ns: ns, res: Response, req: Request, connection: Connection) => {
+const nsBatch = async (ns: ns, res: Response, req: Request, connection: Connection, path:string) => {
     // Get the specified batch
     const batch_id = req.body.batch_id;
     const batch = await connection.getRepository(Batch).findOne({ batch_id: batch_id });
@@ -25,6 +25,7 @@ const nsBatch = async (ns: ns, res: Response, req: Request, connection: Connecti
         // Try adding the new stage to the database
         try {
             await connection.manager.save(ns);
+            res.statusMessage = "Batch with ID: " + batch_id + ", has been updated for: " + path;
             res.status(200).send();
         } catch (e) {
             // If the stage fails to be created, send the error back.
@@ -43,6 +44,6 @@ export function createAddPost<Entity extends ns> (obj:EntityTarget<Entity>, path
     app.post('/wine/add/' + path, isAuth,
         async (req, res) => {
             // Grab filtering object
-            await nsBatch(connection.manager.create(obj, req.body), res, req, connection);
+            await nsBatch(connection.manager.create(obj, req.body), res, req, connection, path);
         });
 }

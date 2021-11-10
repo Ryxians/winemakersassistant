@@ -8,7 +8,7 @@ interface Args {
     connection:Connection
 }
 
-export const WaKit = ({app, connection}:Args):void => {
+export const WaOutput = ({app, connection}:Args):void => {
     // When someone posts to the path
     app.post('/wine/add/kit', isAuth,
         async (req, res) => {
@@ -29,7 +29,8 @@ export const WaKit = ({app, connection}:Args):void => {
             }
 
             await connection.manager.save(wine).then(wine => {
-                console.log("Wine: ", wine, " has been created!");
+                //res.statusMessage = "Wine: " + wine + " has been created!";
+                //res.status(200).send(200);
             });
         });
 }
