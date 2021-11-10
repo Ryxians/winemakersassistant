@@ -23,7 +23,7 @@ export const CreateUser: FC<Props> = ({updateUsers}) => {
         });
     }
     return (
-        <ModalFB handleSubmit={handleSubmit} onSubmit={onSubmit} id={"createUser"} title={"Create User"}>
+        <ModalFB className="m-1" handleSubmit={handleSubmit} onSubmit={onSubmit} id={"createUser"} title={"Create User"}>
             <>
                 <div className="input-group">
                     <span className="input-group-text"> Username: </span>

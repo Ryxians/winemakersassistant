@@ -3,6 +3,9 @@ import {Blended_Batch} from "@entities/Blended_Batch"
 import {Batch} from "@entities/Batch"
 import {Link} from "react-router-dom";
 import {ModalT} from "../modal/ModalT";
+import {FermentationC} from "../stage-components/FermentationC";
+import {RackingC} from "../stage-components/RackingC";
+import {FilteringC} from "../stage-components/FilteringC";
 
 interface Props {
     blend: Blended_Batch
@@ -31,14 +34,12 @@ export const BlendListC: FC<Props> = ({blend, setBatch}) => {
             {isSelected && (
                 <tr className="d-print-none">
                     <ModalT modal_id={id} setSelected={setSelected} isSelected={isSelected} title={wine.fancy_name}>
-                        <ul>
-                            <li className={optionStyles}>
-                                <Link onClick={() => setBatch(blend)} to={{pathname: "/winelog"}}>
-                                    Complete Log
-                                </Link>
-                            </li>
-                            <li className={optionStyles}>Output</li>
-                        </ul>
+                        <div className="btn-group-vertical">
+                            <Link className="btn btn-primary" onClick={() => setBatch(blend)} to={{pathname: "/winelog"}}>
+                                Complete Log
+                            </Link>
+                            Output
+                        </div>
                     </ModalT>
                 </tr>
             )}

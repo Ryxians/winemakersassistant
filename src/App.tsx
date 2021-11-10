@@ -44,6 +44,7 @@ function App() {
         // setHashedUser(hashedUsr);
         // localStorage.setItem("hashedUser", hashedUsr);
         setLoggedIn(true);
+
     }
 
     return (
