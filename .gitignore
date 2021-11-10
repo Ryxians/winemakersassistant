@@ -3,3 +3,5 @@
 ./winemakersassistant-client/
 ./winemakersassistant-client/*
 .env
+./src/build/
+./src/build/*
