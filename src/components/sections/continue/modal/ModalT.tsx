@@ -7,13 +7,17 @@ interface Props {
     isSelected: boolean
     title: string
     children: JSX.Element
+    getButton?: React.Dispatch<HTMLButtonElement>
 }
 
-export const ModalT: FC<Props> = ({modal_id, setSelected, isSelected, title, children}) => {
+export const ModalT: FC<Props> = ({modal_id, setSelected, isSelected, title, children, getButton}) => {
     let button: HTMLButtonElement | null;
     useEffect(() => {
         if (isSelected) {
             button?.click();
+        }
+        if (getButton && button) {
+            getButton(button)
         }
     })
 

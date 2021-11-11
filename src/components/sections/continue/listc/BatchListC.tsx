@@ -18,6 +18,8 @@ export const BatchListC: FC<Props> = ({batch, setBatch}) => {
     let date = new Date(start_date);
     let newDate = "" + date.getMonth() + "/" + date.getDay() + "/" + date.getFullYear()
 
+    const [button, getButton] = useState<HTMLButtonElement>()
+
     const optionStyles = "list-group-item btn";
     const modalId = `batchmod-${batch_id}`
 
@@ -32,9 +34,14 @@ export const BatchListC: FC<Props> = ({batch, setBatch}) => {
             {isSelected && (
                 <tr className="table-info list-group d-print-none">
                     <ModalT modal_id={modalId} setSelected={setSelected} isSelected={isSelected}
-                            title={wine.fancy_name}>
+                            title={wine.fancy_name}
+                            getButton={getButton}
+                    >
                         <div className="btn-group-vertical">
-                            <Link className="btn btn-primary" onClick={() => setBatch(batch)} to={{pathname: "/winelog"}}>
+                            <Link className="btn btn-primary" onClick={() => {
+                                setBatch(batch)
+                                button?.click();
+                            }} to={{pathname: "/winelog"}}>
                                     Complete Log
                             </Link>
                             <FermentationC batch={batch}/>
