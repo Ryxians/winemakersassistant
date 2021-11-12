@@ -14,6 +14,7 @@ import {Batch} from "../database/entities/Batch";
 import {param} from "express-validator";
 import { waBlendedBatch } from "./add/blend/waBlendedBatch"
 import {wgBlendedBatch} from "./get/blend/wgBlendedBatch";
+import {CreatePutPost} from "./put/wpStage";
 
 interface Args {
     app:Application
@@ -29,6 +30,10 @@ function CreateGetAndAdd<Entity extends ns>(obj: EntityTarget<Entity>, path: str
 
     //wine/get/Entity
     CreateGetPost(obj, path, args);
+
+    // @ts-ignore
+    // Not sure why this started throwing an error. It wasnt earlier.
+    CreatePutPost(obj, path, args);
 }
 
 export const CreateDatabasePosts = (args:Args) => {

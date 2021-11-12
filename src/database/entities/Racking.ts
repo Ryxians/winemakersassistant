@@ -5,7 +5,7 @@ import {Batch} from "./Batch";
 export class Racking {
 
     @PrimaryColumn()
-    racking_date!:Date;
+    date!:Date;
 
     @Column()
     batch_id!:number

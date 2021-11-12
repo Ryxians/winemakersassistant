@@ -4,7 +4,7 @@ import {Batch} from "./Batch";
 @Entity({name: "Fermentation"})
 export class Fermentation {
     @PrimaryColumn()
-    fermentation_date!:Date;
+    date!:Date;
 
     @Column()
     batch_id!:number
