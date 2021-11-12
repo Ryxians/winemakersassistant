@@ -57,7 +57,7 @@ export const FermentWlS: FC<Props> = ({batch}) => {
                     <th>SG</th>
                     <th>Temperature</th>
                     <th>Notes</th>
-                    <th>Edit</th>
+                    <th className="d-print-none">Edit</th>
                 </tr>
                 </thead>
                 <tbody>

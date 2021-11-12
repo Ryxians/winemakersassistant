@@ -20,7 +20,7 @@ export const FermentWLC : FC<Props> = ({batch, ferment, number}) => {
       <td>{sg}</td>
       <td>{temperature}</td>
       <td>{notes}</td>
-      <td><FermentationC batch={batch} ferm={ferment} name={"Edit " + number}/></td>
+      <td className="d-print-none"><FermentationC batch={batch} ferm={ferment} name={"Edit " + number}/></td>
   </tr>
  );
 };
