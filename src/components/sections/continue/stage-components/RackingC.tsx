@@ -8,7 +8,7 @@ import {ModalFB} from "../../ModalFB";
 
 interface Racking {
     batch_id: number
-    racking_date: Date
+    date: Date
     sg: number
     temperature: number
     sulfite: number
@@ -46,7 +46,7 @@ export const RackingC: FC<Props> = ({batch}) => {
                     Date of Racking
                 </span>
                     <input type="datetime-local"
-                           className="form-control" {...register("racking_date")}/>
+                           className="form-control" {...register("date")}/>
                 </div>
 
                 <div className="input-group">
