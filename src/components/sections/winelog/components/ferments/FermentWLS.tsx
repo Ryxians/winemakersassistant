@@ -21,8 +21,8 @@ export const FermentWlS: FC<Props> = ({batch}) => {
         let i = 0;
         if (fermentations) {
             const sorted = fermentations.sort((a, b) => {
-                let aDate = new Date(a.fermentation_date).getMilliseconds();
-                let bDate = new Date(b.fermentation_date).getMilliseconds();
+                let aDate = new Date(a.date).getMilliseconds();
+                let bDate = new Date(b.date).getMilliseconds();
                 if (aDate > bDate) {
                     return 1;
                 } else {
@@ -30,7 +30,7 @@ export const FermentWlS: FC<Props> = ({batch}) => {
                 }
             })
             const list = sorted.map((ferm) => {
-                let rc = <FermentWLC key={i} number={i+1} ferment={ferm}/>;
+                let rc = <FermentWLC key={i} number={i+1} ferment={ferm} batch={batch}/>;
                 i++;
                 return rc;
             });
@@ -51,12 +51,13 @@ export const FermentWlS: FC<Props> = ({batch}) => {
             <table className="table table-striped table-bordered border-dark">
                 <thead>
                 <tr>
-                    <td></td>
+                    <th></th>
                     <th>Date</th>
                     <th>Time</th>
                     <th>SG</th>
-                    <th>Temperature:</th>
-                    <th>Notes:</th>
+                    <th>Temperature</th>
+                    <th>Notes</th>
+                    <th>Edit</th>
                 </tr>
                 </thead>
                 <tbody>

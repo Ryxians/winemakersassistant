@@ -1,15 +1,12 @@
 import React, {FC} from 'react';
 import {Batch} from '@entities/Batch'
-import {Blended_Batch} from '@entities/Blended_Batch'
-import {Redirect} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import Axios from "axios";
-import {ModalT} from "../modal/ModalT";
 import {ModalFB} from "../../ModalFB";
 
 interface Fermentation {
     batch_id: number
-    fermentation_date: Date
+    date: Date
     sg: number
     temperature: number
     notes: string
@@ -17,10 +14,17 @@ interface Fermentation {
 
 interface Props {
     batch: Batch
+    ferm?: Fermentation
+    name?: string
 }
 
-export const FermentationC: FC<Props> = ({batch}) => {
-    const {handleSubmit, register} = useForm<Fermentation>();
+export const FermentationC: FC<Props> = ({batch, ferm, name}) => {
+    if (ferm) {
+        ferm.date = new Date(ferm.date);
+    }
+    const {handleSubmit, register} = useForm<Fermentation>({
+        defaultValues: ferm
+    });
 
     const onSubmit = async (ferment: Fermentation) => {
         // @ts-ignore
@@ -28,18 +32,25 @@ export const FermentationC: FC<Props> = ({batch}) => {
         // However, if batch is undefined then the page is set to redirect.
         // So batch should never be undefined.
         ferment.batch_id = batch.batch_id;
-        await Axios.post('/wine/add/fermentation', ferment);
+        if (!ferm) {
+            await Axios.post('/wine/add/fermentation', ferment);
+        } else {
+            await Axios.put('/wine/put/fermentation/', ferment);
+        }
     }
 
+    let id = "ferment-";
+    id += ferm ? ferm.date.getDay() : batch.batch_id;
+
     return (
-        <ModalFB id={"ferment-" + batch.batch_id} handleSubmit={handleSubmit} onSubmit={onSubmit} title={"Fermentation"} modalception={true}>
+        <ModalFB id={id} handleSubmit={handleSubmit} onSubmit={onSubmit} title={name ? name :  "Fermentation"} modalception={true}>
             <>
                 <div className="input-group">
                 <span className="input-group-text">
                     Date of Fermentation Check
                 </span>
                     <input type="datetime-local"
-                           className="form-control" {...register("fermentation_date")}/>
+                           className="form-control" {...register("date")}/>
                 </div>
                 <div className="input-group">
                 <span className="input-group-text">

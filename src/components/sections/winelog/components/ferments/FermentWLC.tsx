@@ -1,14 +1,17 @@
 import React, {FC} from 'react';
 import {Fermentation} from '@entities/Fermentation';
+import {FermentationC} from "../../../continue/stage-components/FermentationC";
+import { Batch } from '@entities/Batch'
 
 interface Props {
     ferment: Fermentation
     number: number
+    batch: Batch
 }
 
-export const FermentWLC : FC<Props> = ({ferment, number}) => {
-    const { fermentation_date, sg, temperature, notes } = ferment;
-    let fixed_date = new Date(fermentation_date);
+export const FermentWLC : FC<Props> = ({batch, ferment, number}) => {
+    const { date, sg, temperature, notes } = ferment;
+    let fixed_date = new Date(date);
  return (
   <tr>
       <td>{number}</td>
@@ -17,6 +20,7 @@ export const FermentWLC : FC<Props> = ({ferment, number}) => {
       <td>{sg}</td>
       <td>{temperature}</td>
       <td>{notes}</td>
+      <td><FermentationC batch={batch} ferm={ferment} name={"Edit " + number}/></td>
   </tr>
  );
 };
