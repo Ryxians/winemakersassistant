@@ -16,13 +16,12 @@ interface Props {
     batch: Batch
     ferm?: Fermentation
     name?: string
+    className?: string
 }
 
-export const FermentationC: FC<Props> = ({batch, ferm, name}) => {
-    if (ferm) {
-        ferm.date = new Date(ferm.date);
-    }
-    const {handleSubmit, register} = useForm<Fermentation>({
+export const FermentationC: FC<Props> = ({batch, ferm, name, className}) => {
+
+    const {handleSubmit, register, setValue} = useForm<Fermentation>({
         defaultValues: ferm
     });
 
@@ -43,7 +42,7 @@ export const FermentationC: FC<Props> = ({batch, ferm, name}) => {
     id += ferm ? ferm.date.getDay() : batch.batch_id;
 
     return (
-        <ModalFB id={id} handleSubmit={handleSubmit} onSubmit={onSubmit} title={name ? name :  "Fermentation"} modalception={true}>
+        <ModalFB id={id} handleSubmit={handleSubmit} onSubmit={onSubmit} title={name ? name :  "Fermentation"} modalception={true} className={className}>
             <>
                 <div className="input-group">
                 <span className="input-group-text">

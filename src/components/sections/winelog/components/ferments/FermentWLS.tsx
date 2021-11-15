@@ -3,6 +3,7 @@ import Axios from "axios";
 import {FermentWLC} from "./FermentWLC";
 import {Fermentation} from '@entities/Fermentation';
 import {Batch} from '@entities/Batch'
+import {FermentationC} from "../../../continue/stage-components/FermentationC";
 
 interface Props {
     batch: Batch
@@ -13,7 +14,12 @@ export const FermentWlS: FC<Props> = ({batch}) => {
 
     const getFermentation = () => {
         Axios.get(`/wine/get/fermentation/${batch.batch_id}`).then(res => {
-            setFerment(res.data);
+            let ferm:Fermentation[] = res.data;
+
+            ferm.forEach(f => {
+                f.date = new Date(f.date)
+            })
+            setFerment(ferm);
         });
     }
 
@@ -21,15 +27,10 @@ export const FermentWlS: FC<Props> = ({batch}) => {
         let i = 0;
         if (fermentations) {
             const sorted = fermentations.sort((a, b) => {
-                let aDate = new Date(a.date).getMilliseconds();
-                let bDate = new Date(b.date).getMilliseconds();
-                if (aDate > bDate) {
-                    return 1;
-                } else {
-                    return -1;
-                }
+                return a.date.getTime() - b.date.getTime();
             })
             const list = sorted.map((ferm) => {
+                console.log("Before: ", ferm.date)
                 let rc = <FermentWLC key={i} number={i+1} ferment={ferm} batch={batch}/>;
                 i++;
                 return rc;
@@ -48,6 +49,7 @@ export const FermentWlS: FC<Props> = ({batch}) => {
     return (
         <div>
             <h3>Fermentation</h3>
+            <FermentationC batch={batch} name={"Add Fermentation"} className={"d-print-none m-1"} />
             <table className="table table-striped table-bordered border-dark">
                 <thead>
                 <tr>

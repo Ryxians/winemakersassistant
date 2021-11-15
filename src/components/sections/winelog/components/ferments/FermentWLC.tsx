@@ -11,12 +11,13 @@ interface Props {
 
 export const FermentWLC : FC<Props> = ({batch, ferment, number}) => {
     const { date, sg, temperature, notes } = ferment;
-    let fixed_date = new Date(date);
+    let time = date.toLocaleString().split(",");
+
  return (
   <tr>
       <td>{number}</td>
-      <td>{fixed_date.getDay() + "-" + fixed_date.getMonth() + "-" + fixed_date.getFullYear()}</td>
-      <td>{fixed_date.getHours() + ":" + fixed_date.getMinutes()}</td>
+      <td>{time[0]}</td>
+      <td>{time[1]}</td>
       <td>{sg}</td>
       <td>{temperature}</td>
       <td>{notes}</td>
