@@ -30,7 +30,6 @@ export const FermentWlS: FC<Props> = ({batch}) => {
                 return a.date.getTime() - b.date.getTime();
             })
             const list = sorted.map((ferm) => {
-                console.log("Before: ", ferm.date)
                 let rc = <FermentWLC key={i} number={i+1} ferment={ferm} batch={batch}/>;
                 i++;
                 return rc;
