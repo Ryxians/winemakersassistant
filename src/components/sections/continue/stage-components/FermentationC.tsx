@@ -42,7 +42,8 @@ export const FermentationC: FC<Props> = ({batch, ferm, name, className}) => {
     id += ferm ? ferm.date.getDay() : batch.batch_id;
 
     return (
-        <ModalFB id={id} handleSubmit={handleSubmit} onSubmit={onSubmit} title={name ? name :  "Fermentation"} modalception={true} className={className}>
+        <ModalFB id={id} handleSubmit={handleSubmit} onSubmit={onSubmit} title={name ? name : "Fermentation"}
+                 modalception={true} className={className}>
             <>
                 <div className="input-group">
                 <span className="input-group-text">

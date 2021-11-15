@@ -1,10 +1,13 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
+import Axios from "axios";
+import {Racking} from '@entities/Racking';
+import {Batch} from '@entities/Batch'
 
 interface Props {
-
+    batch: Batch
 }
 
-export const RackingWl: FC<Props> = () => {
+export const RackingWl: FC<Props> = ({batch}) => {
     return (
         <>
             <h3>Racking</h3>
