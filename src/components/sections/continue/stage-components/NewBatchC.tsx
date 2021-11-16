@@ -1,6 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 import {NewKitC} from "./NewKitC";
+import {Wine} from "@entities/Wine"
 import Axios from "axios";
 import {ModalFB} from "../../ModalFB";
 
@@ -43,7 +44,13 @@ export const NewBatchC: FC<Props> = () => {
     const getWines = async (wine_id?: number) => {
         Axios.get('/wine/get/kit').then(res => {
             if (res.status === 200) {
-                setWines(res.data);
+                let wines = res.data;
+                wines = wines.filter((w:Wine) => {
+                    if (w.wine_style !== "BLENDED") {
+                        return w;
+                    }
+                });
+                setWines(wines);
                 wine_id && setValue("wine_id", wine_id);
             } else {
                 setWines([
