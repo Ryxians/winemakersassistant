@@ -32,6 +32,7 @@ export const BlendC: FC<Props> = ({batch, blends}) => {
                  onSubmit={onSubmit} title={"Blending"} id={`blending-${batch.batch_id}`}
                  modalception={true}>
             <>
+                <h5 className="text-warning">This adds a wine to a Blended Batch, this does not create a blended batch.</h5>
                 <div className="input-group">
                     <span className="input-group-text">
                         Active Blends:
