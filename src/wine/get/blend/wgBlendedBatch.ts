@@ -1,6 +1,7 @@
 import {Application} from "express";
 import {Connection} from "typeorm";
 import {Blended_Batch} from "../../../database/entities/Blended_Batch";
+import {Blend_to_Batch} from "../../../database/entities/Blend_to_Batch";
 
 interface Args {
     app:Application
@@ -11,8 +12,9 @@ const getBlendsFromKit = async (connection: Connection, wineid: string | number)
     // const wines = connection.manager.getRepository(Wine);
 
     // const wine = await wines.findOne(wineid, {relations: ["blends"]});
-    return connection.manager.find(Blended_Batch, {where: {wine_id: wineid}, relations: ["wine", "blend_to_batch"]});
+    return connection.manager.find(Blended_Batch, {where: {wine_id: wineid}, relations: ["wine"]});
 }
+
 
 export const wgBlendedBatch = ({app, connection}:Args):void => {
     // Get all the batches of a wine
@@ -21,7 +23,7 @@ export const wgBlendedBatch = ({app, connection}:Args):void => {
             // Declare the new wine object and get the details from the request
             const {params} = req;
 
-            const batchs = await getBlendsFromKit(connection, params.wineid)
+            let batchs = await getBlendsFromKit(connection, params.wineid)
 
             res.status( batchs ? 200 : 400).send(JSON.stringify(batchs));
         });

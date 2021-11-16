@@ -57,6 +57,15 @@ export const wgBatch = ({app, connection}:Args):void => {
             res.status( batchs ? 200 : 400).send(JSON.stringify(batchs));
         });
 
+    // Get a specific batch
+    app.get('/wine/get/batch/from/:id',
+    async (req, res) => {
+        const {params} = req;
+        const batch = await connection.manager.findOne(Batch, {where: {batch_id: params.id}, relations: ["wine"]});
+
+        console.log(batch)
+        res.status( batch ? 200 : 400).send(JSON.stringify(batch));
+    });
     // get all the kits
     // app.get('/wine/get/batch',
     //     async (req, res) => {

@@ -11,7 +11,7 @@ export class Blended_Batch {
     blend_id!:number;
 
     @Column()
-    blending_date!:Date;
+    date!:Date;
 
     @Column()
     active!:boolean;
