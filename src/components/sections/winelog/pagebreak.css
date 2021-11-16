@@ -1,0 +1,9 @@
+/*Page Break class found from:
+https://stackoverflow.com/questions/1664049/can-i-force-a-page-break-in-html-printing
+*/
+@media print {
+    .pagebreak {
+        clear: both;
+        page-break-after: always;
+    }
+}
