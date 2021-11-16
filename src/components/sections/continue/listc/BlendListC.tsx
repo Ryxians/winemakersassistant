@@ -13,12 +13,13 @@ interface Props {
 }
 
 export const BlendListC: FC<Props> = ({blend, setBatch}) => {
-    const {blend_id, wine, blending_date, blend_to_batch} = blend;
+    let {blend_id, wine, date, blend_to_batch} = blend;
     const [isSelected, setSelected] = useState(false);
-    let date = new Date(blending_date);
+    date = new Date(date);
     let newDate = "" + date.getMonth() + "/" + date.getDay() + "/" + date.getFullYear()
     const optionStyles = "list-group-item btn";
 
+    const [button, getButton] = useState<HTMLButtonElement>()
 
     const id = `blendmod-${blend_id}`
     return (
@@ -33,9 +34,14 @@ export const BlendListC: FC<Props> = ({blend, setBatch}) => {
             </tr>
             {isSelected && (
                 <tr className="d-print-none">
-                    <ModalT modal_id={id} setSelected={setSelected} isSelected={isSelected} title={wine.fancy_name}>
+                    <ModalT modal_id={id} setSelected={setSelected} isSelected={isSelected} title={wine.fancy_name}
+                            getButton={getButton}
+                    >
                         <div className="btn-group-vertical">
-                            <Link className="btn btn-primary" onClick={() => setBatch(blend)} to={{pathname: "/winelog"}}>
+                            <Link className="btn btn-primary" onClick={() => {
+                                setBatch(blend);
+                                button?.click();
+                            }} to={{pathname: "/winelog"}}>
                                 Complete Log
                             </Link>
                             Output

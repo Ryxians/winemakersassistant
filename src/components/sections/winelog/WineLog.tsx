@@ -15,30 +15,56 @@ interface Props {
 }
 
 export const WineLog: FC<Props> = ({batch}) => {
-    let render;
     let blend;
-    if (batch.wine.wine_style === 'BLENDED') {
-        blend = batch as Blended_Batch;
-        let btb:Blend_to_Batch[] = blend.blend_to_batch;
-        let batchs = btb.map(bb => <WineLog batch={bb.batch} />);
+    const [updatedBlend, setUpdatedBlend] = useState<Blended_Batch>();
+    const [render, setRender] = useState<JSX.Element>()
 
-        render =
-            <>
-                <h3>Blended</h3>
-                {batchs}
-            </>
-    } else {
-        batch = batch as Batch;
-        let ferm = <FermentWlS batch={batch}/>;
-        let rack = <RackingWl batch={batch}/>;
-        let filtering = <FilteringWl/>
-        render =
-            <div>
-                {ferm}
-                {rack}
-                {filtering}
-            </div>
+    useEffect(() => {
+        if (batch.wine?.wine_style === 'BLENDED') {
+            blend = batch as Blended_Batch;
+            Axios.get('/wine/get/blend/from/batchs/' + blend.blend_id).then(async res => {
+                let updatedBlend:Blended_Batch = res.data;
+                console.log("Full blend: ", updatedBlend);
+                let batchs = updatedBlend.blend_to_batch.map((wl:Blend_to_Batch) => (
+                    <WineLog key={wl.batch_id} batch={wl.batch} />
+                ))
+                setRender(
+                    <>
+                        <h2>{updatedBlend.wine.fancy_name}: Blended</h2>
+                        {batchs}
+                    </>
+                )
+            })
+        } else {
+            batch = batch as Batch;
+            makeBatchRender(batch);
+            Axios.get('/wine/get/batch/from/' + batch.batch_id).then(res => {
+            })
+
+        }
+
+    }, [])
+
+    const makeBatchRender = (batch: Batch) => {
+        if (batch) {
+            let ferm = <FermentWlS batch={batch}/>;
+            let rack = <RackingWl batch={batch}/>;
+            let filtering = <FilteringWl/>
+            setRender(
+                <div>
+                    <h2>Wine Log: {batch.wine.fancy_name}</h2>
+                    {ferm}
+                    {rack}
+                    {filtering}
+                </div>)
+        } else {
+            setRender(
+                <h5>Loading...</h5>
+            )
+        }
+
     }
+
 
     const getBatchsFromBlend = async () => {
         // let batchs = await fetch()
@@ -47,7 +73,7 @@ export const WineLog: FC<Props> = ({batch}) => {
 
     return (
         <div className="container">
-            <h2>Wine Log: {batch.wine.fancy_name}</h2>
+
             {render}
         </div>
     );

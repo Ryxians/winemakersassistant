@@ -69,7 +69,7 @@ export const Continue: FC<Props> = ({setBatch}) => {
                 <tbody>
                 {
                     (wines && wines.length > 0) ?
-                        (wines.map((wine) => <BatchListC key={wine.batch_id} batch={wine} setBatch={setBatch}/>))
+                        (wines.map((wine) => <BatchListC key={wine.batch_id} batch={wine} setBatch={setBatch} blends={blends}/>))
                         :
                         <tr><td>No wines</td></tr>
                 }
