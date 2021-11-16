@@ -4,7 +4,7 @@ import Axios from "axios";
 import {ModalFB} from "../../ModalFB";
 
 interface Props {
-    setWine: Function
+    setWine?: Function
 }
 
 interface Inputs {
@@ -20,7 +20,7 @@ export const NewKitC: FC<Props> = ({setWine}) => {
     const onSubmit: SubmitHandler<Inputs> = async newKit => {
         console.log(newKit)
         Axios.post('/wine/add/kit', newKit).then ( res => {
-            setWine(res.data.wine_id);
+            setWine && setWine(res.data.wine_id);
         });
     }
 
