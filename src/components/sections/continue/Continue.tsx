@@ -5,6 +5,8 @@ import {BatchListC} from "./listc/BatchListC";
 import {BlendListC} from "./listc/BlendListC";
 import Axios from "axios";
 import 'bootstrap/js/dist/modal';
+import {NewBatchC} from "./stage-components/NewBatchC";
+import {NewKitC} from "./stage-components/NewKitC";
 
 interface Props {
     setBatch:  React.Dispatch<React.SetStateAction<Batch | Blended_Batch | undefined>>
@@ -37,6 +39,16 @@ export const Continue: FC<Props> = ({setBatch}) => {
     }, [])
     return (
         <div className="container">
+            <div className="btn-toolbar p-3">
+                <div className="btn-group px-1">
+                    <NewKitC />
+                    <NewBatchC />
+
+                </div>
+                <div className="btn-group px-1">
+                    <h1 className={"btn btn-primary"} >New Blend</h1>
+                </div>
+            </div>
             <table className="table table-striped table-hover">
                 <thead>
                 <tr>
