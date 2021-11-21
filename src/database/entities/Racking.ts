@@ -26,6 +26,9 @@ export class Racking {
     @Column()
     sorbate!:number;
 
+    @Column()
+    kieselsol!:number;
+
     @Column({length: 4})
     new_tank!:string;
 
