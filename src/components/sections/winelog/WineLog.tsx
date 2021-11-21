@@ -3,7 +3,7 @@ import {Batch} from '@entities/Batch'
 import {Blended_Batch} from "@entities/Blended_Batch"
 import {Blend_to_Batch} from '@entities/Blend_to_Batch';
 import Axios from "axios";
-import {RackingWl} from "./components/racking/RackingWL";
+import {RackingWLS} from "./components/racking/RackingWLS";
 import {FilteringWl} from "./components/filtering/FilteringWL";
 import {FermentWlS} from "./components/ferments/FermentWLS";
 import "./pagebreak.css";
@@ -18,6 +18,48 @@ export const WineLog: FC<Props> = ({batch}) => {
     // To conditionally change what is displayed based on whether its a blend
     // Create a state for what is rendered.
     const [render, setRender] = useState<JSX.Element>()
+
+    // Load WineLog
+    // const loadLog = () => {
+    //     // Is the wine a blend?
+    //     if (batch.wine?.wine_style === 'BLENDED') {
+    //         // Initialize blend as a blend
+    //         blend = batch as Blended_Batch;
+    //
+    //         // Get an entire record of the blend.
+    //         Axios.get('/wine/get/blend/from/batchs/' + blend.blend_id).then(async res => {
+    //             let updatedBlend:Blended_Batch = res.data;
+    //
+    //             // For each batch in the blend, create a new WineLog for that batch.
+    //             let batchs = updatedBlend.blend_to_batch.map((wl:Blend_to_Batch) => (
+    //                 <WineLog key={wl.batch_id} batch={wl.batch} />
+    //             ));
+    //
+    //             // Render the collection of batchs.
+    //             setRender(
+    //                 <>
+    //                     <h1 className="display-1">{updatedBlend.wine.fancy_name}: Blended</h1>
+    //                     {batchs.map(b => {
+    //
+    //                         return (
+    //                             <div className="border border-3 border-secondary rounded m-1 p-1 pagebreak">
+    //                                 {b}
+    //                             </div>
+    //                         );
+    //                     })}
+    //                 </>
+    //             )
+    //         })
+    //     } else {
+    //         // Treat batch as Batch
+    //         batch = batch as Batch;
+    //
+    //         // Call batch render
+    //         makeBatchRender(batch);
+    //
+    //     }
+    //
+    // }
 
     // This runs when the page loads for the first time
     useEffect(() => {
@@ -68,7 +110,7 @@ export const WineLog: FC<Props> = ({batch}) => {
             let ferm = <FermentWlS batch={batch}/>;
 
             // Create a Racking section
-            let rack = <RackingWl batch={batch}/>;
+            let rack = <RackingWLS batch={batch}/>;
 
             // Create a Filtering Section
             let filtering = <FilteringWl/>

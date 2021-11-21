@@ -13,93 +13,109 @@ interface Racking {
     temperature: number
     sulfite: number
     sorbate: number
+    kieselsol: number
     new_tank: string
     notes: string
 }
 
 interface Props {
     batch: Batch
+    racking?: Racking
+    name?: string
+    className?: string
 }
 
-export const RackingC: FC<Props> = ({batch}) => {
+export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
     const {handleSubmit, register} = useForm<Racking>();
+    let modalId = `racking-${batch.batch_id}`
+    const groupClass = 'input-group';
+    const inputLabelClass = 'input-group-text';
+    const inputClass = 'form-control';
 
     const onSubmit = async (racking: Racking) => {
-        // @ts-ignore
-        // There is an error in which batch may be undefined
-        // However, if batch is undefined then the page is set to redirect.
-        // So batch should never be undefined.
         racking.batch_id = batch.batch_id;
-        await Axios.post('/wine/add/racking', racking);
-        // fetch('/wine/add/racking',
-        //     {
-        //         method: 'POST',
-        //         headers: {'Content-Type': 'application/json'},
-        //         body: JSON.stringify(racking)
-        //     });
+        if (racking) {
+            await Axios.post('/wine/add/racking', racking);
+        } else {
+            // Implement Racking Put
+        }
     }
     return (
-        <ModalFB id={`racking-${batch.batch_id}`} title={"Racking"} onSubmit={onSubmit} handleSubmit={handleSubmit} modalception={true}>
+        <ModalFB id={modalId}
+                 title={name ? name : "Racking"}
+                 onSubmit={onSubmit}
+                 handleSubmit={handleSubmit}
+                 modalception={true}
+                 className={className}>
             <>
-                <div className="input-group">
-                <span className="input-group-text">
+                <div className={groupClass}>
+                <span className={inputLabelClass}>
                     Date of Racking
                 </span>
                     <input type="datetime-local"
-                           className="form-control" {...register("date")}/>
+                           className={inputClass} {...register("date")}/>
                 </div>
 
-                <div className="input-group">
-                <span className="input-group-text">
+                <div className={groupClass}>
+                <span className={inputLabelClass}>
                     Racked SG
                 </span>
                     <input type="number"
-                           className="form-control"
+                           className={inputClass}
                            {...register("sg")}
                     />
                 </div>
-                <div className="input-group">
-                <span className="input-group-text">
+                <div className={groupClass}>
+                <span className={inputLabelClass}>
                     Racked Temperature
                 </span>
                     <input type="number"
-                           className="form-control"
+                           className={inputClass}
                            {...register("temperature")}
                     />
                 </div>
-                <div className="input-group">
-                <span className="input-group-text">
+                <div className={groupClass}>
+                <span className={inputLabelClass}>
                     Sulfite
                 </span>
                     <input type="number"
-                           className="form-control"
+                           className={inputClass}
                            {...register("sulfite")}
                     />
                 </div>
-                <div className="input-group">
-                <span className="input-group-text">
+                <div className={groupClass}>
+                <span className={inputLabelClass}>
                     Sorbate
                 </span>
                     <input type="number"
-                           className="form-control"
+                           className={inputClass}
                            {...register("sorbate")}
                     />
                 </div>
-                <div className="input-group">
-                <span className="input-group-text">
+                <div className={groupClass}>
+                    <span className={inputLabelClass}>
+                        Kieselsol:
+                    </span>
+                    <input type="number"
+                    className={inputClass}
+                        {...register("kieselsol")}/>
+
+                </div>
+                <div className={groupClass}>
+                <span className={inputLabelClass}>
                     New Tank
                 </span>
                     <input type="text"
-                           className="form-control"
+                           className={inputClass}
                            {...register("new_tank")}
                     />
                 </div>
-                <div className="input-group">
-                <span className="input-group-text">
+                <div className={groupClass}>
+                <span className={inputLabelClass}>
                     Notes
                 </span>
                     <input type="text"
-                           className="form-control"
+                           className={inputClass}
                            {...register("notes")}
                     />
                 </div>
