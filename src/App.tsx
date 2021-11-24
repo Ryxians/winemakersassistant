@@ -13,9 +13,32 @@ import {WineLog} from "./components/sections/winelog/WineLog";
 import {Blended_Batch} from "@entities/Blended_Batch"
 import {UsersList} from "./components/sections/manageusers/UsersList";
 import Axios from "axios";
+import {Toast, ToastContainer, ToastHeader} from "react-bootstrap";
+import wineglass from "./components/login/glass-with-wine.svg";
+import {ToastPosition} from "react-bootstrap/ToastContainer";
+import {BackendToast} from "./components/BackendToast";
 
 function App() {
     Axios.defaults.withCredentials = true;
+    let position:ToastPosition = 'bottom-end'
+    const [toasts, setToasts] = useState<JSX.Element[]>([]);
+
+    Axios.interceptors.response.use(res => {
+        if (res.status !== 200) {
+            let newToast = <BackendToast message={res.statusText} />
+            if (toasts.length > 3) {
+                setToasts([newToast]);
+            } else {
+                setToasts([...toasts, newToast]);
+            }
+        }
+        return res;
+    }, res => {
+            let newToast = <BackendToast message={"Can't reach backend"} />
+            setToasts([...toasts, newToast]);
+            return res;
+    })
+
 
     const [isLoggedIn, setLoggedIn] = useState(false);
     // const [hashedUser, setHashedUser] = useState("");
@@ -47,6 +70,8 @@ function App() {
 
     }
 
+
+
     return (
         <Router>
             <div className="App text-center">
@@ -77,6 +102,10 @@ function App() {
                 } />
 
                 <Route path="/" exact render={() => (isLoggedIn && <h1>Use the navbar</h1>)}/>
+
+                <ToastContainer className="p-3" position={position}>
+                    {toasts}
+                </ToastContainer>
             </div>
         </Router>
     );
