@@ -7,29 +7,31 @@ import Axios from "axios";
 import 'bootstrap/js/dist/modal';
 import {NewBatchC} from "./stage-components/NewBatchC";
 import {NewKitC} from "./stage-components/NewKitC";
+import {BlendedBatchC} from "./stage-components/BlendedBatchC";
 
 interface Props {
-    setBatch:  React.Dispatch<React.SetStateAction<Batch | Blended_Batch | undefined>>
+    setBatch: React.Dispatch<React.SetStateAction<Batch | Blended_Batch | undefined>>
 }
 
 export const ManageWine: FC<Props> = ({setBatch}) => {
     const [wines, setWines] = useState<Batch[]>();
     const [blends, setBlends] = useState<Blended_Batch[]>();
+    const [active, setActive] = useState(true);
 
-    const getWines = () => {
-        Axios.get('/wine/get/batchs/true').then(res => {
-            res.status === 200 ? setWines(res.data) : setWines([])
-        });
+    const getWines = async () => {
+        let activeStr = active ? 'true' : 'false'
+        let res = await Axios.get('/wine/get/batchs/' + activeStr);
 
-        Axios.get('/wine/get/blend/batchs/true').then(res => {
-            res.status === 200 ? setBlends(res.data) : setBlends([]);
-        });
+        res.status === 200 ? setWines(res.data) : setWines([])
+
+        res = await Axios.get('/wine/get/blend/batchs/' + activeStr)
+        res.status === 200 ? setBlends(res.data) : setBlends([]);
     }
 
     useEffect(() => {
         try {
             if (!wines) {
-                getWines()
+                getWines().then();
             } else {
 
             }
@@ -41,12 +43,27 @@ export const ManageWine: FC<Props> = ({setBatch}) => {
         <div className="container">
             <div className="btn-toolbar p-3">
                 <div className="btn-group px-1">
-                    <NewKitC />
-                    <NewBatchC />
+                    <NewKitC/>
+                    {<NewBatchC/>}
 
                 </div>
                 <div className="btn-group px-1">
-                    <h1 className={"btn btn-primary"} >New Blend</h1>
+                    {wines && <BlendedBatchC/>}
+                </div>
+                <div className="btn-group px-1">
+                    <button className="btn btn-secondary" onClick={(evt) => {
+                        let btn = evt.currentTarget as HTMLButtonElement;
+                        btn.disabled = true;
+                        setActive(!active);
+                        getWines().then(() => btn.disabled = false);
+                    }}>
+                        Toggle Active
+                    </button>
+                </div>
+                <div className="btn-group px-1">
+                    <button className="btn btn-primary"
+                            onClick={() => getWines().then()}
+                    >Refresh</button>
                 </div>
             </div>
             <table className="table table-striped table-hover">
@@ -61,9 +78,11 @@ export const ManageWine: FC<Props> = ({setBatch}) => {
                 <tbody>
                 {
                     (blends && blends.length > 0) ?
-                        (blends.map((wine) => <BlendListC key={wine.blend_id} blend={wine} setBatch={setBatch} />))
+                        (blends.map((wine) => <BlendListC key={wine.blend_id} blend={wine} setBatch={setBatch}/>))
                         :
-                        <tr><td>No wines</td></tr>
+                        <tr>
+                            <td>No wines</td>
+                        </tr>
                 }
                 </tbody>
 
@@ -81,9 +100,12 @@ export const ManageWine: FC<Props> = ({setBatch}) => {
                 <tbody>
                 {
                     (wines && wines.length > 0) ?
-                        (wines.map((wine) => <BatchListC key={wine.batch_id} batch={wine} setBatch={setBatch} blends={blends}/>))
+                        (wines.map((wine) => <BatchListC key={wine.batch_id} batch={wine} setBatch={setBatch}
+                                                         blends={blends}/>))
                         :
-                        <tr><td>No wines</td></tr>
+                        <tr>
+                            <td>No wines</td>
+                        </tr>
                 }
                 </tbody>
 
