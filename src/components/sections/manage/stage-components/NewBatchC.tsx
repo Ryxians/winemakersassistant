@@ -63,16 +63,14 @@ export const NewBatchC: FC<Props> = () => {
             }
         });
     }
-
-    useEffect(() => {
-        getWines().then();
-    }, [])
     return (
         <>
 
             <ModalFB handleSubmit={handleSubmit} onSubmit={onSubmit} title={"New Batch"} id={"CreateBatchModal"}
-                     notFormChildren={<NewKitC setWine={getWines}/>}
                      setSubmit={setSubmit}
+                     onClick={() => {
+                         getWines().then();
+                     }}
             >
                 <>
                     <div className="input-group">

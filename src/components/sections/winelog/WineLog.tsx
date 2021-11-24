@@ -19,47 +19,9 @@ export const WineLog: FC<Props> = ({batch}) => {
     // Create a state for what is rendered.
     const [render, setRender] = useState<JSX.Element>()
 
-    // Load WineLog
-    // const loadLog = () => {
-    //     // Is the wine a blend?
-    //     if (batch.wine?.wine_style === 'BLENDED') {
-    //         // Initialize blend as a blend
-    //         blend = batch as Blended_Batch;
-    //
-    //         // Get an entire record of the blend.
-    //         Axios.get('/wine/get/blend/from/batchs/' + blend.blend_id).then(async res => {
-    //             let updatedBlend:Blended_Batch = res.data;
-    //
-    //             // For each batch in the blend, create a new WineLog for that batch.
-    //             let batchs = updatedBlend.blend_to_batch.map((wl:Blend_to_Batch) => (
-    //                 <WineLog key={wl.batch_id} batch={wl.batch} />
-    //             ));
-    //
-    //             // Render the collection of batchs.
-    //             setRender(
-    //                 <>
-    //                     <h1 className="display-1">{updatedBlend.wine.fancy_name}: Blended</h1>
-    //                     {batchs.map(b => {
-    //
-    //                         return (
-    //                             <div className="border border-3 border-secondary rounded m-1 p-1 pagebreak">
-    //                                 {b}
-    //                             </div>
-    //                         );
-    //                     })}
-    //                 </>
-    //             )
-    //         })
-    //     } else {
-    //         // Treat batch as Batch
-    //         batch = batch as Batch;
-    //
-    //         // Call batch render
-    //         makeBatchRender(batch);
-    //
-    //     }
-    //
-    // }
+    const changeActive = async (id:number) => {
+        await Axios.put('/wine/put/batch/active/' + id);
+    }
 
     // This runs when the page loads for the first time
     useEffect(() => {
@@ -115,6 +77,9 @@ export const WineLog: FC<Props> = ({batch}) => {
             // Create a Filtering Section
             let filtering = <FilteringWl/>
 
+            // Bottling/Output
+            let output = <></>
+
             // Render the batch with its sections.
             setRender(
                 <div>
@@ -122,6 +87,14 @@ export const WineLog: FC<Props> = ({batch}) => {
                     {ferm}
                     {rack}
                     {filtering}
+                    {output}
+                    <button className="btn btn-warning"
+                            onClick={(evt) => {
+                                let btn = evt.currentTarget as HTMLButtonElement
+                                btn.disabled = true;
+                                changeActive(batch.batch_id).then(() => btn.disabled = false)
+                            }}
+                    >Change Active Status</button>
                 </div>)
         }
     }

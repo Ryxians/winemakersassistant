@@ -12,6 +12,7 @@ interface Props {
     className?: string
     notFormChildren?: JSX.Element,
     setSubmit?: Function
+    onClick?: Function
 }
 
 export const ModalFB: FC<Props> = ({
@@ -23,7 +24,8 @@ export const ModalFB: FC<Props> = ({
                                        modalception,
                                        className,
                                        notFormChildren,
-                                       setSubmit
+                                       setSubmit,
+                                       onClick
                                    }) => {
     if (!modalception) {
         modalception = false;
@@ -88,7 +90,12 @@ export const ModalFB: FC<Props> = ({
                     </div>
                 </div>
             </div>
-            <button type="button" className={className} data-bs-toggle="modal" data-bs-target={`#${id}`}>
+            <button type="button" className={className}
+                    data-bs-toggle="modal" data-bs-target={`#${id}`}
+                    onClick={() => {
+                        onClick && onClick();
+                    }}
+            >
                 {title}
             </button>
         </>
