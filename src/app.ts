@@ -101,6 +101,19 @@ createConnection({
         // Load database creation post requests
         CreateDatabasePosts({app, connection});
 
+        let current_datetime = new Date();
+
+        let formatted_date =
+            current_datetime.getFullYear() +
+            "-" +
+            (current_datetime.getMonth() + 1) +
+            "-" +
+            current_datetime.getDate();
+
+        app.get('/logs', (req, res) => {
+            res.sendFile(path.join(__dirname, "middleware", "logs", `${formatted_date}.txt`));
+        })
+
         // This will have Express Serve the React App
         // https://create-react-app.dev/docs/deployment/
         app.use(express.static(path.join(__dirname, "build")));

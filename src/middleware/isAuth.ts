@@ -52,7 +52,11 @@ export const doLog = (req: Request, res: Response, next: NextFunction) => {
 
         let p = path.join(__dirname, "logs");
 
-        fs.access(p, err => err && fs.mkdir(p, err => err && console.log(err)));
+        fs.mkdir(p, err => {
+            // Do Nothing lol
+            })
+
+        // fs.access(p, err => err && fs.mkdir(p, err => err && console.log(err)));
 
         p = path.join(p, `${formatted_date}.txt`);
 
