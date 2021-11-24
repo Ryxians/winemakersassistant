@@ -17,6 +17,7 @@ import {wgBlendedBatch} from "./get/blend/wgBlendedBatch";
 import {CreatePutPost} from "./put/wpStage";
 import {waBatchToBlend} from "./add/blend/waBatchToBlend";
 import {wgBatchsFromBlend} from "./get/blend/wgBatchsFromBlend";
+import {wpBatchInactive} from "./put/wpBatchInactive";
 
 interface Args {
     app:Application
@@ -50,6 +51,9 @@ export const CreateDatabasePosts = (args:Args) => {
 
     // Get Batch
     wgBatch(args)
+
+    // Change Batch activity
+    wpBatchInactive(args);
 
     //wine/add/blend/batch
     waBlendedBatch(args)

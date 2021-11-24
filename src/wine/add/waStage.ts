@@ -25,8 +25,13 @@ const nsBatch = async (ns: ns, res: Response, req: Request, connection: Connecti
         // Try adding the new stage to the database
         try {
             await connection.manager.save(ns);
+            let tank = req.body.new_tank;
+            if (tank) {
+                batch.last_tank = tank;
+                await connection.manager.save(batch);
+            }
             res.statusMessage = "Batch with ID: " + batch_id + ", has been updated for: " + path;
-            res.status(200).send();
+            res.status(201).send();
         } catch (e) {
             // If the stage fails to be created, send the error back.
             res.statusMessage = e;

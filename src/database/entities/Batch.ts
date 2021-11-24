@@ -42,6 +42,9 @@ export class Batch {
     @Column({length: 100})
     notes!:string;
 
+    @Column({length:3})
+    last_tank!:string;
+
     @OneToMany(() => Fermentation, ferm => ferm.batch)
     fermentation!: Fermentation[];
 
