@@ -1,7 +1,7 @@
 import {Application} from "express";
 import {Connection} from "typeorm";
 import {Wine} from "../../database/entities/Wine";
-import {doLog, isAuth} from "../../middleware/isAuth";
+import {isAuth} from "../../middleware/isAuth";
 
 interface Args {
     app:Application

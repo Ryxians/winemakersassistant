@@ -1,7 +1,6 @@
 import {Application} from "express";
 import {Connection} from "typeorm";
 import {Blended_Batch} from "../../../database/entities/Blended_Batch";
-import {Blend_to_Batch} from "../../../database/entities/Blend_to_Batch";
 
 interface Args {
     app:Application

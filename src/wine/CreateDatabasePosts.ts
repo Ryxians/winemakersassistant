@@ -11,7 +11,6 @@ import {Output} from "../database/entities/Output";
 import {createAddPost} from "./add/waStage";
 import {CreateGetPost} from "./get/wgStages";
 import {Batch} from "../database/entities/Batch";
-import {param} from "express-validator";
 import { waBlendedBatch } from "./add/blend/waBlendedBatch"
 import {wgBlendedBatch} from "./get/blend/wgBlendedBatch";
 import {CreatePutPost} from "./put/wpStage";
@@ -79,10 +78,6 @@ export const CreateDatabasePosts = (args:Args) => {
     // Output
     CreateGetAndAdd(Output, Output.name, args);
 
-
-
-    // Destructure
-    const {app, connection} = args;
 
 
 }

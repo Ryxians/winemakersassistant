@@ -1,7 +1,6 @@
 import {Application} from "express";
 import {Connection} from "typeorm";
 import {Wine} from "../../../database/entities/Wine";
-import {Batch} from "../../../database/entities/Batch";
 import {Blended_Batch} from "../../../database/entities/Blended_Batch";
 import {isAuth} from "../../../middleware/isAuth";
 

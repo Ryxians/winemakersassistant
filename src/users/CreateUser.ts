@@ -1,6 +1,5 @@
 import {Application, Request, Response} from "express";
 import bcrypt from 'bcrypt';
-import {v4 as uuid} from 'uuid'
 import {Connection} from "typeorm";
 import {User} from "../database/entities/User";
 import {isAdmin} from "../middleware/isAuth";
@@ -24,13 +23,13 @@ export const CreateUser = ({app, connection}: Args): void => {
             root.password = await bcrypt.hash('root', 10);
             root.active = true;
             root.role = 1;
-            await connection.manager.save(root).then(rt => {
+            await connection.manager.save(root).then(() => {
                 console.log("Root Created with default login (root/root). " +
                     "\nCHANGE IMMEDIATELY!")
             })
         }
     }
-    initRoot();
+    initRoot().then();
 
     // Post new users to users
     app.post('/users/new', isAdmin, (async (req: Request, res: Response) => {

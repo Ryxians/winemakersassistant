@@ -1,4 +1,4 @@
-import express, {Application, Request, Response} from 'express';
+import express, {Application} from 'express';
 import {CreateUser} from "./users/CreateUser";
 import {LoginUser} from "./users/LoginUser";
 import "reflect-metadata";

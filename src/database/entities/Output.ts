@@ -9,7 +9,7 @@ export class Output {
     @Column()
     batch_id!:number
 
-    @ManyToOne(type => Batch, batch => batch.output)
+    @ManyToOne(() => Batch, batch => batch.output)
     @JoinColumn({name: "batch_id"})
     batch!:Batch;
 

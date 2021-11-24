@@ -1,6 +1,5 @@
 import { ISession } from "connect-typeorm";
 import { Column, Entity, Index, PrimaryColumn } from "typeorm";
-import {User} from "./User";
 @Entity()
 export class Session implements ISession {
     @Index()

@@ -1,7 +1,7 @@
 import {Batch} from "../../database/entities/Batch";
-import {Application, Request, Response} from "express";
+import {Application} from "express";
 import {Connection, EntityTarget} from "typeorm";
-import {isAdmin, isAuth} from "../../middleware/isAuth";
+import {isAdmin} from "../../middleware/isAuth";
 
 interface ns {
     batch: Batch;

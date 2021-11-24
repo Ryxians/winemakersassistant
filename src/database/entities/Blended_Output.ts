@@ -10,7 +10,7 @@ export class Blended_Output {
     @Column()
     blend_id!:number;
 
-    @ManyToOne(type => Blended_Batch, blend => blend.blended_output)
+    @ManyToOne(() => Blended_Batch, blend => blend.blended_output)
     @JoinColumn({name: "blend_id"})
     blend!:Blended_Batch;
 

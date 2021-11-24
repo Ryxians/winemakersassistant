@@ -52,8 +52,10 @@ export const doLog = (req: Request, res: Response, next: NextFunction) => {
 
         let p = path.join(__dirname, "logs");
 
-        fs.mkdir(p, err => {
-            // Do Nothing lol
+        fs.mkdir(p, () => {
+            // This will scream an error if the logs folder already exists
+            // However, we don't care.
+            // We may move this to the server start so it can scream its error once.
             })
 
         // fs.access(p, err => err && fs.mkdir(p, err => err && console.log(err)));

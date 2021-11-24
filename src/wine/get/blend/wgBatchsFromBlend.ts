@@ -10,15 +10,12 @@ interface Args {
 }
 
 const getBatchsFromBlend = async (connection: Connection, blend_id: string | number) => {
-    let results = await connection.manager.find(Blend_to_Batch, {where: {blend_id: blend_id}, relations: ["batch"]});
+    return await connection.manager.find(Blend_to_Batch, {where: {blend_id: blend_id}, relations: ["batch"]});
 
-    return results;
 }
 
 const getWineForBatch = async (connection: Connection, wine_id: string | number) => {
-    let results = await connection.manager.findOne(Wine, {where: {wine_id: wine_id}});
-
-    return results;
+    return await connection.manager.findOne(Wine, {where: {wine_id: wine_id}});
 }
 
 export const wgBatchsFromBlend = ({app, connection}: Args): void => {

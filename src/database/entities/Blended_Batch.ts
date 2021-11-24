@@ -1,5 +1,4 @@
-import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
-import {Batch} from "./Batch";
+import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Wine} from "./Wine";
 import {Blend_to_Batch} from "./Blend_to_Batch";
 import {Blended_Output} from "./Blended_Output";
