@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Fermentation} from '@entities/Fermentation';
-import {FermentationC} from "../../../continue/stage-components/FermentationC";
+import {FermentationC} from "../../../manage/stage-components/FermentationC";
 import { Batch } from '@entities/Batch'
 
 interface Props {

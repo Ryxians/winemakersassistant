@@ -12,7 +12,7 @@ interface Props {
     setBatch:  React.Dispatch<React.SetStateAction<Batch | Blended_Batch | undefined>>
 }
 
-export const Continue: FC<Props> = ({setBatch}) => {
+export const ManageWine: FC<Props> = ({setBatch}) => {
     const [wines, setWines] = useState<Batch[]>();
     const [blends, setBlends] = useState<Blended_Batch[]>();
 

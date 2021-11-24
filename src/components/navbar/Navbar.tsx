@@ -26,28 +26,11 @@ export const Navbar : FC<Props> = ({logout}) => {
                              General
                          </Link>
                      </li>
-                     <li className="nav-item dropdown">
-                         <a className="nav-link active dropdown-toggle" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false" href="/"
-                         >
-                             Manage Wine
-                         </a>
-                         <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                             <li><Link className="dropdown-item" to="/continue"
-                             >
-                                 Continue
-                             </Link></li>
-                             <li><Link className="dropdown-item"
-                                    to="/new"
-                             >New Wine</Link></li>
-                         </ul>
+                     <li className="nav-item">
+                         <Link className="nav-link active" to="/manage">
+                         Manage Wine
+                     </Link>
                      </li>
-                     {/*<li className="nav-item">*/}
-                     {/*    <Link className="nav-link active" aria-current="page" to="/"*/}
-                     {/*    >*/}
-                     {/*        Continue Wine*/}
-                     {/*    </Link>*/}
-                     {/*</li>*/}
                      <li className="nav-item">
                          <Link className="nav-link active" aria-current="page" to="/"
                          >

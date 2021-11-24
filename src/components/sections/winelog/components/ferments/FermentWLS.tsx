@@ -3,7 +3,7 @@ import Axios from "axios";
 import {FermentWLC} from "./FermentWLC";
 import {Fermentation} from '@entities/Fermentation';
 import {Batch} from '@entities/Batch'
-import {FermentationC} from "../../../continue/stage-components/FermentationC";
+import {FermentationC} from "../../../manage/stage-components/FermentationC";
 
 interface Props {
     batch: Batch
