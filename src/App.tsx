@@ -101,7 +101,7 @@ function App() {
                     () => (currentBatch ? <WineLog batch={currentBatch} /> : <Redirect to={'/'} />)
                 } />
 
-                <Route path="/" exact render={() => (isLoggedIn && <h1>Use the navbar</h1>)}/>
+                <Route path="/" exact render={() => (isLoggedIn && <Redirect to={"/manage"} />)}/>
 
                 <ToastContainer className="p-3" position={position}>
                     {toasts}
