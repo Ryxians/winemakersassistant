@@ -49,7 +49,7 @@ export const FermentWlS: FC<Props> = ({batch}) => {
         <div>
             <h3>Fermentation</h3>
             <FermentationC batch={batch} name={"Add Fermentation"} className={"d-print-none m-1"} />
-            <table className="table table-striped table-bordered border-dark">
+            <table className="table table-sm table-striped table-bordered border-dark">
                 <thead>
                 <tr>
                     <th></th>

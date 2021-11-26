@@ -2,9 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import Axios from "axios";
 import {Racking} from '@entities/Racking';
 import {Batch} from '@entities/Batch'
-import {FermentWLC} from "../ferments/FermentWLC";
 import {RackingWLC} from "./RackingWLC";
-import {FermentationC} from "../../../manage/stage-components/FermentationC";
 import {RackingC} from "../../../manage/stage-components/RackingC";
 
 interface Props {

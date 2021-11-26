@@ -12,7 +12,7 @@ export const RackingWLC : FC<Props> = ({racking}) => {
  return (
      <>
          <h3>Racking</h3>
-         <table className="table table-striped table-bordered border-dark text-start">
+         <table className="table table-sm table-striped table-bordered border-dark text-start">
              <tbody>
              <tr>
                  <td>Date: {time[0]}</td>

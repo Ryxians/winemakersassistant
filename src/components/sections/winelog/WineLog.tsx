@@ -4,9 +4,10 @@ import {Blended_Batch} from "@entities/Blended_Batch"
 import {Blend_to_Batch} from '@entities/Blend_to_Batch';
 import Axios from "axios";
 import {RackingWLS} from "./components/racking/RackingWLS";
-import {FilteringWl} from "./components/filtering/FilteringWL";
+import {FilteringWLC} from "./components/filtering/FilteringWLC";
 import {FermentWlS} from "./components/ferments/FermentWLS";
 import "./pagebreak.css";
+import {FilteringWLS} from "./components/filtering/FilteringWLS";
 
 interface Props {
     batch: Batch | Blended_Batch
@@ -75,7 +76,7 @@ export const WineLog: FC<Props> = ({batch}) => {
             let rack = <RackingWLS batch={batch}/>;
 
             // Create a Filtering Section
-            let filtering = <FilteringWl/>
+            let filtering = <FilteringWLS batch={batch}/>
 
             // Bottling/Output
             let output = <></>
@@ -84,17 +85,17 @@ export const WineLog: FC<Props> = ({batch}) => {
             setRender(
                 <div>
                     <h2 className="display-3">Wine Log: {batch.wine.fancy_name}</h2>
-                    {ferm}
-                    {rack}
-                    {filtering}
-                    {output}
-                    <button className="btn btn-warning"
+                    <button className="btn btn-warning d-print-none"
                             onClick={(evt) => {
                                 let btn = evt.currentTarget as HTMLButtonElement
                                 btn.disabled = true;
                                 changeActive(batch.batch_id).then(() => btn.disabled = false)
                             }}
                     >Change Active Status</button>
+                    {ferm}
+                    {rack}
+                    {filtering}
+                    {output}
                 </div>)
         }
     }
