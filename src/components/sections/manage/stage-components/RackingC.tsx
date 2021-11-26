@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {Batch} from '@entities/Batch'
 import {Blended_Batch} from '@entities/Blended_Batch'
 import {Redirect} from "react-router-dom";
@@ -26,6 +26,8 @@ interface Props {
 }
 
 export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
+    const [submitButton, setSubmit] = useState<HTMLButtonElement>()
+
     const {handleSubmit, register} = useForm<Racking>();
     let modalId = `racking-${batch.batch_id}`
     const groupClass = 'input-group';
@@ -34,10 +36,16 @@ export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
 
     const onSubmit = async (racking: Racking) => {
         racking.batch_id = batch.batch_id;
+        let res;
         if (racking) {
-            await Axios.post('/wine/add/racking', racking);
+            res = await Axios.post('/wine/add/racking', racking);
         } else {
             // Implement Racking Put
+            res = await Axios.post('/wine/add/racking', racking);
+        }
+
+        if (res.status === 201) {
+            submitButton?.click();
         }
     }
     return (
@@ -46,7 +54,9 @@ export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
                  onSubmit={onSubmit}
                  handleSubmit={handleSubmit}
                  modalception={true}
-                 className={className}>
+                 className={className}
+                 setSubmit={setSubmit}
+        >
             <>
                 <div className={groupClass}>
                 <span className={inputLabelClass}>

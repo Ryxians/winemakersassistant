@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {Batch} from '@entities/Batch'
 import {Blended_Batch} from '@entities/Blended_Batch'
 import {Redirect} from "react-router-dom";
@@ -20,6 +20,7 @@ interface Props {
 
 export const FilteringC: FC<Props> = ({batch}) => {
     const {handleSubmit, register} = useForm<Filtering>();
+    const [submitButton, setSubmit] = useState<HTMLButtonElement>();
 
     const onSubmit = async (filter: Filtering) => {
         // @ts-ignore
@@ -27,10 +28,16 @@ export const FilteringC: FC<Props> = ({batch}) => {
         // However, if batch is undefined then the page is set to redirect.
         // So batch should never be undefined.
         filter.batch_id = batch.batch_id;
-        await Axios.post('/wine/add/filtering', filter);
+        let res = await Axios.post('/wine/add/filtering', filter);
+
+        if (res.status === 201) {
+            submitButton?.click();
+        }
     }
     return (
-        <ModalFB modalception={true} id={`filtering-${batch.batch_id}`} handleSubmit={handleSubmit} onSubmit={onSubmit} title={"Filtering"}>
+        <ModalFB modalception={true} id={`filtering-${batch.batch_id}`} handleSubmit={handleSubmit} onSubmit={onSubmit} title={"Filtering"}
+                 setSubmit={setSubmit}
+        >
             <>
                 <div className="input-group">
                 <span className="input-group-text">
