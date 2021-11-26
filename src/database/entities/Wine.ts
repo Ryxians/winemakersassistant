@@ -17,6 +17,9 @@ export class Wine {
     })
     wine_style!: string;
 
+    @Column()
+    kit_volume!: number;
+
     @OneToMany(() => Batch, batch => batch.wine)
     batchs!: Batch[]
 

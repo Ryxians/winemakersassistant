@@ -30,7 +30,7 @@ export const WaKit = ({app, connection}:Args):void => {
 
             await connection.manager.save(wine).then(wine => {
                 res.statusMessage = "Wine: " + wine + " has been created!";
-                res.status(200).send(wine);
+                res.status(201).send(wine);
             });
         });
 }
