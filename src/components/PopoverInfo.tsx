@@ -5,7 +5,7 @@ interface Props {
     children: JSX.Element
     id: string
     header: string
-    body: string
+    body: string | JSX.Element
 }
 
 export const PopoverInfo : FC<Props> = ({id, header, body, children}) => {
