@@ -31,6 +31,7 @@ dotenv.config();
 // Initialize Express App
 const app: Application = express();
 const PORT = process.env.PORT || 3001;
+const developerMode = true;
 
 //
 
@@ -114,12 +115,14 @@ createConnection({
             res.sendFile(path.join(__dirname, "middleware", "logs", `${formatted_date}.txt`));
         })
 
-        // This will have Express Serve the React App
-        // https://create-react-app.dev/docs/deployment/
-        app.use(express.static(path.join(__dirname, "build")));
-        app.get('/*', (req, res) => {
-            res.sendFile(path.join(__dirname, "build", "index.html"))
-        })
+
+        if (!developerMode) {// This will have Express Serve the React App
+            // https://create-react-app.dev/docs/deployment/
+            app.use(express.static(path.join(__dirname, "build")));
+            app.get('/*', (req, res) => {
+                res.sendFile(path.join(__dirname, "build", "index.html"))
+            })
+        }
 
 
         // Listen to port 5000 for requests

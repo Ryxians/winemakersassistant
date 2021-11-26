@@ -17,6 +17,7 @@ import {CreatePutPost} from "./put/wpStage";
 import {waBatchToBlend} from "./add/blend/waBatchToBlend";
 import {wgBatchsFromBlend} from "./get/blend/wgBatchsFromBlend";
 import {wpBatchInactive} from "./put/wpBatchInactive";
+import {GetWineMonthSheet} from "./get/sheet/GetWineMonthSheet";
 
 interface Args {
     app:Application
@@ -77,6 +78,9 @@ export const CreateDatabasePosts = (args:Args) => {
 
     // Output
     CreateGetAndAdd(Output, Output.name, args);
+
+    // Excel Sheet
+    GetWineMonthSheet(args);
 
 
 
