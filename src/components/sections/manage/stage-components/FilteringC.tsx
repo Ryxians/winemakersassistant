@@ -5,6 +5,8 @@ import {Redirect} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import Axios from "axios";
 import {ModalFB} from "../../ModalFB";
+import {PopoverInfo} from "../../../PopoverInfo";
+import {sgBody} from "./SGBody";
 
 interface Filtering {
     batch_id: number
@@ -35,7 +37,8 @@ export const FilteringC: FC<Props> = ({batch}) => {
         }
     }
     return (
-        <ModalFB modalception={true} id={`filtering-${batch.batch_id}`} handleSubmit={handleSubmit} onSubmit={onSubmit} title={"Filtering"}
+        <ModalFB modalception={true} id={`filtering-${batch.batch_id}`} handleSubmit={handleSubmit} onSubmit={onSubmit}
+                 title={"Filtering"}
                  setSubmit={setSubmit}
         >
             <>
@@ -51,10 +54,15 @@ export const FilteringC: FC<Props> = ({batch}) => {
                 <span className="input-group-text">
                     Filtered SG
                 </span>
-                    <input type="number"
-                           className="form-control"
-                           {...register("sg")}
-                    />
+                    <PopoverInfo id={`filtering-${batch.batch_id}` + "-FilteredSG"}
+                                 header={"Filtered Specific Gravity"}
+                                 body={sgBody}>
+
+                        <input type="number"
+                               className="form-control"
+                               {...register("sg")}
+                        />
+                    </PopoverInfo>
                 </div>
                 <div className="input-group">
                 <span className="input-group-text">

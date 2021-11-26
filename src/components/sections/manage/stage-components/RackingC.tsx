@@ -5,6 +5,8 @@ import {Redirect} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import Axios from "axios";
 import {ModalFB} from "../../ModalFB";
+import {PopoverInfo} from "../../../PopoverInfo";
+import {sgBody} from "./SGBody";
 
 interface Racking {
     batch_id: number
@@ -63,17 +65,23 @@ export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
                     Date of Racking
                 </span>
                     <input type="datetime-local"
-                           className={inputClass} {...register("date")}/>
+                           className={inputClass} {...register("date", 
+                        {required: true})}/>
                 </div>
 
                 <div className={groupClass}>
                 <span className={inputLabelClass}>
                     Racked SG
                 </span>
-                    <input type="number"
-                           className={inputClass}
-                           {...register("sg")}
-                    />
+                    <PopoverInfo id={modalId + "-RackedSG"}
+                                 header={"Racked Specific Gravity"}
+                                 body={sgBody}>
+
+                        <input type="number"
+                               className={inputClass}
+                               {...register("sg")}
+                        />
+                    </PopoverInfo>
                 </div>
                 <div className={groupClass}>
                 <span className={inputLabelClass}>

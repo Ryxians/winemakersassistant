@@ -3,6 +3,8 @@ import {Batch} from '@entities/Batch'
 import {useForm} from "react-hook-form";
 import Axios from "axios";
 import {ModalFB} from "../../ModalFB";
+import {PopoverInfo} from "../../../PopoverInfo";
+import {sgBody} from "./SGBody";
 
 interface Fermentation {
     batch_id: number
@@ -28,10 +30,6 @@ export const FermentationC: FC<Props> = ({batch, ferm, name, className}) => {
 
 
     const onSubmit = async (ferment: Fermentation) => {
-        // @ts-ignore
-        // There is an error in which batch may be undefined
-        // However, if batch is undefined then the page is set to redirect.
-        // So batch should never be undefined.
         ferment.batch_id = batch.batch_id;
         let res;
         if (!ferm) {
@@ -59,14 +57,19 @@ export const FermentationC: FC<Props> = ({batch, ferm, name, className}) => {
                     Date of Fermentation Check
                 </span>
                     <input type="datetime-local"
-                           className="form-control" {...register("date")}/>
+                           className="form-control" {...register("date",
+                        {required:true})}/>
                 </div>
                 <div className="input-group">
                 <span className="input-group-text">
                     New SG Level
                 </span>
-                    <input type="number"
-                           className="form-control" {...register("sg")}/>
+                    <PopoverInfo id={id + "-NewFermentSG"} header={"New Specific Gravity"}
+                                 body={sgBody}>
+
+                        <input type="number"
+                               className="form-control" {...register("sg")}/>
+                    </PopoverInfo>
                 </div>
                 <div className="input-group">
                 <span className="input-group-text">
