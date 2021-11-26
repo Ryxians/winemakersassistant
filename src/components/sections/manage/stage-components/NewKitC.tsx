@@ -24,8 +24,10 @@ export const NewKitC: FC<Props> = ({setWine}) => {
     const onSubmit: SubmitHandler<Inputs> = async newKit => {
         Axios.post('/wine/add/kit', newKit).then ( res => {
             setWine && setWine(res.data.wine_id);
+            if (res.status === 201) {
+                submitButton?.click();
+            }
         });
-        submitButton?.click();
     }
 
     const newStyleBody =
