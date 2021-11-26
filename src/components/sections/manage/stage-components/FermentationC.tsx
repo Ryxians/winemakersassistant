@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {Batch} from '@entities/Batch'
 import {useForm} from "react-hook-form";
 import Axios from "axios";
@@ -24,6 +24,8 @@ export const FermentationC: FC<Props> = ({batch, ferm, name, className}) => {
     const {handleSubmit, register, setValue} = useForm<Fermentation>({
         defaultValues: ferm
     });
+    const [submitButton, setSubmit] = useState<HTMLButtonElement>();
+
 
     const onSubmit = async (ferment: Fermentation) => {
         // @ts-ignore
@@ -31,10 +33,15 @@ export const FermentationC: FC<Props> = ({batch, ferm, name, className}) => {
         // However, if batch is undefined then the page is set to redirect.
         // So batch should never be undefined.
         ferment.batch_id = batch.batch_id;
+        let res;
         if (!ferm) {
-            await Axios.post('/wine/add/fermentation', ferment);
+            res = await Axios.post('/wine/add/fermentation', ferment);
         } else {
-            await Axios.put('/wine/put/fermentation/', ferment);
+            res = await Axios.put('/wine/put/fermentation/', ferment);
+        }
+
+        if (res.status === 201) {
+            submitButton?.click();
         }
     }
 
@@ -43,7 +50,9 @@ export const FermentationC: FC<Props> = ({batch, ferm, name, className}) => {
 
     return (
         <ModalFB id={id} handleSubmit={handleSubmit} onSubmit={onSubmit} title={name ? name : "Fermentation"}
-                 modalception={true} className={className}>
+                 modalception={true} className={className}
+                 setSubmit={setSubmit}
+        >
             <>
                 <div className="input-group">
                 <span className="input-group-text">
