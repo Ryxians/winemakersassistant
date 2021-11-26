@@ -35,7 +35,7 @@ export const NewBatchC: FC<Props> = () => {
     const {handleSubmit, register, setValue} = useForm<Inputs>();
     const onSubmit: SubmitHandler<Inputs> = async newBatch => {
         Axios.post('/wine/add/batch', newBatch).then(res => {
-            if (res.status === 200) {
+            if (res.status === 201) {
                 submitButton?.click();
             }
         });
