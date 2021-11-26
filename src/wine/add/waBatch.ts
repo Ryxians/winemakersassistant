@@ -33,7 +33,7 @@ export const WaBatch = ({app, connection}:Args):void => {
                 try {
                     await connection.manager.save(newBatch);
                     res.statusMessage = "New Batch Created with ID: " + newBatch.batch_id;
-                    res.status(200).send();
+                    res.status(201).send();
                 } catch (e) {
                     res.statusMessage = e;
                     res.status(400).send();
