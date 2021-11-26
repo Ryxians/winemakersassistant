@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const FilteringWLC : FC<Props> = ({filtering}) => {
-    const {date, sg, new_tank, notes} = filtering;
+    const {date, new_tank, notes, vol, filterMedium} = filtering;
     let time = date.toLocaleString().split(",");
  return (
   <>
@@ -16,8 +16,8 @@ export const FilteringWLC : FC<Props> = ({filtering}) => {
           <tbody>
           <tr>
               <td>Date: {time[0]}</td>
-              <td>Vol. Level: </td>
-              <td>Filter Media: </td>
+              <td>Vol. Level: {vol}</td>
+              <td>Filter Media: {filterMedium}</td>
           </tr>
           <tr>
               <td>Tank #: {new_tank}</td>
