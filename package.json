@@ -21,7 +21,9 @@
     "react-router-dom": "^5.2.0",
     "@types/react-router-dom": "^5.1.8",
     "axios": "^0.24.0",
-    "react-bootstrap": "^2.0.2"
+    "react-bootstrap": "^2.0.2",
+    "downloadjs": "^1.4.7",
+    "@types/downloadjs": "^1.4.2"
   },
   "scripts": {
     "start": "react-scripts start",

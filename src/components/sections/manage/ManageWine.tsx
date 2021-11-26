@@ -8,6 +8,7 @@ import 'bootstrap/js/dist/modal';
 import {NewBatchC} from "./stage-components/NewBatchC";
 import {NewKitC} from "./stage-components/NewKitC";
 import {BlendedBatchC} from "./stage-components/BlendedBatchC";
+import {DownloadWineSheet} from "./DownloadWineSheet";
 
 interface Props {
     setBatch: React.Dispatch<React.SetStateAction<Batch | Blended_Batch | undefined>>
@@ -59,11 +60,10 @@ export const ManageWine: FC<Props> = ({setBatch}) => {
                     }}>
                         Toggle Active
                     </button>
-                </div>
-                <div className="btn-group px-1">
                     <button className="btn btn-primary"
                             onClick={() => getWines().then()}
                     >Refresh</button>
+                    <DownloadWineSheet />
                 </div>
             </div>
             <table className="table table-striped table-hover">
