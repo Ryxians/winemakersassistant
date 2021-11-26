@@ -20,7 +20,7 @@ export const PopoverInfo : FC<Props> = ({id, header, body, children}) => {
         </Popover>
     );
  return (
-  <OverlayTrigger trigger={"hover"} placement={"right"} overlay={popover}>
+  <OverlayTrigger trigger={"click"} placement={"right"} overlay={popover}>
       {children}
   </OverlayTrigger>
  );
