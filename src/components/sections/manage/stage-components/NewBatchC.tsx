@@ -17,6 +17,7 @@ interface Inputs {
     start_date: Date
     kit_amount: number
     brix: number
+    volume:number
     sg: number
     starting_tank: string
     temperature: number
@@ -143,6 +144,20 @@ export const NewBatchC: FC<Props> = () => {
                         </PopoverInfo>
                     </div>
                     {errors.brix && <InputRequiredAlert>Brix Required</InputRequiredAlert>}
+                    <div className="input-group">
+                        <span className="input-group-text">Volume Level</span>
+                        <PopoverInfo id={"NewBatchVolumeLevel"}
+                                     header={"Volume Level"}
+                                     body={"Measure from the bottom of the tank in inches, " +
+                                     "then use inch to gal calculator."}>
+
+                            <input type="number"
+                                   className="form-control"
+                                   {...register("volume",
+                                       {required:true})}
+                            />
+                        </PopoverInfo>
+                    </div>
                     <div className="input-group">
                 <span className="input-group-text">
                     SG Amount
