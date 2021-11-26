@@ -1,8 +1,9 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 import Axios from "axios";
 import {ModalFB} from "../../ModalFB";
 import {PopoverInfo} from "../../../PopoverInfo";
+import {InputRequiredAlert} from "../../InputRequiredAlert";
 
 interface Props {
     setWine?: Function
@@ -16,14 +17,15 @@ interface Inputs {
 
 export const NewKitC: FC<Props> = ({setWine}) => {
     // const [isBlended, setBlended] = useState(false);
+    const [submitButton, setSubmit] = useState<HTMLButtonElement>()
 
-    const {handleSubmit, register, setValue} = useForm<Inputs>();
+    const {handleSubmit, register, setValue, formState: {errors}} = useForm<Inputs>();
 
     const onSubmit: SubmitHandler<Inputs> = async newKit => {
-        console.log(newKit)
         Axios.post('/wine/add/kit', newKit).then ( res => {
             setWine && setWine(res.data.wine_id);
         });
+        submitButton?.click();
     }
 
     const newStyleBody =
@@ -39,7 +41,13 @@ export const NewKitC: FC<Props> = ({setWine}) => {
         </>
 
     return (
-        <ModalFB handleSubmit={handleSubmit} onSubmit={onSubmit} title={"New Kit"} id={"CreateNewKitModal"} modalception={true}>
+        <ModalFB handleSubmit={handleSubmit}
+                 onSubmit={onSubmit}
+                 title={"New Kit"}
+                 id={"CreateNewKitModal"}
+                 modalception={true}
+                 setSubmit={setSubmit}
+        >
             <>
 
                 <div className="input-group m-1 form-check form-check-inline">
@@ -55,6 +63,7 @@ export const NewKitC: FC<Props> = ({setWine}) => {
                     }}/>
                     <label className="form-check-label" htmlFor="WineStyleCheck">Blended</label>
                 </div>
+                {errors.style && <InputRequiredAlert>No Style Given</InputRequiredAlert>}
                 <div className="form-check">
                 </div>
                 <div className="input-group m-1">
@@ -65,6 +74,7 @@ export const NewKitC: FC<Props> = ({setWine}) => {
                         <input type="text" className="form-control" {...register("name", {required: true})}/>
                     </PopoverInfo>
                 </div>
+                {errors.name && <InputRequiredAlert>No Fancy Name Given</InputRequiredAlert>}
                 <div className="input-group m-1">
                     <span className="input-group-text">Kit Volume: </span>
                     <PopoverInfo id={"NewKitVolumeInfo"} header={"Kit Volume"}
@@ -72,13 +82,14 @@ export const NewKitC: FC<Props> = ({setWine}) => {
 
                         <input type="number"
                                className="form-control"
-                               {...register("volume")}
+                               {...register("volume", {required: true})}
                         />
                     </PopoverInfo>
                     <span className="input-group-text">
                         Liters
                     </span>
                 </div>
+                {errors.volume && <InputRequiredAlert>No Kit Volume Provided</InputRequiredAlert>}
             </>
         </ModalFB>
     );
