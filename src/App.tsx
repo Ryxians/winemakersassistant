@@ -3,12 +3,8 @@ import './App.css';
 import {Navbar} from "./components/navbar/Navbar";
 import {BootStrapLogin} from "./components/login/BootStrapLogin";
 import {Route, BrowserRouter as Router, Redirect} from 'react-router-dom';
-import {NewBatchC} from "./components/sections/manage/stage-components/NewBatchC";
 import {ManageWine} from "./components/sections/manage/ManageWine";
-import {FermentationC} from "./components/sections/manage/stage-components/FermentationC";
 import { Batch } from "@server/database/entities/Batch"
-import {RackingC} from "./components/sections/manage/stage-components/RackingC";
-import {FilteringC} from "./components/sections/manage/stage-components/FilteringC";
 import {WineLog} from "./components/sections/winelog/WineLog";
 import {Blended_Batch} from "@entities/Blended_Batch"
 import {UsersList} from "./components/sections/manageusers/UsersList";
@@ -17,11 +13,14 @@ import {Toast, ToastContainer, ToastHeader} from "react-bootstrap";
 import wineglass from "./components/login/glass-with-wine.svg";
 import {ToastPosition} from "react-bootstrap/ToastContainer";
 import {BackendToast} from "./components/BackendToast";
+import {User} from "@entities/User"
 
 function App() {
     Axios.defaults.withCredentials = true;
     let position:ToastPosition = 'bottom-end'
     const [toasts, setToasts] = useState<JSX.Element[]>([]);
+    const [user, setUser] = useState<User | undefined>(undefined);
+    const [render, setRender] = useState<JSX.Element>()
 
     Axios.interceptors.response.use(res => {
         if (res.status !== 200) {
@@ -48,8 +47,29 @@ function App() {
     const saveProgress = true;
 
     useEffect(() => {
+        let usrstr = localStorage.getItem('user');
+        if (usrstr) {
+            setUser(JSON.parse(usrstr));
+            setLoggedIn(true);
+        }
+
         Axios.get('/users/login').then(res => {
-            res.status === 200 ? setLoggedIn(true) : setLoggedIn(false);
+            if (res.status === 200) {
+                setLoggedIn(true);
+                let resUser:User = res.data;
+                console.log("Users: ", resUser);
+                if (resUser) {
+                    setUser(resUser);
+                    setRender(
+                        <>
+                            <Navbar logout={logout} user={resUser}/>
+                        </>
+                    );
+                }
+            } else {
+                setLoggedIn(false);
+                setRender(<Redirect to={'/login'} />);
+            }
             console.log("Login Status: ", res.status);
         });
     }, [])
@@ -58,15 +78,23 @@ function App() {
         Axios.post('/users/logout').then(res => {
             console.log("Logout Status: ", res.status);
             setLoggedIn(false);
+            setRender(<Redirect to={'/login'} />);
             localStorage.clear();
         });
         // setHashedUser("");
     }
 
-    const handleLogin = () => {
+    const handleLogin = (usr:User) => {
+        setUser(usr);
         // setHashedUser(hashedUsr);
         // localStorage.setItem("hashedUser", hashedUsr);
+        console.log("User:", usr)
         setLoggedIn(true);
+        setRender(
+            <>
+                <Navbar logout={logout} user={usr}/>
+            </>
+        );
 
     }
 
@@ -75,19 +103,7 @@ function App() {
     return (
         <Router>
             <div className="App text-center">
-                {isLoggedIn ?
-
-
-                    (
-                        <>
-                            <Navbar logout={logout}/>
-                        </>
-
-                    ) :
-                    (
-                        <BootStrapLogin isLoggedIn={isLoggedIn} handleLogin={handleLogin} />
-                    )
-                }
+                {render}
                 <Route path="/manage" exact render={ () =>
                     <ManageWine setBatch={setBatch}/>
                 }/>

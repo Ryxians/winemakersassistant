@@ -25,7 +25,7 @@ export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleLogin}) => {
             .then(res => {
                 console.log("Status: " + res.status);
                 if (res.status === 200) {
-                    handleLogin();
+                    handleLogin(res.data);
                 } else {
                     switch (res.status) {
                         case 403:
@@ -89,7 +89,7 @@ export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleLogin}) => {
                 <a href="https://www.flaticon.com/"
                    title="Flaticon">www.flaticon.com</a>
             </div>
-            {/*{isLoggedIn && (<Redirect to={{pathname: '/'}} />)}*/}
+            {isLoggedIn && (<Redirect to={{pathname: '/'}} />)}
         </div>
     );
 };
