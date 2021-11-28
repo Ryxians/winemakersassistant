@@ -9,11 +9,13 @@ import {WineLog} from "./components/sections/winelog/WineLog";
 import {Blended_Batch} from "@entities/Blended_Batch"
 import {UsersList} from "./components/sections/manageusers/UsersList";
 import Axios from "axios";
-import {Toast, ToastContainer, ToastHeader} from "react-bootstrap";
+import {ToastContainer} from "react-bootstrap";
 import wineglass from "./components/login/glass-with-wine.svg";
 import {ToastPosition} from "react-bootstrap/ToastContainer";
 import {BackendToast} from "./components/BackendToast";
 import {User} from "@entities/User"
+import {CalculatorPage} from "./components/calculator/page/CalculatorPage";
+
 
 function App() {
     Axios.defaults.withCredentials = true;
@@ -42,9 +44,6 @@ function App() {
     const [isLoggedIn, setLoggedIn] = useState(false);
     // const [hashedUser, setHashedUser] = useState("");
     const [currentBatch, setBatch] = useState<Batch | Blended_Batch>()
-
-    const savedHash = localStorage.getItem("hashedUser");
-    const saveProgress = true;
 
     useEffect(() => {
         let usrstr = localStorage.getItem('user');
@@ -116,6 +115,8 @@ function App() {
                 <Route path="/winelog" exact render={
                     () => (currentBatch ? <WineLog batch={currentBatch} /> : <Redirect to={'/'} />)
                 } />
+
+                <Route path={'/calc'} exact component={CalculatorPage} />
 
                 <Route path="/" exact render={() => (isLoggedIn && <Redirect to={"/manage"} />)}/>
 

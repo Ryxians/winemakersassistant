@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {ModalFB} from "../sections/ModalFB";
+import {ModalFB} from "../../sections/ModalFB";
 import {useForm} from "react-hook-form";
 
 interface Props {

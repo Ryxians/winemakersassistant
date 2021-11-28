@@ -3,6 +3,9 @@ import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/js/dist/collapse';
 import {Link} from "react-router-dom";
 import {User} from "@entities/User";
+import {Nav, NavDropdown, NavLink} from "react-bootstrap";
+import {AlcoholTest} from "../calculator/alctest/AlcoholTest";
+import {PortCalculator} from "../calculator/alctest/PortCalculator";
 
 interface Props {
     logout: any
@@ -44,12 +47,9 @@ export const Navbar: FC<Props> = ({logout, user}) => {
                                 Manage Wine
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link active" aria-current="page" to="/"
-                            >
-                                Wine Logs
-                            </Link>
-                        </li>
+                        <Nav.Item>
+                            <Link className={"nav-link active"} to={'/calc'}>Calculator</Link>
+                        </Nav.Item>
                         <li className="nav-item dropdown">
                             <Link className="nav-link active dropdown-toggle" id="navbarDropdown" role="button"
                                   data-bs-toggle="dropdown" aria-expanded="false" to="/"
