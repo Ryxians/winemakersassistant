@@ -9,8 +9,6 @@ import {NewBatchC} from "./stage-components/NewBatchC";
 import {NewKitC} from "./stage-components/NewKitC";
 import {BlendedBatchC} from "./stage-components/BlendedBatchC";
 import {DownloadWineSheet} from "./DownloadWineSheet";
-import {AlcoholTest} from "../../calculator/AlcoholTest";
-import {PortCalculator} from "../../calculator/PortCalculator";
 
 interface Props {
     setBatch: React.Dispatch<React.SetStateAction<Batch | Blended_Batch | undefined>>
@@ -66,8 +64,6 @@ export const ManageWine: FC<Props> = ({setBatch}) => {
                             onClick={() => getWines().then()}
                     >Refresh</button>
                     <DownloadWineSheet />
-                    <AlcoholTest />
-                    <PortCalculator />
                 </div>
             </div>
             <table className="table table-striped table-hover">
