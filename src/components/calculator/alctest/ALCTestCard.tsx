@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Card, ListGroup, ListGroupItem} from "react-bootstrap";
-import percent from "../page/percent.svg";
+import percent from "./percent.svg";
 import {AlcoholTest} from "./AlcoholTest";
 import {PortCalculator} from "./PortCalculator";
 
