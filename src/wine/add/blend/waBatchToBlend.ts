@@ -28,7 +28,7 @@ export const waBatchToBlend = ({app, connection}: Args): void => {
                 try {
                     let results = await connection.getRepository(Blend_to_Batch).save(btb);
                     res.statusMessage = 'Added Batch to Blend: '
-                    res.status(200).send(results);
+                    res.status(201).send(results);
                 } catch (e) {
                     res.statusMessage = 'Failed to add Batch to Blend';
                     res.status(402).send(e);

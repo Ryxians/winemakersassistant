@@ -30,9 +30,9 @@ export const waBlendedBatch = ({app, connection}:Args):void => {
                 // Attempt to submit new batch to database
                 // If failed, send the error.
                 try {
-                    await connection.manager.save(newBBatch);
+                    let response = await connection.manager.save(newBBatch);
                     res.statusMessage = "Blend Created with id: " + newBBatch.blend_id;
-                    res.status(200).send();
+                    res.status(201).send(response);
                 } catch (e) {
                     res.statusMessage = e;
                     res.status(400).send();

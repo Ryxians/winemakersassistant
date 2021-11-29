@@ -22,11 +22,8 @@ export class Blended_Batch {
     @JoinColumn({name: 'wine_id'})
     wine!: Wine;
 
-    @Column()
-    brix!:number;
-
     @Column({length: 100})
-    notes!:string;
+    notes:string = "";
 
     @OneToMany(() => Blend_to_Batch, blends => blends.blend)
     blend_to_batch!: Blend_to_Batch[];

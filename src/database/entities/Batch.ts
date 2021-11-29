@@ -30,6 +30,9 @@ export class Batch {
     @Column({type:"double"})
     brix!:number;
 
+    @Column()
+    volume!:number;
+
     @Column({type:"double"})
     sg!:number;
 

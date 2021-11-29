@@ -23,13 +23,13 @@ export const LoginUser = ({app, connection}:Args):void => {
             // If the User does exist, check to see if the correct password has been provided.
             try {
                 if (await bcrypt.compare(req.body.password, user.password)) {
-                    const hashedUser = await bcrypt.hash(user.username, 10);
                     req.session.isAuth = true;
                     req.session.role = user.role;
                     req.session.active = user.active;
                     req.session.user = user;
                     res.statusMessage = user.username + " has been logged in!";
-                    res.status(200).send({hashedUser: hashedUser});
+                    user.password = "";
+                    res.status(200).send(user);
                 } else {
                     res.status(403).send("Wrong Password");
                 }
@@ -38,6 +38,6 @@ export const LoginUser = ({app, connection}:Args):void => {
             }
         });
     app.get('/users/login', isAuth, (req, res) => {
-        res.status(200).send();
+        res.status(200).send(req.session.user);
     })
 }

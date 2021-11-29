@@ -15,7 +15,10 @@ export class Filtering {
     batch!:Batch;
 
     @Column()
-    sg!:number;
+    vol!:string;
+
+    @Column()
+    filterMedium!:string;
 
     @Column({length: 4})
     new_tank!:string;
