@@ -1,6 +1,7 @@
 import {Application} from "express";
 import {Connection} from "typeorm";
 import XLXS from 'xlsx'
+import {Wine} from "../../../database/entities/Wine";
 
 interface Args {
     app:Application
@@ -9,7 +10,7 @@ interface Args {
 
 export const GetWineMonthSheet = ({app, connection}:Args) => {
 
-    app.get('/wine/get/sheet', (req, res) => {
+    app.get('/wine/get/sheet', async (req, res) => {
         const current_datetime = new Date();
         let formatted_date =
             current_datetime.getFullYear() +
@@ -28,7 +29,15 @@ export const GetWineMonthSheet = ({app, connection}:Args) => {
         wb.SheetNames.push(name);
 
         // Content
-        let ws_date = [['Hello', 'World']];
+        let ws_date = [['Style', 'Fancy Name']];
+
+        const wineRep = connection.manager.getRepository(Wine);
+        let wines = await wineRep.createQueryBuilder("wine").select().getMany();
+        wines.forEach(w => {
+            ws_date.push([w.wine_style, w.fancy_name]);
+        })
+
+        // turn content into sheet
         let ws = XLXS.utils.aoa_to_sheet(ws_date);
         wb.Sheets[name] = ws;
 
