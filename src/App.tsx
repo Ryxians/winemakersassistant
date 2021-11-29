@@ -26,7 +26,7 @@ function App() {
 
     Axios.interceptors.response.use(res => {
         if (res.status !== 200) {
-            let newToast = <BackendToast message={res.statusText} />
+            let newToast = <BackendToast key={toasts.length} message={res.statusText} />
             if (toasts.length > 3) {
                 setToasts([newToast]);
             } else {
