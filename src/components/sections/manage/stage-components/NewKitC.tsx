@@ -10,9 +10,9 @@ interface Props {
 }
 
 interface Inputs {
-    style: string
-    name: string
-    volume: number
+    wine_style: string
+    fancy_name: string
+    kit_volume: number
 }
 
 export const NewKitC: FC<Props> = ({setWine}) => {
@@ -58,14 +58,14 @@ export const NewKitC: FC<Props> = ({setWine}) => {
                                  body={newStyleBody}>
 
                         <input type="text" className="form-control"
-                               {...register("style", {required: true})}/>
+                               {...register("wine_style", {required: true})}/>
                     </PopoverInfo>
                     <input type="checkbox" className="form-check-input p-1 m-1" id="WineStyleCheck" onChange={() => {
-                        setValue("style", "BLENDED");
+                        setValue("wine_style", "BLENDED");
                     }}/>
                     <label className="form-check-label" htmlFor="WineStyleCheck">Blended</label>
                 </div>
-                {errors.style && <InputRequiredAlert>No Style Given</InputRequiredAlert>}
+                {errors.wine_style && <InputRequiredAlert>No Style Given</InputRequiredAlert>}
                 <div className="form-check">
                 </div>
                 <div className="input-group m-1">
@@ -73,10 +73,10 @@ export const NewKitC: FC<Props> = ({setWine}) => {
                     <PopoverInfo id={"FancyNameInformation"} header={"Fancy Name"}
                                  body={"This is the name used on the custom label."} >
 
-                        <input type="text" className="form-control" {...register("name", {required: true})}/>
+                        <input type="text" className="form-control" {...register("fancy_name", {required: true})}/>
                     </PopoverInfo>
                 </div>
-                {errors.name && <InputRequiredAlert>No Fancy Name Given</InputRequiredAlert>}
+                {errors.fancy_name && <InputRequiredAlert>No Fancy Name Given</InputRequiredAlert>}
                 <div className="input-group m-1">
                     <span className="input-group-text">Kit Volume: </span>
                     <PopoverInfo id={"NewKitVolumeInfo"} header={"Kit Volume"}
@@ -84,14 +84,14 @@ export const NewKitC: FC<Props> = ({setWine}) => {
 
                         <input type="number"
                                className="form-control"
-                               {...register("volume", {required: true})}
+                               {...register("kit_volume", {required: true})}
                         />
                     </PopoverInfo>
                     <span className="input-group-text">
                         Liters
                     </span>
                 </div>
-                {errors.volume && <InputRequiredAlert>No Kit Volume Provided</InputRequiredAlert>}
+                {errors.kit_volume && <InputRequiredAlert>No Kit Volume Provided</InputRequiredAlert>}
             </>
         </ModalFB>
     );
