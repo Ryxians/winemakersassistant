@@ -13,18 +13,19 @@ export const WaKit = ({app, connection}:Args):void => {
     app.post('/wine/add/kit', isAuth,
         async (req, res) => {
             // Declare the new wine object and get the details from the request
-            const wine = new Wine();
-            if (req.body.style) {
-                wine.wine_style = req.body.style;
-            } else {
+            const wine = await connection.manager.create(Wine, req.body);
+            if (!req.body.wine_style) {
                 res.status(403).send("No Style Provided.");
                 return;
             }
 
-            if (req.body.name) {
-                wine.fancy_name = req.body.name;
-            } else {
+            if (!req.body.fancy_name) {
                 res.status(403).send("No Name Provided.");
+                return;
+            }
+
+            if (!req.body.kit_volume) {
+                res.status(403).send("No Kit Volume Provided");
                 return;
             }
 
