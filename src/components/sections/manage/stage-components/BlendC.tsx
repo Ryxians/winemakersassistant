@@ -1,48 +1,128 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {ModalFB} from "../../ModalFB";
-import {useForm} from "react-hook-form";
+import {set, useForm} from "react-hook-form";
 import {Batch} from "@entities/Batch"
 import {Blended_Batch} from "@entities/Blended_Batch"
 import Axios from "axios";
+import {Wine} from '@entities/Wine'
+import {FormControl, InputGroup} from "react-bootstrap";
 
 interface Props {
     batch: Batch
     blends: Blended_Batch[]
 }
 
+interface BlendedBatch {
+    wine_id: number
+    date: Date
+}
+
 interface Blending {
-    blend_id: number
+    blend_id: number | undefined
     batch_id: number
     gallons_used: number
+    date: Date
 }
 
 export const BlendC: FC<Props> = ({batch, blends}) => {
-    const {handleSubmit, register} = useForm<Blending>();
+    const {handleSubmit, register, setValue} = useForm<Blending & BlendedBatch>();
 
-    const onSubmit = (blend:Blending) => {
+    const [submitButton, setSubmit] = useState<HTMLButtonElement>()
+
+    interface wine {
+        wine_id: number
+        fancy_name: string
+        wine_style: string
+    }
+    const [wines, setWines] = useState<wine[]>([]);
+
+    const getWines = async (wine_id?: number) => {
+        Axios.get('/wine/get/kit').then(res => {
+            if (res.status === 200) {
+                let wines = res.data;
+                wines = wines.filter((w:Wine) => {
+                    if (w.wine_style === "BLENDED") {
+                        return w;
+                    }
+                });
+                setWines(wines);
+                wine_id && setValue("wine_id", wine_id);
+            } else {
+                setWines([{
+                    wine_id: 0,
+                    wine_style: "ERROR",
+                    fancy_name: "ERROR"
+                }]);
+            }
+        });
+    }
+
+    useEffect(() => {
+        getWines().then();
+    }, [])
+
+    const onSubmit = (blend:Blending & BlendedBatch) => {
+
         blend.batch_id = batch.batch_id;
-        Axios.post('/wine/add/blend/to/batch/', blend)
-            .then(res => {
+        if (blend.blend_id && blend.blend_id > -1) {
+            Axios.post('/wine/add/blend/to/batch/', blend)
+                .then(res => {
+                    if (res.status === 201) {
+                        submitButton?.click();
+                    }
+                });
 
-            });
+        } else {
+            blend.blend_id = undefined;
+            Axios.post('/wine/add/blend/batch', blend).then(res => {
+                if (res.status === 201) {
+                    console.log(res.data)
+                    let bb:Blended_Batch = res.data;
+                    let newBlend:Blending = blend;
+                    newBlend.blend_id = bb.blend_id;
+                    Axios.post('/wine/add/blend/to/batch/', newBlend)
+                        .then(res => {
+                            if (res.status === 201) {
+                                console.log(res.data)
+                                submitButton?.click();
+                            }
+                        });
+                }
+            })
+        }
 
     }
     return (
         <ModalFB handleSubmit={handleSubmit}
                  onSubmit={onSubmit} title={"Blending"} id={`blending-${batch.batch_id}`}
-                 modalception={true}>
+                 modalception={true}
+                 setSubmit={setSubmit}
+        >
             <>
                 <h5 className="text-warning">This adds a wine to a Blended Batch, this does not create a blended batch.</h5>
-                <div className="input-group">
-                    <span className="input-group-text">
-                        Active Blends:
-                    </span>
-                    <select className="form-select"
-                            {...register("blend_id")}>
+                <InputGroup>
+                    <InputGroup.Text>Date: </InputGroup.Text>
+                    <input type={"datetime-local"}
+                           className={"form-control"}
+                           {...register("date")}
+                    />
+                </InputGroup>
+                <InputGroup>
+                    <InputGroup.Text>Active Blends: </InputGroup.Text>
+                    <FormControl as={"select"}
+                                 {...register("blend_id")}
+                    >
                         <option value={-1}>Choose a blend!</option>
                         {blends.map(({blend_id, wine}) => <option key={blend_id} value={blend_id}>{wine.fancy_name + ''}</option>)}
-                    </select>
-                </div>
+                    </FormControl>
+                    <InputGroup.Text>New Blend: </InputGroup.Text>
+                    <FormControl as={"select"}
+                        {...register("wine_id")}
+                        >
+                        <option value={-1}>Choose a wine!</option>
+                        {wines.map(({wine_id, fancy_name}) => <option key={wine_id} value={wine_id}>{fancy_name}</option>)}
+                    </FormControl>
+                </InputGroup>
                 <div className="input-group">
                 <span className="input-group-text">
                     Gallons Used:
