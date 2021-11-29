@@ -8,6 +8,8 @@ interface Props {
 
 export const FilteringWLC : FC<Props> = ({filtering}) => {
     const {date, new_tank, notes, vol, filterMedium} = filtering;
+
+    // Break time into a date and time
     let time = date.toLocaleString().split(",");
  return (
   <>

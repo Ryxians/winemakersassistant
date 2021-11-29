@@ -57,7 +57,8 @@ export const OutputC: FC<Props> = ({batch, user}) => {
             <Modal show={show}
                    onHide={handleClose} centered
                    size={"lg"}
-                   fullscreen={"md-down"}>
+                   fullscreen={"md-down"}
+            >
                 <Modal.Header closeButton>
                     <Modal.Title>Bottling/Output</Modal.Title>
                 </Modal.Header>

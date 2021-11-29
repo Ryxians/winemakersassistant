@@ -10,40 +10,46 @@ interface Props {
 }
 
 export const FermentWlS: FC<Props> = ({batch}) => {
+
+    // Stores an array of Fermentation objects
     const [fermentations, setFerment] = useState<Fermentation[]>();
 
+    // Grabs fermentations from batch
     const getFermentation = () => {
         Axios.get(`/wine/get/fermentation/${batch.batch_id}`).then(res => {
             let ferm:Fermentation[] = res.data;
 
             ferm.forEach(f => {
+                // The date object is a little broken, to fully utilize it
+                // Reinitialize it
                 f.date = new Date(f.date)
             })
             setFerment(ferm);
         });
     }
 
+    // Sorts the ferments and creates individual rows for the table
     const ferments = () => {
         let i = 0;
         if (fermentations) {
             const sorted = fermentations.sort((a, b) => {
                 return a.date.getTime() - b.date.getTime();
             })
-            const list = sorted.map((ferm) => {
+            return sorted.map((ferm) => {
                 let rc = <FermentWLC key={i} number={i+1} ferment={ferm} batch={batch}/>;
                 i++;
                 return rc;
             });
-            return list;
         } else {
             return <td>No Fermentations</td>
         }
 
     }
 
+    // Grab fermentations on first load.
     useEffect(() => {
         getFermentation();
-    }, [])
+    },[])
 
     return (
         <div>
@@ -52,7 +58,7 @@ export const FermentWlS: FC<Props> = ({batch}) => {
             <table className="table table-sm table-striped table-bordered border-dark">
                 <thead>
                 <tr>
-                    <th></th>
+                    <th> </th>
                     <th>Date</th>
                     <th>Time</th>
                     <th>SG</th>

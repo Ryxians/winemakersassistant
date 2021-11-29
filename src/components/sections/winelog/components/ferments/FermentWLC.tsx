@@ -11,6 +11,7 @@ interface Props {
 
 export const FermentWLC : FC<Props> = ({batch, ferment, number}) => {
     const { date, sg, temperature, notes } = ferment;
+    // splits time into a date and a time
     let time = date.toLocaleString().split(",");
 
  return (

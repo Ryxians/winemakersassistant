@@ -17,9 +17,13 @@ interface Inputs {
 export const CreateUser: FC<Props> = ({updateUsers}) => {
     const {register, handleSubmit} = useForm<Inputs>();
     const onSubmit = (user: Inputs) => {
+        // Create a new user
         Axios.post('/users/new', user).then(res => {
-            updateUsers();
-
+            // If user created
+            if (res.status === 201) {
+                // Update displayed users
+                updateUsers();
+            }
         });
     }
     return (

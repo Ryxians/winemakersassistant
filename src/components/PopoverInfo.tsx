@@ -8,7 +8,12 @@ interface Props {
     body: string | JSX.Element
 }
 
-export const PopoverInfo : FC<Props> = ({id, header, body, children}) => {
+export const PopoverInfo : FC<Props> = ({id,
+                                            header,
+                                            body,
+                                            children}) => {
+
+    // How the Popover will look
     const popover = (
         <Popover id={id}>
             <Popover.Header as="h3">
@@ -20,7 +25,7 @@ export const PopoverInfo : FC<Props> = ({id, header, body, children}) => {
         </Popover>
     );
  return (
-  <OverlayTrigger trigger={"click"} placement={"right"} overlay={popover}>
+  <OverlayTrigger trigger={"focus"} placement={"right"} overlay={popover}>
       {children}
   </OverlayTrigger>
  );

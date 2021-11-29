@@ -4,7 +4,6 @@ import {Blended_Batch} from "@entities/Blended_Batch"
 import {Blend_to_Batch} from '@entities/Blend_to_Batch';
 import Axios from "axios";
 import {RackingWLS} from "./components/racking/RackingWLS";
-import {FilteringWLC} from "./components/filtering/FilteringWLC";
 import {FermentWlS} from "./components/ferments/FermentWLS";
 import "./pagebreak.css";
 import {FilteringWLS} from "./components/filtering/FilteringWLS";
@@ -14,20 +13,21 @@ interface Props {
 }
 
 export const WineLog: FC<Props> = ({batch}) => {
-    // The blend variable is where the blend is stored, if it exists
-    let blend;
-    // To conditionally change what is displayed based on whether its a blend
-    // Create a state for what is rendered.
     const [render, setRender] = useState<JSX.Element>()
 
     const changeActive = async (id:number) => {
         await Axios.put('/wine/put/batch/active/' + id);
     }
 
-    // This runs when the page loads for the first time
     useEffect(() => {
-        // Is the wine a blend?
         if (batch.wine?.wine_style === 'BLENDED') {
+            // Is the wine a blend?
+            // This runs when the page loads for the first time
+            // Create a state for what is rendered.
+
+            // To conditionally change what is displayed based on whether its a blend
+            // The blend variable is where the blend is stored, if it exists
+            let blend;
             // Initialize blend as a blend
             blend = batch as Blended_Batch;
 
@@ -87,8 +87,11 @@ export const WineLog: FC<Props> = ({batch}) => {
                     <h2 className="display-3">Wine Log: {batch.wine.fancy_name}</h2>
                     <button className="btn btn-warning d-print-none"
                             onClick={(evt) => {
+                                // Get button and disable it
                                 let btn = evt.currentTarget as HTMLButtonElement
                                 btn.disabled = true;
+
+                                // After results have been changed, enable the button
                                 changeActive(batch.batch_id).then(() => btn.disabled = false)
                             }}
                     >Change Active Status</button>

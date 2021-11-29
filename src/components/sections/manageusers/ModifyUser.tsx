@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC} from 'react';
 import {User} from '@entities/User';
 import 'bootstrap/js/dist/modal';
 import {useForm} from "react-hook-form";
@@ -16,11 +16,12 @@ interface Inputs {
 }
 
 export const ModifyUser : FC<Props> = ({user}) => {
-    const {register, handleSubmit, setValue, getValues, unregister} = useForm<Inputs>({
+    const {register, handleSubmit} = useForm<Inputs>({
         defaultValues: user
     });
     const {id, username, role, active} = user;
 
+    // Update a user
     const onSubmit = (updated:User) => {
         Axios.put(`/users/put/${updated.id}`, updated).then(
             res => console.log("Update Status: ", res.status)
@@ -40,7 +41,7 @@ export const ModifyUser : FC<Props> = ({user}) => {
                       <div className="modal-content">
                           <div className="modal-header">
                               <h5 className="modal-title">Modify {username}</h5>
-                              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
                           </div>
                           <form onSubmit={handleSubmit(onSubmit)}>
                               <div className="modal-body">

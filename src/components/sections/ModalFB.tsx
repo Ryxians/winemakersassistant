@@ -2,14 +2,28 @@ import React, {FC} from 'react';
 
 interface Props {
     children: JSX.Element
+    // Runs when the form is submitted
     handleSubmit: any
+
+    // Called by handleSubmit
     onSubmit: Function
+
+    // Identifier of the Modal
     id: string
+
+    // What the button and Modal Header displays
     title: string
+
+    // Whether the modal is being called within another Modal
     modalception?: undefined | boolean
+
+    // Styling for the button
     className?: string
-    notFormChildren?: JSX.Element,
+
+    // setSubmit binds the submit button to an object, allowing you to submit after code has been run
     setSubmit?: Function
+
+    // A function to be called after the Modal is closed.
     onClick?: Function
 }
 
@@ -21,19 +35,21 @@ export const ModalFB: FC<Props> = ({
                                        onSubmit,
                                        modalception,
                                        className,
-                                       notFormChildren,
                                        setSubmit,
                                        onClick
                                    }) => {
+    // If modalception isn't specified, assume false
     if (!modalception) {
         modalception = false;
     }
 
+    // If no class is given, create one
     if (!className) {
         className = ""
     }
     className += " btn btn-primary";
 
+    // Button used for closing modal
     let button: HTMLButtonElement | null;
 
 
@@ -44,7 +60,6 @@ export const ModalFB: FC<Props> = ({
                     <div className="modal-content">
                         <div className="modal-header">
                             <h3 className="modal-title">{title}: </h3>
-                            {notFormChildren}
                         </div>
                         <form className="container" onSubmit={handleSubmit(onSubmit)}>
                             <div className="modal-body">

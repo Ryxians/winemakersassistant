@@ -8,6 +8,7 @@ interface Props {
 }
 
 export const BackendToast : FC<Props> = ({message}) => {
+    // Whether the toast is visible
     const [show, setShow] = useState(true);
 
  return (
