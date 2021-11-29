@@ -9,12 +9,14 @@ import {NewBatchC} from "./stage-components/NewBatchC";
 import {NewKitC} from "./stage-components/NewKitC";
 import {BlendedBatchC} from "./stage-components/BlendedBatchC";
 import {DownloadWineSheet} from "./DownloadWineSheet";
+import {User} from '@entities/User'
 
 interface Props {
     setBatch: React.Dispatch<React.SetStateAction<Batch | Blended_Batch | undefined>>
+    user?: User
 }
 
-export const ManageWine: FC<Props> = ({setBatch}) => {
+export const ManageWine: FC<Props> = ({setBatch, user}) => {
     const [wines, setWines] = useState<Batch[]>();
     const [blends, setBlends] = useState<Blended_Batch[]>();
     const [active, setActive] = useState(true);
@@ -99,9 +101,11 @@ export const ManageWine: FC<Props> = ({setBatch}) => {
                 </thead>
                 <tbody>
                 {
-                    (wines && wines.length > 0) ?
+                    (wines && wines.length > 0 && user) ?
                         (wines.map((wine) => <BatchListC key={wine.batch_id} batch={wine} setBatch={setBatch}
-                                                         blends={blends}/>))
+                                                         blends={blends}
+                                                         user={user}
+                        />))
                         :
                         <tr>
                             <td>No wines</td>

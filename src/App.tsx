@@ -104,7 +104,7 @@ function App() {
             <div className="App text-center">
                 {render}
                 <Route path="/manage" exact render={ () =>
-                    <ManageWine setBatch={setBatch}/>
+                    <ManageWine setBatch={setBatch} user={user}/>
                 }/>
                 <Route path="/login" exact render={() =>
                     (<BootStrapLogin isLoggedIn={isLoggedIn}

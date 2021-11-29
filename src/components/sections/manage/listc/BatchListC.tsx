@@ -8,14 +8,17 @@ import {RackingC} from "../stage-components/RackingC";
 import {FilteringC} from "../stage-components/FilteringC";
 import {BlendListC} from "./BlendListC";
 import {BlendC} from "../stage-components/BlendC";
+import {OutputC} from "../stage-components/OutputC";
+import {User} from '@entities/User'
 
 interface Props {
     batch: Batch
     setBatch: React.Dispatch<React.SetStateAction<Batch | Blended_Batch | undefined>>
     blends?: Blended_Batch[]
+    user: User
 }
 
-export const BatchListC: FC<Props> = ({batch, setBatch, blends}) => {
+export const BatchListC: FC<Props> = ({batch, setBatch, blends, user}) => {
     const {batch_id, wine, starting_tank, start_date} = batch;
     const [isSelected, setSelected] = useState(false);
     let date = new Date(start_date);
@@ -54,7 +57,7 @@ export const BatchListC: FC<Props> = ({batch, setBatch, blends}) => {
 
                             <BlendC batch={batch} blends={blends} />
                             )}
-                            Output
+                            <OutputC batch={batch} user={user} />
                         </div>
                     </ModalT>
                 </tr>
