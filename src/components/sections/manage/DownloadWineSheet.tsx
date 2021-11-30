@@ -11,7 +11,7 @@ interface Props {
 export const DownloadWineSheet : FC<Props> = () => {
     let date = new Date();
     const onDownload = () => {
-        let month = date.getUTCMonth() + 1;
+        let month = date.getUTCMonth();
         let year = date.getFullYear();
         Axios.get(`/wine/get/sheet/${month}&${year}`).then(res => {
             let data = res.data;
