@@ -18,13 +18,16 @@ import {waBatchToBlend} from "./add/blend/waBatchToBlend";
 import {wgBatchsFromBlend} from "./get/blend/wgBatchsFromBlend";
 import {wpBatchInactive} from "./put/wpBatchInactive";
 import {GetWineMonthSheet} from "./get/sheet/GetWineMonthSheet";
+import {User} from "../database/entities/User";
 
 interface Args {
     app:Application
     connection:Connection
 }
-interface ns {
+export interface ns {
     batch: Batch;
+    user_id?:number;
+    bottleTeam?:User;
 }
 
 function CreateGetAndAdd<Entity extends ns>(obj: EntityTarget<Entity>, path: string, args:Args) {

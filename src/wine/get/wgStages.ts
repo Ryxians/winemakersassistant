@@ -1,16 +1,14 @@
 import {Application} from "express";
 import {Connection, EntityTarget} from "typeorm";
 import {User} from "../../database/entities/User";
+import {ns} from "../CreateDatabasePosts";
 
 interface Args {
     app:Application
     connection:Connection
 }
 
-interface ns {
-    user_id?:number
-    bottleTeam?:User
-}
+
 
 export function CreateGetPost<Entity extends ns>(obj:EntityTarget<Entity>, path:string, {app, connection}:Args) {
     // Get all the specified entities of a batch
