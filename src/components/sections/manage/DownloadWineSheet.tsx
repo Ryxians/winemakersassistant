@@ -28,7 +28,7 @@ export const DownloadWineSheet : FC<Props> = () => {
  return (
   <div>
       <PopoverInfo id={"downloadInfo"} header={"Excel Download"} body={"This downloads an Excel sheet!"} >
-          <ButtonGroup>
+          <ButtonGroup className={"d-none d-lg-flex"}>
               <input type={"month"} className={"form-control"}
                      defaultValue={date.getFullYear() + "-" + (date.getUTCMonth() + 1)}
                      onChange={evt => {
@@ -38,7 +38,7 @@ export const DownloadWineSheet : FC<Props> = () => {
                              date = d;
                          }
                      }}/>
-              <Button onClick={onDownload}>Download</Button>
+              <Button variant={"warning"} onClick={onDownload}>Download</Button>
           </ButtonGroup>
 
       </PopoverInfo>
