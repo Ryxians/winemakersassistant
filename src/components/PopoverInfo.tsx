@@ -25,7 +25,7 @@ export const PopoverInfo : FC<Props> = ({id,
         </Popover>
     );
  return (
-  <OverlayTrigger trigger={"focus"} placement={"right"} overlay={popover}>
+  <OverlayTrigger trigger={"focus"} placement={"bottom"} overlay={popover}>
       {children}
   </OverlayTrigger>
  );
