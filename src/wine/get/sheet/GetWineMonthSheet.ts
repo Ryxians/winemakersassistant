@@ -52,7 +52,7 @@ export const GetWineMonthSheet = ({app, connection}:Args) => {
             .getMany();
 
         // Filter the wines based on the date
-        wines = wines.filter(w => {
+        wines.forEach(w => {
 
             // Filter the batchs based on the date
            let b = w.batchs.filter(b => {
@@ -70,10 +70,7 @@ export const GetWineMonthSheet = ({app, connection}:Args) => {
                })
 
                // If there are outputs, update the outputs and return the batch
-               if (o && o.length > 0) {
-                   b.output = o;
-                   return b;
-               }
+               b.output = o;
 
            });
 
