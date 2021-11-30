@@ -18,6 +18,9 @@ export class Blended_Batch {
     @Column()
     wine_id!:number
 
+    @Column()
+    tank:string = ""
+
     @ManyToOne(() => Wine, wine => wine.blends)
     @JoinColumn({name: 'wine_id'})
     wine!: Wine;
