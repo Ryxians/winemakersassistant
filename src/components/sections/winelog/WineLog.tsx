@@ -7,15 +7,19 @@ import {RackingWLS} from "./components/racking/RackingWLS";
 import {FermentWlS} from "./components/ferments/FermentWLS";
 import "./pagebreak.css";
 import {FilteringWLS} from "./components/filtering/FilteringWLS";
+import {OutputWLS} from "./components/output/OutputWLS";
+import {batchSection} from "./components/batchSection";
+import {blendSection} from "./components/blendSection";
 
 interface Props {
     batch: Batch | Blended_Batch
+    children?:JSX.Element
 }
 
-export const WineLog: FC<Props> = ({batch}) => {
+export const WineLog: FC<Props> = ({batch, children}) => {
     const [render, setRender] = useState<JSX.Element>()
 
-    const changeActive = async (id:number) => {
+    const changeActive = async (id: number) => {
         await Axios.put('/wine/put/batch/active/' + id);
     }
 
@@ -33,10 +37,10 @@ export const WineLog: FC<Props> = ({batch}) => {
 
             // Get an entire record of the blend.
             Axios.get('/wine/get/blend/from/batchs/' + blend.blend_id).then(async res => {
-                let updatedBlend:Blended_Batch = res.data;
+                let updatedBlend: Blended_Batch = res.data;
 
                 // For each batch in the blend, create a new WineLog for that batch.
-                let batchs = updatedBlend.blend_to_batch.map((wl:Blend_to_Batch) => (
+                let batchs = updatedBlend.blend_to_batch.map((wl: Blend_to_Batch) => (
                     <WineLog key={wl.batch_id} batch={wl.batch} />
                 ));
 
@@ -44,6 +48,7 @@ export const WineLog: FC<Props> = ({batch}) => {
                 setRender(
                     <>
                         <h1 className="display-1">{updatedBlend.wine.fancy_name}: Blended</h1>
+                        {blendSection(updatedBlend)}
                         {batchs.map(b => {
 
                             return (
@@ -64,7 +69,9 @@ export const WineLog: FC<Props> = ({batch}) => {
 
         }
 
-    }, [])
+    }, []);
+
+
 
     // Render a batch
     const makeBatchRender = (batch: Batch) => {
@@ -79,12 +86,13 @@ export const WineLog: FC<Props> = ({batch}) => {
             let filtering = <FilteringWLS batch={batch}/>
 
             // Bottling/Output
-            let output = <></>
+            let output = <OutputWLS batch={batch}/>
 
             // Render the batch with its sections.
             setRender(
                 <div>
                     <h2 className="display-3">Wine Log: {batch.wine.fancy_name}</h2>
+                    {children}
                     <button className="btn btn-warning d-print-none"
                             onClick={(evt) => {
                                 // Get button and disable it
@@ -94,7 +102,9 @@ export const WineLog: FC<Props> = ({batch}) => {
                                 // After results have been changed, enable the button
                                 changeActive(batch.batch_id).then(() => btn.disabled = false)
                             }}
-                    >Change Active Status</button>
+                    >Change Active Status
+                    </button>
+                    {batchSection(batch)}
                     {ferm}
                     {rack}
                     {filtering}
