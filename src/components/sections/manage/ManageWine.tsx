@@ -65,8 +65,8 @@ export const ManageWine: FC<Props> = ({setBatch, user}) => {
                     <button className="btn btn-primary"
                             onClick={() => getWines().then()}
                     >Refresh</button>
-                    <DownloadWineSheet />
                 </div>
+                <DownloadWineSheet />
             </div>
             <table className="table table-striped table-hover">
                 <thead>
