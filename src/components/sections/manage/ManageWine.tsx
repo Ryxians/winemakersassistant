@@ -45,15 +45,16 @@ export const ManageWine: FC<Props> = ({setBatch, user}) => {
     return (
         <div className="container">
             <div className="btn-toolbar p-3">
-                <div className="btn-group px-1">
+                <div className="btn-group btn-group-sm p-1">
                     <NewKitC/>
                     {<NewBatchC/>}
 
                 </div>
-                <div className="btn-group px-1">
-                    {wines && <BlendedBatchC/>}
-                </div>
-                <div className="btn-group px-1">
+                {/*<div className="btn-group btn-group-sm p-1">*/}
+                {/*    {wines && <BlendedBatchC/>}*/}
+                {/*</div>*/}
+                <DownloadWineSheet />
+                <div className="btn-group btn-group-sm p-1">
                     <button className="btn btn-secondary" onClick={(evt) => {
                         let btn = evt.currentTarget as HTMLButtonElement;
                         btn.disabled = true;
@@ -66,7 +67,6 @@ export const ManageWine: FC<Props> = ({setBatch, user}) => {
                             onClick={() => getWines().then()}
                     >Refresh</button>
                 </div>
-                <DownloadWineSheet />
             </div>
             <table className="table table-striped table-hover">
                 <thead>
