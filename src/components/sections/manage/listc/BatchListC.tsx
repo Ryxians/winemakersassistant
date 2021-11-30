@@ -43,7 +43,7 @@ export const BatchListC: FC<Props> = ({batch, setBatch, blends, user}) => {
                             title={wine.fancy_name}
                             getButton={getButton}
                     >
-                        <div className="btn-group-vertical">
+                        <div className="btn-group-vertical btn-group-lg">
                             <Link className="btn btn-primary" onClick={() => {
                                 setBatch(batch)
                                 button?.click();
