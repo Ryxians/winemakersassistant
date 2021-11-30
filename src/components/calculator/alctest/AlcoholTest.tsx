@@ -2,6 +2,7 @@ import React, {FC, useState} from 'react';
 import {ModalFB} from "../../sections/ModalFB";
 import {useForm} from "react-hook-form";
 import {PopoverInfo} from "../../PopoverInfo";
+import {calcAlc} from "../Calc";
 
 
 interface Props {
@@ -21,11 +22,11 @@ export const AlcoholTest: FC<Props> = () => {
     const [ALC, setALC] = useState(<h4>Alcohol %: </h4>)
     const [submitButton, setSubmit] = useState<HTMLButtonElement>();
 
+
     const onSubmit = (inputs:Inputs) => {
-        let ALCE = ((inputs.Start - inputs.Final) *
-            ((23 - inputs.Add)/23) /
-            inputs.Factor);
-        setALC(<h4>Alcohol % Equals: {ALCE}</h4>)
+        let {Start, Final, Add, Factor} = inputs;
+
+        setALC(<h4>Alcohol % Equals: {calcAlc(Start, Final, Add, Factor)}</h4>)
 
     }
 

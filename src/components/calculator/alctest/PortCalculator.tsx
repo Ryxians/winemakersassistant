@@ -1,6 +1,7 @@
 import React, {FC, useState} from 'react';
 import {ModalFB} from "../../sections/ModalFB";
 import {useForm} from "react-hook-form";
+import {calcPort} from "../Calc";
 
 interface Props {
 
@@ -19,10 +20,8 @@ export const PortCalculator : FC<Props> = () => {
     const [submitButton, setSubmit] = useState<HTMLButtonElement>();
 
     const onSubmit = ({Alcohol, BrandyProof, TotalBrandy, TotalWine}:Inputs) => {
-        const estimatedNewAlc = ((Alcohol/100) + ((BrandyProof/2/100) * (TotalBrandy/TotalWine)))
-        console.log(Alcohol, "+", "((", BrandyProof, "/2/100) * (", TotalBrandy, "/", TotalWine, ")))")
 
-        setALC(<h3>Estimated new alcohol %: {estimatedNewAlc}</h3>)
+        setALC(<h3>Estimated new alcohol %: {calcPort(Alcohol, BrandyProof, TotalBrandy, TotalWine)}</h3>)
     }
  return (
      <ModalFB
