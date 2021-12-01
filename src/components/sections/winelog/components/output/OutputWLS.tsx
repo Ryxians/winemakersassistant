@@ -1,22 +1,28 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Output} from '@entities/Output'
+import {Blended_Output} from '@entities/Blended_Output'
 import {Batch} from '@entities/Batch'
+import {Blended_Batch} from "@entities/Blended_Batch"
 import Axios from "axios";
 import {OutputWLC} from "./OutputWLC";
 import {OutputC} from "../../../manage/stage-components/OutputC";
 
 interface Props {
-    batch: Batch
+    batch: Batch | Blended_Batch
 }
 
 export const OutputWLS : FC<Props> = ({batch}) => {
     // Filter objects to display
-    const [outputs, setOut] = useState<Output[]>();
+    const [outputs, setOut] = useState<Output[] | Blended_Output[]>();
 
     // Grab outputs from the batch
     const getOuts = () => {
-        Axios.get(`/wine/get/output/${batch.batch_id}`).then(res => {
-            let outs: Output[] = res.data;
+        let b = batch as Batch;
+        let bb = batch as Blended_Batch;
+        let get = '/wine/get/';
+        get += b.batch_id ? `output/${b.batch_id}` : `blended_output/${bb.blend_id}`;
+        Axios.get(get).then(res => {
+            let outs: Output[] | Blended_Output[] = res.data;
 
             outs.forEach(out => {
                 // Fix Date

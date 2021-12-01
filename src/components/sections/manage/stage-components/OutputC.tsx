@@ -2,18 +2,20 @@ import React, {FC, useState} from 'react';
 import {useForm} from "react-hook-form";
 import {Button, Form, InputGroup, Modal} from "react-bootstrap";
 import {Batch} from '@entities/Batch'
+import {Blended_Batch} from '@entities/Blended_Batch'
 import {User} from '@entities/User'
 import Axios from "axios";
 import {InputRequiredAlert} from "../../InputRequiredAlert";
 
 interface Props {
-    batch: Batch
+    batch: Batch | Blended_Batch
     user: User
 }
 
 interface Output {
     date: Date,
     batch_id: number
+    blend_id: number
     numberOfContainer: number
     containerSize: number
     notes: string
@@ -37,13 +39,23 @@ export const OutputC: FC<Props> = ({batch, user}) => {
     const handleShow = () => setShow(true);
 
     const onSubmit = (out: Output) => {
-        out.batch_id = batch.batch_id;
+        let b = batch as Batch;
+        let bb = batch as Blended_Batch;
+        let path = '';
+        if (b.batch_id) {
+            out.batch_id = b.batch_id;
+            path = 'output'
+        }
+        if (bb.blend_id) {
+            out.blend_id = bb.blend_id;
+            path = 'blended_output';
+        }
         out.user_id = user.id;
-
-        console.log("Out: ", out)
-        Axios.post('/wine/add/output', out).then(res => {
+        Axios.post(`/wine/add/${path}`, out).then(res => {
             if (res.status === 201 || res.status === 200) {
                 handleClose();
+            } else {
+                console.log(':(')
             }
         });
     }

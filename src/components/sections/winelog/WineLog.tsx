@@ -49,6 +49,7 @@ export const WineLog: FC<Props> = ({batch, children}) => {
                     <>
                         <h1 className="display-1">{updatedBlend.wine.fancy_name}: Blended</h1>
                         {blendSection(updatedBlend)}
+                        <OutputWLS batch={updatedBlend} />
                         {batchs.map(b => {
 
                             return (

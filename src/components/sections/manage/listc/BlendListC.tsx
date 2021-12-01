@@ -6,13 +6,16 @@ import {ModalT} from "../modal/ModalT";
 import {FermentationC} from "../stage-components/FermentationC";
 import {RackingC} from "../stage-components/RackingC";
 import {FilteringC} from "../stage-components/FilteringC";
+import {OutputC} from "../stage-components/OutputC";
+import {User} from '@entities/User'
 
 interface Props {
     blend: Blended_Batch
     setBatch: React.Dispatch<React.SetStateAction<Batch | Blended_Batch | undefined>>
+    user: User
 }
 
-export const BlendListC: FC<Props> = ({blend, setBatch}) => {
+export const BlendListC: FC<Props> = ({blend, setBatch, user}) => {
     let {blend_id, wine, date, blend_to_batch} = blend;
     const [isSelected, setSelected] = useState(false);
     date = new Date(date);
@@ -30,7 +33,7 @@ export const BlendListC: FC<Props> = ({blend, setBatch}) => {
                 <th scope="row">{blend_id}</th>
                 <td>{wine.fancy_name}</td>
                 <td>{newDate}</td>
-                <td>?</td>
+                <td>{blend.tank}</td>
             </tr>
             {isSelected && (
                 <tr className="d-print-none">
@@ -44,7 +47,7 @@ export const BlendListC: FC<Props> = ({blend, setBatch}) => {
                             }} to={{pathname: "/winelog"}}>
                                 Complete Log
                             </Link>
-                            Output
+                            <OutputC batch={blend} user={user} />
                         </div>
                     </ModalT>
                 </tr>

@@ -1,8 +1,9 @@
 import React, {FC} from 'react';
 import {Output} from '@entities/Output'
+import {Blended_Output} from '@entities/Blended_Output'
 
 interface Props {
-    output: Output
+    output: Output | Blended_Output
 }
 
 export const OutputWLC: FC<Props> = ({output}) => {
@@ -25,6 +26,9 @@ export const OutputWLC: FC<Props> = ({output}) => {
                 </tr>
                 <tr>
                     <td colSpan={2}>{containerSize + "ml Bottles: " + numberOfContainer}</td>
+                </tr>
+                <tr>
+                    <td colSpan={2}>Notes: {notes}</td>
                 </tr>
                 </tbody>
             </table>

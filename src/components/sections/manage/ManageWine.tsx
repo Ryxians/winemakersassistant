@@ -79,8 +79,8 @@ export const ManageWine: FC<Props> = ({setBatch, user}) => {
                 </thead>
                 <tbody>
                 {
-                    (blends && blends.length > 0) ?
-                        (blends.map((wine) => <BlendListC key={wine.blend_id} blend={wine} setBatch={setBatch}/>))
+                    (blends && blends.length > 0 && user) ?
+                        (blends.map((wine) => <BlendListC key={wine.blend_id} blend={wine} setBatch={setBatch} user={user}/>))
                         :
                         <tr>
                             <td>No wines</td>
