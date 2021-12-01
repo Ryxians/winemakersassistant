@@ -6,14 +6,15 @@
   "scripts": {
     "run": "node ./dist/app.js",
     "dev" : "ts-node-dev ./src/app.ts",
-    "pregetClient": "rm -rf ./winemakersassistant-client",
+    "cleanClient": "rm -rf ./winemakersassistant-client",
+    "pregetClient": "npm run cleanClient",
     "getClient": "git clone https://github.com/Ryxians/winemakersassistant-client.git",
     "clean": "rm -rf ./src/build && rm -rf ./dist",
     "buidClient": "npm --prefix ./winemakersassistant-client run build",
     "buidClientDev": "npm --prefix ./winemakersassistant-client run buildDev",
     "prebuildServer": "npm run clean",
     "buildServer": "tsc",
-    "postbuildServer": "npm run buidClient"
+    "postbuildServer": "npm run buidClient && npm prune --production"
   },
   "keywords": [],
   "author": "",
