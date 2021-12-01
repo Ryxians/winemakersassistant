@@ -78,6 +78,7 @@ export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
                                  body={sgBody}>
 
                         <input type="number"
+                               step={.001}
                                className={inputClass}
                                {...register("sg")}
                         />

@@ -6,7 +6,6 @@ import {ModalT} from "../modal/ModalT";
 import {FermentationC} from "../stage-components/FermentationC";
 import {RackingC} from "../stage-components/RackingC";
 import {FilteringC} from "../stage-components/FilteringC";
-import {BlendListC} from "./BlendListC";
 import {BlendC} from "../stage-components/BlendC";
 import {OutputC} from "../stage-components/OutputC";
 import {User} from '@entities/User'
@@ -19,7 +18,7 @@ interface Props {
 }
 
 export const BatchListC: FC<Props> = ({batch, setBatch, blends, user}) => {
-    const {batch_id, wine, starting_tank, start_date} = batch;
+    const {batch_id, wine, tank, start_date} = batch;
     const [isSelected, setSelected] = useState(false);
     let date = new Date(start_date);
     let newDate = "" + date.getMonth() + "/" + date.getDay() + "/" + date.getFullYear()
@@ -35,7 +34,7 @@ export const BatchListC: FC<Props> = ({batch, setBatch, blends, user}) => {
                 <th scope="row">{batch_id}</th>
                 <td>{wine.fancy_name}</td>
                 <td>{newDate}</td>
-                <td>{starting_tank}</td>
+                <td>{tank}</td>
             </tr>
             {isSelected && (
                 <tr className="table-info list-group d-print-none">
