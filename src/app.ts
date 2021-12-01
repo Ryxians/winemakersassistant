@@ -31,7 +31,7 @@ dotenv.config();
 // Initialize Express App
 const app: Application = express();
 const PORT = process.env.PORT || 3001;
-const developerMode = false;
+const developerMode = process.env.DEV || false;
 
 //
 
