@@ -10,13 +10,21 @@ interface Args {
 
 
 
-export function CreateGetPost<Entity extends ns>(obj:EntityTarget<Entity>, path:string, {app, connection}:Args) {
+export function CreateGetPost<Entity extends ns>(obj:EntityTarget<Entity>, path:string, {app, connection}:Args, isBlend?:boolean) {
     // Get all the specified entities of a batch
-    app.get(`/wine/get/${path}/:batchid`, async (req, res) => {
+    app.get(`/wine/get/${path}/:batchid`, async (req, res, next) => {
         // Declare the new wine object and get the details from the request
         const {params} = req;
 
-        const nsList = await connection.manager.find(obj, {where: {batch_id: params.batchid}});
+        isBlend = isBlend ? isBlend : false;
+
+        let nsList;
+
+        if (isBlend) {
+            nsList = await connection.manager.find(obj, {where: {blend_id: params.batchid}});
+        } else {
+            nsList = await connection.manager.find(obj, {where: {batch_id: params.batchid}});
+        }
 
         if (nsList[0]?.user_id) {
             for (const s of nsList) {

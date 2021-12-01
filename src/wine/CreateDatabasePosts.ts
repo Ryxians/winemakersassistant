@@ -19,6 +19,8 @@ import {wgBatchsFromBlend} from "./get/blend/wgBatchsFromBlend";
 import {wpBatchInactive} from "./put/wpBatchInactive";
 import {GetWineMonthSheet} from "./get/sheet/GetWineMonthSheet";
 import {User} from "../database/entities/User";
+import {Blended_Output} from "../database/entities/Blended_Output";
+import {createBlendedOutputPost} from "./add/blend/waBlendedOutput";
 
 interface Args {
     app:Application
@@ -81,6 +83,10 @@ export const CreateDatabasePosts = (args:Args) => {
 
     // Output
     CreateGetAndAdd(Output, Output.name, args);
+
+    // Blended Output
+    createBlendedOutputPost(args);
+    CreateGetPost(Blended_Output, 'blended_output', args, true);
 
     // Excel Sheet
     GetWineMonthSheet(args);
