@@ -1,11 +1,9 @@
 import {Column, Entity, JoinColumn, ManyToOne, PrimaryColumn} from "typeorm";
 import {Blended_Batch} from "./Blended_Batch";
+import {OutputAbstract} from "./OutputAbstract";
 
 @Entity({name: "Blended_Output"})
-export class Blended_Output {
-
-    @PrimaryColumn()
-    output_date!:Date;
+export class Blended_Output extends OutputAbstract{
 
     @Column()
     blend_id!:number;
@@ -14,12 +12,4 @@ export class Blended_Output {
     @JoinColumn({name: "blend_id"})
     blend!:Blended_Batch;
 
-    @Column()
-    numberOfContainer!:number;
-
-    @Column()
-    containerSize!:number;
-
-    @Column({length:100})
-    notes!:string;
 }
