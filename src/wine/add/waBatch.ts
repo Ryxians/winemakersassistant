@@ -26,7 +26,7 @@ export const WaBatch = ({app, connection}:Args):void => {
                 // Set the batches wine and make it active
                 newBatch.wine = wine;
                 newBatch.active = true;
-                newBatch.last_tank = newBatch.starting_tank;
+                newBatch.tank = newBatch.starting_tank;
 
                 // Attempt to submit new batch to database
                 // If failed, send the error.

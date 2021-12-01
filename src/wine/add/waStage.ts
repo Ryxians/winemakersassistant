@@ -27,7 +27,7 @@ const nsBatch = async (ns: ns, res: Response, req: Request, connection: Connecti
             await connection.manager.save(ns);
             let tank = req.body.new_tank;
             if (tank) {
-                batch.last_tank = tank;
+                batch.tank = tank;
                 await connection.manager.save(batch);
             }
             res.statusMessage = "Batch with ID: " + batch_id + ", has been updated for: " + path;
@@ -47,8 +47,9 @@ export function createAddPost<Entity extends ns> (obj:EntityTarget<Entity>, path
 
     // Generate post with with path name
     app.post('/wine/add/' + path, isAuth,
-        async (req, res) => {
+        async (req, res, next) => {
             // Grab filtering object
             await nsBatch(connection.manager.create(obj, req.body), res, req, connection, path);
+            next();
         });
 }

@@ -46,7 +46,7 @@ export class Batch {
     notes!:string;
 
     @Column({length:3})
-    last_tank!:string;
+    tank!:string;
 
     @OneToMany(() => Fermentation, ferm => ferm.batch)
     fermentation!: Fermentation[];
