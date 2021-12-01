@@ -16,7 +16,7 @@ export function CreatePutPost<Entity extends ns> (obj:EntityTarget<Entity>, path
 
     // Generate post with with path name
     app.put('/wine/put/' + path, isAdmin,
-        async (req, res) => {
+        async (req, res, next) => {
             // Grab filtering object
             const date = new Date(req.body.date)
             const objRepository = connection.getRepository(obj);
@@ -29,7 +29,8 @@ export function CreatePutPost<Entity extends ns> (obj:EntityTarget<Entity>, path
                 let results = await objRepository.save(existingObject)
                 if (results) {
                     res.statusMessage = "Updated " + path +  "!"
-                    res.status(200).send()
+                    res.status(200).send();
+                    next()
                 } else {
                     res.statusMessage = "Failed to update information."
                     res.status(400).send();

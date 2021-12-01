@@ -15,7 +15,8 @@ export const waBatchToBlend = ({app, connection}: Args): void => {
     // When someone posts to the path
     app.post('/wine/add/blend/to/batch/', isAuth,
         async (req,
-               res) => {
+               res,
+               next) => {
 
             const blend = await connection.manager.findOne(Blended_Batch, req.body.blend_id);
             const batch = await connection.manager.findOne(Batch, req.body.batch_id);
@@ -29,6 +30,7 @@ export const waBatchToBlend = ({app, connection}: Args): void => {
                     let results = await connection.getRepository(Blend_to_Batch).save(btb);
                     res.statusMessage = 'Added Batch to Blend: '
                     res.status(201).send(results);
+                    next();
                 } catch (e) {
                     res.statusMessage = 'Failed to add Batch to Blend';
                     res.status(402).send(e);

@@ -83,7 +83,7 @@ createConnection({
             store
         }));
 
-        app.use(doLog);
+
 
         // Create a new users, passes the express app
         CreateUser({app, connection});
@@ -101,6 +101,8 @@ createConnection({
 
         // Load database creation post requests
         CreateDatabasePosts({app, connection});
+
+        app.use(doLog);
 
         let current_datetime = new Date();
 

@@ -11,7 +11,7 @@ interface Args {
 export const WaKit = ({app, connection}:Args):void => {
     // When someone posts to the path
     app.post('/wine/add/kit', isAuth,
-        async (req, res) => {
+        async (req, res, next) => {
             // Declare the new wine object and get the details from the request
             const wine = await connection.manager.create(Wine, req.body);
             if (!req.body.wine_style) {
@@ -32,6 +32,7 @@ export const WaKit = ({app, connection}:Args):void => {
             await connection.manager.save(wine).then(wine => {
                 res.statusMessage = "Wine: " + wine + " has been created!";
                 res.status(201).send(wine);
+                next();
             });
         });
 }

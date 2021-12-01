@@ -32,7 +32,7 @@ export const CreateUser = ({app, connection}: Args): void => {
     initRoot().then();
 
     // Post new users to users
-    app.post('/users/new', isAdmin, (async (req: Request, res: Response) => {
+    app.post('/users/new', isAdmin, (async (req: Request, res: Response, next) => {
         try {
             // Hash the password
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -50,6 +50,7 @@ export const CreateUser = ({app, connection}: Args): void => {
                 await connection.manager.save(user).then(usr => {
                         res.statusMessage = usr.username + " has been created!";
                         res.status(201).send();
+                        next();
                     }
                 )
 

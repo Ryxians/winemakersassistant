@@ -11,7 +11,7 @@ interface Args {
 
 export const UpdateUser = ({app, connection}: Args): void => {
     app.put('/users/put/:id', isAdmin,
-        async (req, res) => {
+        async (req, res, next) => {
             const userRepository = connection.getRepository(User);
             const user = await userRepository.findOne(req.params.id);
             if (user) {
@@ -26,6 +26,7 @@ export const UpdateUser = ({app, connection}: Args): void => {
                 const results = await userRepository.save(user);
                 res.statusMessage = user.username + " has been Updated!";
                 res.status(200).send(results);
+                next();
             } else {
                 res.status(400).send();
             }

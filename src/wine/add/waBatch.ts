@@ -13,7 +13,7 @@ export const WaBatch = ({app, connection}:Args):void => {
 
     // When someone posts to the path
     app.post('/wine/add/batch', isAuth,
-        async (req, res) => {
+        async (req, res, next) => {
             // Grab the wine object and get the details from the request
             const wine_id = req.body.wine_id;
             const wine = await connection.getRepository(Wine).findOne({ wine_id: wine_id });
@@ -34,6 +34,7 @@ export const WaBatch = ({app, connection}:Args):void => {
                     await connection.manager.save(newBatch);
                     res.statusMessage = "New Batch Created with ID: " + newBatch.batch_id;
                     res.status(201).send();
+                    next();
                 } catch (e) {
                     res.statusMessage = e;
                     res.status(400).send();
