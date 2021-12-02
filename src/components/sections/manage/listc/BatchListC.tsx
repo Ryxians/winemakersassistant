@@ -2,7 +2,6 @@ import React, {FC, useEffect, useState} from 'react';
 import {Batch} from '@entities/Batch'
 import {Blended_Batch} from "@entities/Blended_Batch"
 import {Link} from "react-router-dom";
-import {ModalT} from "../modal/ModalT";
 import {FermentationC} from "../stage-components/FermentationC";
 import {RackingC} from "../stage-components/RackingC";
 import {FilteringC} from "../stage-components/FilteringC";
@@ -25,7 +24,6 @@ export const BatchListC: FC<Props> = ({batch, setBatch, blends, user}) => {
     const handleOpen = () => setShow(true);
 
     const {batch_id, wine, tank, start_date} = batch;
-    const [isSelected, setSelected] = useState(false);
     let date = new Date(start_date);
     let newDate = "" + date.getMonth() + "/" + date.getDay() + "/" + date.getFullYear()
 

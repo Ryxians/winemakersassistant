@@ -7,7 +7,6 @@ import Axios from "axios";
 import 'bootstrap/js/dist/modal';
 import {NewBatchC} from "./stage-components/NewBatchC";
 import {NewKitC} from "./stage-components/NewKitC";
-import {BlendedBatchC} from "./stage-components/BlendedBatchC";
 import {DownloadWineSheet} from "./DownloadWineSheet";
 import {User} from '@entities/User'
 
@@ -50,9 +49,6 @@ export const ManageWine: FC<Props> = ({setBatch, user}) => {
                     {<NewBatchC/>}
 
                 </div>
-                {/*<div className="btn-group btn-group-sm p-1">*/}
-                {/*    {wines && <BlendedBatchC/>}*/}
-                {/*</div>*/}
                 <DownloadWineSheet />
                 <div className="btn-group btn-group-sm p-1">
                     <button className="btn btn-secondary" onClick={(evt) => {

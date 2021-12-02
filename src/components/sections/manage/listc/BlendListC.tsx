@@ -2,10 +2,6 @@ import React, {FC, useEffect, useState} from 'react';
 import {Blended_Batch} from "@entities/Blended_Batch"
 import {Batch} from "@entities/Batch"
 import {Link} from "react-router-dom";
-import {ModalT} from "../modal/ModalT";
-import {FermentationC} from "../stage-components/FermentationC";
-import {RackingC} from "../stage-components/RackingC";
-import {FilteringC} from "../stage-components/FilteringC";
 import {OutputC} from "../stage-components/OutputC";
 import {User} from '@entities/User'
 import {Button, Modal, ModalBody} from "react-bootstrap";
@@ -23,7 +19,6 @@ export const BlendListC: FC<Props> = ({blend, setBatch, user}) => {
     const handleOpen = () => setShow(true);
 
     let {blend_id, wine, date, blend_to_batch} = blend;
-    const [isSelected, setSelected] = useState(false);
     date = new Date(date);
     let newDate = "" + date.getMonth() + "/" + date.getDay() + "/" + date.getFullYear()
     const optionStyles = "list-group-item btn";
@@ -33,9 +28,7 @@ export const BlendListC: FC<Props> = ({blend, setBatch, user}) => {
     const id = `blendmod-${blend_id}`
     return (
         <>
-            <tr onClick={() => {
-                setSelected(!isSelected);
-            }}>
+            <tr>
                 <th scope="row">{blend_id}</th>
                 <td>{wine.fancy_name}</td>
                 <td>{newDate}</td>
