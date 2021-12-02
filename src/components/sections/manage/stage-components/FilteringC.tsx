@@ -7,6 +7,7 @@ import Axios from "axios";
 import {ModalFB} from "../../ModalFB";
 import {PopoverInfo} from "../../../PopoverInfo";
 import {sgBody} from "./SGBody";
+import {InputRequiredAlert} from "../../InputRequiredAlert";
 
 interface Filtering {
     batch_id: number
@@ -21,7 +22,7 @@ interface Props {
 }
 
 export const FilteringC: FC<Props> = ({batch}) => {
-    const {handleSubmit, register} = useForm<Filtering>();
+    const {handleSubmit, register, formState: {errors}} = useForm<Filtering>();
     const [submitButton, setSubmit] = useState<HTMLButtonElement>();
 
     const onSubmit = async (filter: Filtering) => {
@@ -49,7 +50,7 @@ export const FilteringC: FC<Props> = ({batch}) => {
                     <input type="datetime-local"
                            className="form-control" {...register("date", {required: true})}/>
                 </div>
-
+                {errors.date && <InputRequiredAlert>Date is required!</InputRequiredAlert>}
                 <div className="input-group">
                 <span className="input-group-text">
                     Filtered SG
@@ -64,15 +65,17 @@ export const FilteringC: FC<Props> = ({batch}) => {
                         />
                     </PopoverInfo>
                 </div>
+                {errors.sg && <InputRequiredAlert>SG is required!</InputRequiredAlert>}
                 <div className="input-group">
                 <span className="input-group-text">
                     New Tank
                 </span>
                     <input type="text"
                            className="form-control"
-                           {...register("new_tank")}
+                           {...register("new_tank", {required: true})}
                     />
                 </div>
+                {errors.new_tank && <InputRequiredAlert>Please specify the new tank!</InputRequiredAlert>}
                 <div className="input-group">
                 <span className="input-group-text">
                     Notes
