@@ -44,7 +44,7 @@ export const ManageWine: FC<Props> = ({setBatch, user}) => {
     }, [])
     return (
         <div className="container">
-            <div className="btn-toolbar p-3">
+            <div className="btn-toolbar p-3 d-print-none">
                 <div className="btn-group btn-group-sm p-1">
                     <NewKitC/>
                     {<NewBatchC/>}
@@ -75,6 +75,7 @@ export const ManageWine: FC<Props> = ({setBatch, user}) => {
                     <th scope="col">Fancy Name</th>
                     <th scope="col">Date Started</th>
                     <th scope="col">Tank</th>
+                    <th scope="col" className={"d-print-none"}>Edit</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -97,6 +98,7 @@ export const ManageWine: FC<Props> = ({setBatch, user}) => {
                     <th scope="col">Fancy Name</th>
                     <th scope="col">Date Started</th>
                     <th scope="col">Tank</th>
+                    <th scope="col" className={"d-print-none"}>Edit</th>
                 </tr>
                 </thead>
                 <tbody>

@@ -9,6 +9,7 @@ import {FilteringC} from "../stage-components/FilteringC";
 import {BlendC} from "../stage-components/BlendC";
 import {OutputC} from "../stage-components/OutputC";
 import {User} from '@entities/User'
+import {Button, Modal} from "react-bootstrap";
 
 interface Props {
     batch: Batch
@@ -18,6 +19,11 @@ interface Props {
 }
 
 export const BatchListC: FC<Props> = ({batch, setBatch, blends, user}) => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleOpen = () => setShow(true);
+
     const {batch_id, wine, tank, start_date} = batch;
     const [isSelected, setSelected] = useState(false);
     let date = new Date(start_date);
@@ -30,37 +36,49 @@ export const BatchListC: FC<Props> = ({batch, setBatch, blends, user}) => {
 
     return (
         <>
-            <tr onClick={() => setSelected(!isSelected)}>
+            <tr>
                 <th scope="row">{batch_id}</th>
                 <td>{wine.fancy_name}</td>
                 <td>{newDate}</td>
                 <td>{tank}</td>
-            </tr>
-            {isSelected && (
-                <tr className="table-info list-group d-print-none">
-                    <ModalT modal_id={modalId} setSelected={setSelected} isSelected={isSelected}
-                            title={wine.fancy_name}
-                            getButton={getButton}
+                <td className={"d-print-none"}>
+                    <Button variant={"primary"} onClick={handleOpen}>Edit</Button>
+                    <Modal show={show}
+                           onHide={handleClose} centered
+                           fullscreen={"md-down"}
                     >
-                        <div className="btn-group-vertical btn-group-lg">
-                            <Link className="btn btn-primary" onClick={() => {
-                                setBatch(batch)
-                                button?.click();
-                            }} to={{pathname: "/winelog"}}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>
+                                {wine.fancy_name}: {batch_id}
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <div className="btn-group-vertical btn-group-lg">
+                                <Link className="btn btn-primary" onClick={() => {
+                                    setBatch(batch)
+                                    button?.click();
+                                }} to={{pathname: "/winelog"}}>
                                     Complete Log
-                            </Link>
-                            <FermentationC batch={batch}/>
-                            <RackingC batch={batch} />
-                            <FilteringC batch={batch} />
-                            {blends && (
+                                </Link>
+                                <FermentationC batch={batch}/>
+                                <RackingC batch={batch} />
+                                <FilteringC batch={batch} />
+                                {blends && (
 
-                            <BlendC batch={batch} blends={blends} />
-                            )}
-                            <OutputC batch={batch} user={user} />
-                        </div>
-                    </ModalT>
-                </tr>
-            )}
+                                    <BlendC batch={batch} blends={blends} />
+                                )}
+                                <OutputC batch={batch} user={user} />
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant={"secondary"} onClick={handleClose}>
+                                Close
+                            </Button>
+                        </Modal.Footer>
+
+                    </Modal>
+                </td>
+            </tr>
         </>
     );
 };
