@@ -7,6 +7,7 @@ import Axios from "axios";
 import {ModalFB} from "../../ModalFB";
 import {PopoverInfo} from "../../../PopoverInfo";
 import {sgBody} from "./SGBody";
+import {AlcoholTest, factors} from "../../../calculator/alctest/AlcoholTest";
 
 interface Racking {
     batch_id: number
@@ -16,6 +17,9 @@ interface Racking {
     sulfite: number
     sorbate: number
     kieselsol: number
+    isinglass: number
+    sgFactor: number
+    volume: number
     new_tank: string
     notes: string
 }
@@ -65,7 +69,7 @@ export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
                     Date of Racking
                 </span>
                     <input type="datetime-local"
-                           className={inputClass} {...register("date", 
+                           className={inputClass} {...register("date",
                         {required: true})}/>
                 </div>
 
@@ -80,7 +84,7 @@ export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
                         <input type="number"
                                step={.001}
                                className={inputClass}
-                               {...register("sg")}
+                               {...register("sg", {required: true})}
                         />
                     </PopoverInfo>
                 </div>
@@ -93,31 +97,79 @@ export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
                            {...register("temperature")}
                     />
                 </div>
-                <div className={groupClass}>
+                <PopoverInfo id={modalId + "-Sulfite"} header={"Sulfite"}
+                             body={"Sulfite information can be found in the kit information."}>
+
+                    <div className={groupClass}>
                 <span className={inputLabelClass}>
                     Sulfite
                 </span>
-                    <input type="number"
-                           className={inputClass}
-                           {...register("sulfite")}
-                    />
-                </div>
-                <div className={groupClass}>
+                        <input type="number"
+                               className={inputClass}
+                               {...register("sulfite")}
+                        />
+                    </div>
+                </PopoverInfo>
+                <PopoverInfo id={modalId + "-Sorbate"} header={"Sorbate"}
+                             body={"Sorbate information can be found in the kit information"}>
+
+                    <div className={groupClass}>
                 <span className={inputLabelClass}>
                     Sorbate
                 </span>
-                    <input type="number"
-                           className={inputClass}
-                           {...register("sorbate")}
-                    />
-                </div>
-                <div className={groupClass}>
+                        <input type="number"
+                               className={inputClass}
+                               {...register("sorbate")}
+                        />
+                    </div>
+                </PopoverInfo>
+                <PopoverInfo id={modalId + "-Kieselsol"} header={"Kieselsol"}
+                             body={"Kieselsol information is found in the kit information."}>
+
+                    <div className={groupClass}>
                     <span className={inputLabelClass}>
                         Kieselsol:
                     </span>
+                        <input type="number"
+                               className={inputClass}
+                               {...register("kieselsol")}/>
+
+                    </div>
+                </PopoverInfo>
+                <PopoverInfo id={modalId + "-isinglass"} header={"Isinglass"}
+                             body={"Isinglass information is found in the kit information."}>
+                    <div className={groupClass}>
+                    <span className={inputLabelClass}>
+                        Isinglass:
+                    </span>
+                        <input type="number"
+                               className={inputClass}
+                               {...register("isinglass")}/>
+
+                    </div>
+                </PopoverInfo>
+                <PopoverInfo id={modalId + "-SGFactor"}
+                             header={"SG Factors"}
+                             placement={"right"}
+                             body={factors}>
+                    <div className={groupClass}>
+                    <span className={inputLabelClass}>
+                        SG Factor:
+                    </span>
+                        <input type="number"
+                               className={inputClass}
+                               step={.001}
+                               {...register("sgFactor")}/>
+
+                    </div>
+                </PopoverInfo>
+                <div className={groupClass}>
+                    <span className={inputLabelClass}>
+                        Vol. Level:
+                    </span>
                     <input type="number"
-                    className={inputClass}
-                        {...register("kieselsol")}/>
+                           className={inputClass}
+                           {...register("volume")}/>
 
                 </div>
                 <div className={groupClass}>
@@ -126,7 +178,7 @@ export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
                 </span>
                     <input type="text"
                            className={inputClass}
-                           {...register("new_tank")}
+                           {...register("new_tank", {required: true})}
                     />
                 </div>
                 <div className={groupClass}>

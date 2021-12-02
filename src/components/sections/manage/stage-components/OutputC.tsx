@@ -86,9 +86,10 @@ export const OutputC: FC<Props> = ({batch, user}) => {
                         </InputGroup>
                         {errors.date && <InputRequiredAlert>Date Required</InputRequiredAlert>}
 
-                        <InputGroup>
+                        <InputGroup >
                             <InputGroup.Text>Fill Level: </InputGroup.Text>
                             <Form.Control type={"number"} {...register("fillLevel")}/>
+
                             <InputGroup.Text>Fill Level 2: </InputGroup.Text>
                             <Form.Control type={"number"} {...register("fillLevelTwo")}/>
                         </InputGroup>
@@ -114,6 +115,8 @@ export const OutputC: FC<Props> = ({batch, user}) => {
                             <Form.Control type={"number"}
                                           {...register("numberOfContainer",
                                               {required: true})} />
+                        </InputGroup>
+                        <InputGroup>
                             <InputGroup.Text>Container Size</InputGroup.Text>
                             <Form.Control type={"number"}
                                           {...register("containerSize",
