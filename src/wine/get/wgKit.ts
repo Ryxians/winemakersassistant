@@ -27,6 +27,5 @@ export const wgKit = ({app, connection}:Args):void => {
             // Declare the new wine object and get the details from the request
             const wines = await connection.manager.find(Wine);
             res.status(wines ? 200 : 400).send(JSON.stringify(wines));
-            console.log("Kits requested!")
         });
 }
