@@ -34,7 +34,7 @@ const nsBatch = async (ns: ns, res: Response, req: Request, connection: Connecti
             res.status(201).send();
         } catch (e) {
             // If the stage fails to be created, send the error back.
-            res.statusMessage = e;
+            res.statusMessage = JSON.stringify(e);
             res.status(400).send();
         }
     } else {

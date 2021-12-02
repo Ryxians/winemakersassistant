@@ -20,6 +20,11 @@ export function CreatePutPost<Entity extends ns> (obj:EntityTarget<Entity>, path
             // Grab filtering object
             const date = new Date(req.body.date)
             const objRepository = connection.getRepository(obj);
+            if (!objRepository) {
+                res.statusMessage = "Failed to get repository";
+                res.status(400).send();
+                return;
+            }
             const existingObject = await objRepository.findOne({date: date});
             if (existingObject) {
                 await objRepository.delete(existingObject)

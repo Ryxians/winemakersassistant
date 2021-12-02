@@ -35,7 +35,7 @@ export const waBlendedBatch = ({app, connection}:Args):void => {
                     res.status(201).send(response);
                     next();
                 } catch (e) {
-                    res.statusMessage = e;
+                    res.statusMessage = JSON.stringify(e);
                     res.status(400).send();
                 }
             } else {

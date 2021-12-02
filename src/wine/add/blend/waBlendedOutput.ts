@@ -28,7 +28,7 @@ const nsBatch = async (out: Blended_Output, res: Response, req: Request, connect
             res.status(201).send();
         } catch (e) {
             // If the stage fails to be created, send the error back.
-            res.statusMessage = e;
+            res.statusMessage = JSON.stringify(e)
             res.status(400).send();
         }
     } else {

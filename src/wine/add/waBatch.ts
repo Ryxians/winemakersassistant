@@ -36,7 +36,7 @@ export const WaBatch = ({app, connection}:Args):void => {
                     res.status(201).send();
                     next();
                 } catch (e) {
-                    res.statusMessage = e;
+                    res.statusMessage = JSON.stringify(e)
                     res.status(400).send();
                 }
             } else {
