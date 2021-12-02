@@ -43,7 +43,6 @@ export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
 
     const onSubmit = async (racking: Racking) => {
         racking.batch_id = batch.batch_id;
-        console.log(racking)
         let res;
         if (racking) {
             res = await Axios.post('/wine/add/racking', racking);
