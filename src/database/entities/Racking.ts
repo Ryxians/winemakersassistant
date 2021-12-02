@@ -14,7 +14,7 @@ export class Racking {
     @JoinColumn({name: "batch_id"})
     batch!:Batch;
 
-    @Column()
+    @Column({type: "double"})
     sg!:number;
 
     @Column()
@@ -32,8 +32,11 @@ export class Racking {
     @Column()
     isinglass!:number;
 
-    @Column()
+    @Column({type: "double"})
     sgFactor:number = 0;
+
+    @Column()
+    alc:number = 0;
 
     @Column()
     volume!:number;
