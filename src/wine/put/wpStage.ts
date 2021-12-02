@@ -25,6 +25,7 @@ export function CreatePutPost<Entity extends ns> (obj:EntityTarget<Entity>, path
                 res.status(400).send();
                 return;
             }
+            //@ts-ignore
             const existingObject = await objRepository.findOne({date: date});
             if (existingObject) {
                 await objRepository.delete(existingObject)
