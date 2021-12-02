@@ -17,6 +17,7 @@ interface Props {
 interface BlendedBatch {
     wine_id: number
     date: Date
+    tank: string
 }
 
 interface Blending {
@@ -140,6 +141,17 @@ export const BlendC: FC<Props> = ({batch, blends}) => {
                     <input type="number"
                            className="form-control" {...register("gallons_used", {required: true})}/>
                 </div>
+                <PopoverInfo id={batch.batch_id + "-BatchBlendTank"} header={"Tank"}
+                             body={"You only need to specify the tank if its a new blend."}>
+
+                <div className="input-group">
+                <span className="input-group-text">
+                    Tank:
+                </span>
+                    <input type="text"
+                           className="form-control" {...register("tank")}/>
+                </div>
+                </PopoverInfo>
             </>
         </ModalFB>
     );

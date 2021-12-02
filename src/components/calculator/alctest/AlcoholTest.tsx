@@ -160,7 +160,10 @@ export const AlcoholTest: FC<Props> = () => {
               <span className={"input-group-text"}>
                   Factor from list
               </span>
-                    <PopoverInfo id={"AlcoholTestFactors"} header={"Factors"} body={factors}>
+                    <PopoverInfo id={"AlcoholTestFactors"} header={"Factors"}
+                                 body={factors}
+                                 placement={"right"}
+                    >
                         <input type="number"
                                className={"form-control"}
                                step={.001}
