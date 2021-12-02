@@ -7,7 +7,9 @@ interface Props {
 }
 
 export const RackingWLC : FC<Props> = ({racking}) => {
-    const {date, sg, temperature, sulfite, sorbate, kieselsol} = racking;
+    const {date, sg, temperature, sulfite, sorbate, kieselsol,
+        isinglass, sgFactor, volume, alc, new_tank
+    } = racking;
     let time = date.toLocaleString().split(",");
  return (
      <>
@@ -25,17 +27,17 @@ export const RackingWLC : FC<Props> = ({racking}) => {
                  <td>Kieselsol: {kieselsol}</td>
              </tr>
              <tr>
-                 <td>Isinglass: </td>
-                 <td>SG Factor: </td>
-                 <td>Vol. level</td>
+                 <td>Isinglass: {isinglass}</td>
+                 <td>SG Factor: {sgFactor}</td>
+                 <td>Vol. level: {volume}</td>
              </tr>
              <tr>
-                 <td>ALC Test: </td>
-                 <td>ALC %: </td>
-                 <td>ALC Test Date: </td>
+                 <td>ALC Test: {sg}</td>
+                 <td>ALC %: {alc}</td>
+                 <td></td>
              </tr>
              <tr>
-                 <td>Tank #: </td>
+                 <td>Tank #: {new_tank}</td>
                  <td colSpan={2}>Notes: </td>
              </tr>
              </tbody>

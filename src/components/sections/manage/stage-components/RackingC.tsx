@@ -19,6 +19,7 @@ interface Racking {
     kieselsol: number
     isinglass: number
     sgFactor: number
+    alc: number
     volume: number
     new_tank: string
     notes: string
@@ -42,6 +43,7 @@ export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
 
     const onSubmit = async (racking: Racking) => {
         racking.batch_id = batch.batch_id;
+        console.log(racking)
         let res;
         if (racking) {
             res = await Axios.post('/wine/add/racking', racking);
@@ -163,13 +165,27 @@ export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
 
                     </div>
                 </PopoverInfo>
+                <PopoverInfo id={modalId + "-ALCTest"} header={"ALC Test"}
+                             body={"The Alcohol Calculator can be found in the Calculators tab."}>
+                    <div className={groupClass}>
+                    <span className={inputLabelClass}>
+                        ALC %:
+                    </span>
+                        <input type="number"
+                               className={inputClass}
+                               step={.001}
+                               {...register("alc")}/>
+
+                    </div>
+                </PopoverInfo>
                 <div className={groupClass}>
                     <span className={inputLabelClass}>
                         Vol. Level:
                     </span>
                     <input type="number"
+                           step={.001}
                            className={inputClass}
-                           {...register("volume")}/>
+                           {...register("volume", {required: true})}/>
 
                 </div>
                 <div className={groupClass}>

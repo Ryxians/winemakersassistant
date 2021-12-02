@@ -153,6 +153,7 @@ export const NewBatchC: FC<Props> = () => {
 
                             <input type="number"
                                    className="form-control"
+                                   step={.001}
                                    {...register("volume",
                                        {required:true})}
                             />
