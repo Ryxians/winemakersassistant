@@ -15,7 +15,7 @@
     "buidClient": "npm --prefix ./winemakersassistant-client run build",
     "buidClientDev": "npm --prefix ./winemakersassistant-client run buildDev",
     "prebuildServer": "npm run fatInstall && npm run clean",
-    "buildServer": "tsc",
+    "buildServer": "npx tsc",
     "postbuildServer": "npm run buidClient && npm prune --production"
   },
   "keywords": [],
