@@ -47,7 +47,7 @@ export const FilteringC: FC<Props> = ({batch}) => {
                     Date of Filtering
                 </span>
                     <input type="datetime-local"
-                           className="form-control" {...register("date")}/>
+                           className="form-control" {...register("date", {required: true})}/>
                 </div>
 
                 <div className="input-group">
@@ -60,7 +60,7 @@ export const FilteringC: FC<Props> = ({batch}) => {
 
                         <input type="number"
                                className="form-control"
-                               {...register("sg")}
+                               {...register("sg", {required: true})}
                         />
                     </PopoverInfo>
                 </div>
