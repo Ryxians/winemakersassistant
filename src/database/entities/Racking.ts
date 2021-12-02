@@ -29,6 +29,15 @@ export class Racking {
     @Column()
     kieselsol!:number;
 
+    @Column()
+    isinglass!:number;
+
+    @Column()
+    sgFactor:number = 0;
+
+    @Column()
+    volume!:number;
+
     @Column({length: 4})
     new_tank!:string;
 
