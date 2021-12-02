@@ -6,6 +6,7 @@ import {Blended_Batch} from "@entities/Blended_Batch"
 import Axios from "axios";
 import {Wine} from '@entities/Wine'
 import {FormControl, InputGroup} from "react-bootstrap";
+import {InputRequiredAlert} from "../../InputRequiredAlert";
 
 interface Props {
     batch: Batch
@@ -25,7 +26,7 @@ interface Blending {
 }
 
 export const BlendC: FC<Props> = ({batch, blends}) => {
-    const {handleSubmit, register, setValue} = useForm<Blending & BlendedBatch>();
+    const {handleSubmit, register, setValue, setError, formState: {errors}} = useForm<Blending & BlendedBatch>();
 
     const [submitButton, setSubmit] = useState<HTMLButtonElement>()
 
@@ -72,7 +73,7 @@ export const BlendC: FC<Props> = ({batch, blends}) => {
                     }
                 });
 
-        } else {
+        } else if (blend.wine_id && blend.wine_id > -1) {
             blend.blend_id = undefined;
             Axios.post('/wine/add/blend/batch', blend).then(res => {
                 if (res.status === 201) {
@@ -89,6 +90,8 @@ export const BlendC: FC<Props> = ({batch, blends}) => {
                         });
                 }
             })
+        } else {
+            setError("blend_id", {message: "You must select an Active Blend or a New Blend!"})
         }
 
     }
@@ -99,12 +102,11 @@ export const BlendC: FC<Props> = ({batch, blends}) => {
                  setSubmit={setSubmit}
         >
             <>
-                <h5 className="text-warning">This adds a wine to a Blended Batch, this does not create a blended batch.</h5>
                 <InputGroup>
                     <InputGroup.Text>Date: </InputGroup.Text>
                     <input type={"datetime-local"}
                            className={"form-control"}
-                           {...register("date")}
+                           {...register("date", {required: true})}
                     />
                 </InputGroup>
                 <InputGroup>
@@ -123,12 +125,13 @@ export const BlendC: FC<Props> = ({batch, blends}) => {
                         {wines.map(({wine_id, fancy_name}) => <option key={wine_id} value={wine_id}>{fancy_name}</option>)}
                     </FormControl>
                 </InputGroup>
+                {errors.blend_id && <InputRequiredAlert>{errors.blend_id.message}</InputRequiredAlert>}
                 <div className="input-group">
                 <span className="input-group-text">
                     Gallons Used:
                 </span>
                     <input type="number"
-                           className="form-control" {...register("gallons_used")}/>
+                           className="form-control" {...register("gallons_used", {required: true})}/>
                 </div>
             </>
         </ModalFB>
