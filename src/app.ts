@@ -47,7 +47,7 @@ createConnection({
     host: process.env.DB_HOST,
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
-    database: 'WMA_Prot',
+    database: process.env.DB_NAME,
     entities: [
         User,
         Wine,
