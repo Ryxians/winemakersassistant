@@ -49,6 +49,7 @@ export const GetWineMonthSheet = ({app, connection}:Args) => {
         let wines = await wineRep.createQueryBuilder("wine").
         leftJoinAndSelect("wine.batchs", "batchs").leftJoinAndSelect("batchs.output", "output")
             .select()
+            .where("wine.wine_style != :id", {id: "BLENDED"})
             .getMany();
 
         // Filter the wines based on the date
@@ -101,7 +102,66 @@ export const GetWineMonthSheet = ({app, connection}:Args) => {
 
             // Add new row
             ws_data.push({"Style": w.wine_style, "Fancy Name": w.fancy_name, "Output (Liters)":bottled});
-        })
+        });
+
+        // Grab all the wines with their blends and blended outputs
+        wines = await wineRep.createQueryBuilder("wine").
+        leftJoinAndSelect("wine.blends", "blends").leftJoinAndSelect("blends.blended_output", "output")
+            .select()
+            .where("wine.wine_style = :id", {id: "BLENDED"})
+            .getMany();
+
+        // Filter the wines based on the date
+        wines.forEach(w => {
+
+            // Filter the batchs based on the date
+            let b = w.blends.filter(b => {
+
+                // Filter the outputs based on the date
+                let o = b.blended_output.filter(o => {
+                    // Get bottling date
+                    let tempdate = new Date(o.date);
+
+                    // If its the same month and year return the output
+                    if (tempdate.getUTCMonth() === current_datetime.getUTCMonth() &&
+                        tempdate.getFullYear() === current_datetime.getFullYear()) {
+                        return o;
+                    }
+                })
+
+                // If there are outputs, update the outputs and return the batch
+                b.blended_output = o;
+
+            });
+
+            // If there is a batch, update the batchs and return the wine
+            if (b && b.length > 0) {
+                w.blends = b;
+                return w;
+            };
+        });
+
+        // For each wine, create a row in the excel sheet
+        wines.forEach(w => {
+            // Amount of wine in liters
+            let bottled = 0;
+
+            // For each batch
+            for (const blend of w.blends){
+                // For each output,
+                // get the ml by multiplying the size of the container
+                // and the number of the container
+                for (const out of blend.blended_output) {
+                    bottled += out.numberOfContainer * out.containerSize;
+                }
+            }
+
+            // Divide bottled by 1000 to convert to liters
+            bottled = bottled/1000;
+
+            // Add new row
+            ws_data.push({"Style": w.wine_style, "Fancy Name": w.fancy_name, "Output (Liters)":bottled});
+        });
 
         // turn content into sheet
         let ws = XLXS.utils.json_to_sheet(ws_data);
