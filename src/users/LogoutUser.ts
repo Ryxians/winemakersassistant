@@ -6,7 +6,7 @@ interface Args {
     connection:Connection
 }
 
-export const LogoutUser = ({app, connection}:Args):void => {
+export const LogoutUser = ({app}:Args):void => {
     app.post('/users/logout', (req, res) => {
         req.session.isAuth = false;
         req.session.destroy(() => res.send());

@@ -12,16 +12,21 @@ interface Args {
 export const UpdateUser = ({app, connection}: Args): void => {
     app.put('/users/put/:id', isAdmin,
         async (req, res, next) => {
+
+        // Get user
             const userRepository = connection.getRepository(User);
             const user = await userRepository.findOne(req.params.id);
             if (user) {
-                let { password } = req.body;
+                // If there is a new password, encrypt it
+                let {password} = req.body;
                 if (password !== "" || !password) {
                     password = await bcrypt.hash(password, 10);
                 } else {
                     password = user.password;
                 }
                 req.body.password = password;
+
+                // merge and save the updated user
                 userRepository.merge(user, req.body);
                 const results = await userRepository.save(user);
                 res.statusMessage = user.username + " has been Updated!";
