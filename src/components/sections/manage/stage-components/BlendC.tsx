@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 import {ModalFB} from "../../ModalFB";
-import {set, useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import {Batch} from "@entities/Batch"
 import {Blended_Batch} from "@entities/Blended_Batch"
 import Axios from "axios";

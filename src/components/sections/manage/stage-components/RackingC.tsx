@@ -1,13 +1,11 @@
 import React, {FC, useState} from 'react';
-import {Batch} from '@entities/Batch'
-import {Blended_Batch} from '@entities/Blended_Batch'
-import {Redirect} from "react-router-dom";
+import {Batch} from '@entities/Batch';
 import {useForm} from "react-hook-form";
 import Axios from "axios";
 import {ModalFB} from "../../ModalFB";
 import {PopoverInfo} from "../../../PopoverInfo";
 import {sgBody} from "./SGBody";
-import {AlcoholTest, factors} from "../../../calculator/alctest/AlcoholTest";
+import {factors} from "../../../calculator/alctest/AlcoholTest";
 
 interface Racking {
     batch_id: number
@@ -32,7 +30,7 @@ interface Props {
     className?: string
 }
 
-export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
+export const RackingC: FC<Props> = ({batch, racking, name}) => {
 
     const [close, setClose] = useState<Function>(() => {});
     const {handleSubmit, register} = useForm<Racking>();

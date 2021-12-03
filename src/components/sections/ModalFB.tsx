@@ -26,7 +26,6 @@ interface Props {
 }
 
 export const ModalFB: FC<Props> = ({
-                                       id,
                                        title,
                                        children,
                                        handleSubmit,

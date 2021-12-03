@@ -1,6 +1,5 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
-import {NewKitC} from "./NewKitC";
 import {Wine} from "@entities/Wine"
 import Axios from "axios";
 import {ModalFB} from "../../ModalFB";

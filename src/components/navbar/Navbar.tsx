@@ -3,9 +3,7 @@ import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/js/dist/collapse';
 import {Link} from "react-router-dom";
 import {User} from "@entities/User";
-import {Nav, NavDropdown, NavLink} from "react-bootstrap";
-import {AlcoholTest} from "../calculator/alctest/AlcoholTest";
-import {PortCalculator} from "../calculator/alctest/PortCalculator";
+import {Nav} from "react-bootstrap";
 
 interface Props {
     logout: any
@@ -32,7 +30,7 @@ export const Navbar: FC<Props> = ({logout, user}) => {
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
+                    <span className="navbar-toggler-icon"/>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">

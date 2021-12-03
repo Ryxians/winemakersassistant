@@ -49,7 +49,7 @@ export const FiveHundredFiftyLiter : FC<Props> = () => {
                      <h6 className={"fw-bold"}>Red/White</h6>
                      <InputGroup>
                          <InputGroup.Text># Of Kits</InputGroup.Text>
-                         <Form.Control type={"number"} {...register("kits")}></Form.Control>
+                         <Form.Control type={"number"} {...register("kits")}/>
                          <InputGroup.Text>Max is 25</InputGroup.Text>
                      </InputGroup>
 
@@ -69,7 +69,7 @@ export const FiveHundredFiftyLiter : FC<Props> = () => {
 
                      <InputGroup>
                          <InputGroup.Text># Of Kits</InputGroup.Text>
-                         <Form.Control type={"number"} {...register("kitsS")}></Form.Control>
+                         <Form.Control type={"number"} {...register("kitsS")}/>
                          <InputGroup.Text>Max is 26</InputGroup.Text>
                      </InputGroup>
                      <InputGroup>

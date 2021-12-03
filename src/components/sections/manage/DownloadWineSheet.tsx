@@ -1,8 +1,8 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import download from "downloadjs";
 import Axios from "axios";
 import {PopoverInfo} from "../../PopoverInfo";
-import {Button, ButtonGroup, InputGroup} from "react-bootstrap";
+import {Button, ButtonGroup} from "react-bootstrap";
 
 interface Props {
 

@@ -43,7 +43,7 @@ export const FiftyGallon : FC<Props> = () => {
                  <Form onSubmit={handleSubmit(calc)}>
                      <InputGroup>
                          <InputGroup.Text># Of Kits</InputGroup.Text>
-                         <Form.Control type={"number"} {...register("kits")}></Form.Control>
+                         <Form.Control type={"number"} {...register("kits")}/>
                          <InputGroup.Text>Max is 8</InputGroup.Text>
                      </InputGroup>
 

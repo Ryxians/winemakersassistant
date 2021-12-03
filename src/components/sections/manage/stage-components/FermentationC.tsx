@@ -21,9 +21,9 @@ interface Props {
     className?: string
 }
 
-export const FermentationC: FC<Props> = ({batch, ferm, name, className}) => {
+export const FermentationC: FC<Props> = ({batch, ferm, name}) => {
     const [close, setClose] = useState<Function>(() => {});
-    const {handleSubmit, register, setValue} = useForm<Fermentation>({
+    const {handleSubmit, register} = useForm<Fermentation>({
         defaultValues: ferm
     });
 

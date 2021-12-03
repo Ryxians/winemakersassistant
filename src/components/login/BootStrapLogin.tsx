@@ -20,13 +20,15 @@ type Inputs = {
 // Aug 1, 2021
 export const BootStrapLogin: FC<Props> = ({isLoggedIn, handleLogin}) => {
     const { register, handleSubmit, setError, formState: { errors } } = useForm<Inputs>();
+    // On login
     const onSubmit: SubmitHandler<Inputs> = async user => {
         await Axios.post('/users/login', user)
             .then(res => {
-                console.log("Status: " + res.status);
+                // If login worked
                 if (res.status === 200) {
                     handleLogin(res.data);
                 } else {
+                    // If its not logged in set error
                     switch (res.status) {
                         case 403:
                             setError("password", {

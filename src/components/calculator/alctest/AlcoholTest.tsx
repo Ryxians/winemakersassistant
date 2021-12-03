@@ -17,7 +17,8 @@ interface Inputs {
 
 }
 
-export     const factors = (
+// SG Factors
+export const factors = (
     <table>
         <thead>
         <tr>
@@ -106,11 +107,15 @@ export     const factors = (
 
 
 export const AlcoholTest: FC<Props> = () => {
+    // Create form
     const {handleSubmit, register} = useForm<Inputs>();
+
+    // React output
     const [ALC, setALC] = useState(<h4>Alcohol %: </h4>);
 
 
-    const onSubmit = (inputs:Inputs) => {
+    // When the user hits the Add Button
+    const onSubmit = (inputs: Inputs) => {
         let {Start, Final, Add, Factor} = inputs;
 
         setALC(<h4>Alcohol % Equals: {calcAlc(Start, Final, Add, Factor)}</h4>)

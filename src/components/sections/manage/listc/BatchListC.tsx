@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {Batch} from '@entities/Batch'
 import {Blended_Batch} from "@entities/Blended_Batch"
 import {Link} from "react-router-dom";
@@ -27,10 +27,6 @@ export const BatchListC: FC<Props> = ({batch, setBatch, blends, user}) => {
     let date = new Date(start_date);
     let newDate = "" + date.getMonth() + "/" + date.getDay() + "/" + date.getFullYear()
 
-    const [button, getButton] = useState<HTMLButtonElement>()
-
-    const optionStyles = "list-group-item btn";
-    const modalId = `batchmod-${batch_id}`
 
     return (
         <>
@@ -54,7 +50,6 @@ export const BatchListC: FC<Props> = ({batch, setBatch, blends, user}) => {
                             <div className="btn-group-vertical btn-group-lg">
                                 <Link className="btn btn-primary" onClick={() => {
                                     setBatch(batch)
-                                    button?.click();
                                 }} to={{pathname: "/winelog"}}>
                                     Complete Log
                                 </Link>

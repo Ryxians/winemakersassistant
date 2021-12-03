@@ -44,7 +44,7 @@ export const ElevenHundredLiter: FC<Props> = () => {
                     <Form onSubmit={handleSubmit(calc)}>
                         <InputGroup>
                             <InputGroup.Text># Of Kits</InputGroup.Text>
-                            <Form.Control type={"number"} {...register("kits")}></Form.Control>
+                            <Form.Control type={"number"} {...register("kits")}/>
                         </InputGroup>
 
                         <Button variant="primary" type={"submit"}>

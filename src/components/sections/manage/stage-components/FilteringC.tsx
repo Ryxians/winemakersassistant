@@ -1,7 +1,5 @@
 import React, {FC, useState} from 'react';
-import {Batch} from '@entities/Batch'
-import {Blended_Batch} from '@entities/Blended_Batch'
-import {Redirect} from "react-router-dom";
+import {Batch} from '@entities/Batch';
 import {useForm} from "react-hook-form";
 import Axios from "axios";
 import {ModalFB} from "../../ModalFB";
@@ -27,7 +25,6 @@ export const FilteringC: FC<Props> = ({batch}) => {
 
     const [close, setClose] = useState<Function>(() => {});
     const onSubmit = async (filter: Filtering) => {
-        // @ts-ignore
         // There is an error in which batch may be undefined
         // However, if batch is undefined then the page is set to redirect.
         // So batch should never be undefined.

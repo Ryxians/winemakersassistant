@@ -1,10 +1,10 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {Blended_Batch} from "@entities/Blended_Batch"
 import {Batch} from "@entities/Batch"
 import {Link} from "react-router-dom";
 import {OutputC} from "../stage-components/OutputC";
 import {User} from '@entities/User'
-import {Button, Modal, ModalBody} from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
 
 interface Props {
     blend: Blended_Batch
@@ -18,14 +18,9 @@ export const BlendListC: FC<Props> = ({blend, setBatch, user}) => {
     const handleClose = () => setShow(false);
     const handleOpen = () => setShow(true);
 
-    let {blend_id, wine, date, blend_to_batch} = blend;
+    let {blend_id, wine, date} = blend;
     date = new Date(date);
     let newDate = "" + date.getMonth() + "/" + date.getDay() + "/" + date.getFullYear()
-    const optionStyles = "list-group-item btn";
-
-    const [button, getButton] = useState<HTMLButtonElement>()
-
-    const id = `blendmod-${blend_id}`
     return (
         <>
             <tr>
@@ -48,7 +43,6 @@ export const BlendListC: FC<Props> = ({blend, setBatch, user}) => {
                             <div className="btn-group-vertical">
                                 <Link className="btn btn-primary" onClick={() => {
                                     setBatch(blend);
-                                    button?.click();
                                 }} to={{pathname: "/winelog"}}>
                                     Complete Log
                                 </Link>
