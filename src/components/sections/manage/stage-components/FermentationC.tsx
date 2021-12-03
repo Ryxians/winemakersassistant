@@ -22,11 +22,11 @@ interface Props {
 }
 
 export const FermentationC: FC<Props> = ({batch, ferm, name, className}) => {
-
+    const [close, setClose] = useState<Function>(() => {});
     const {handleSubmit, register, setValue} = useForm<Fermentation>({
         defaultValues: ferm
     });
-    const [submitButton, setSubmit] = useState<HTMLButtonElement>();
+
 
 
     const onSubmit = async (ferment: Fermentation) => {
@@ -39,17 +39,17 @@ export const FermentationC: FC<Props> = ({batch, ferm, name, className}) => {
         }
 
         if (res.status === 201) {
-            submitButton?.click();
+            close();
         }
     }
 
     let id = "ferment-";
     id += ferm ? ferm.date.getDay() : batch.batch_id;
 
+
     return (
         <ModalFB id={id} handleSubmit={handleSubmit} onSubmit={onSubmit} title={name ? name : "Fermentation"}
-                 modalception={true} className={className}
-                 setSubmit={setSubmit}
+                 setClose={setClose}
         >
             <>
                 <div className="input-group">

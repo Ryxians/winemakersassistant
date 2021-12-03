@@ -16,16 +16,15 @@ interface Inputs {
 }
 
 export const NewKitC: FC<Props> = ({setWine}) => {
-    // const [isBlended, setBlended] = useState(false);
-    const [submitButton, setSubmit] = useState<HTMLButtonElement>()
 
+    const [close, setClose] = useState<Function>(() => {});
     const {handleSubmit, register, setValue, formState: {errors}} = useForm<Inputs>();
 
     const onSubmit: SubmitHandler<Inputs> = async newKit => {
         Axios.post('/wine/add/kit', newKit).then ( res => {
             setWine && setWine(res.data.wine_id);
             if (res.status === 201) {
-                submitButton?.click();
+                close();
             }
         });
     }
@@ -47,8 +46,7 @@ export const NewKitC: FC<Props> = ({setWine}) => {
                  onSubmit={onSubmit}
                  title={"New Kit"}
                  id={"CreateNewKitModal"}
-                 modalception={true}
-                 setSubmit={setSubmit}
+                 setClose={setClose}
         >
             <>
 

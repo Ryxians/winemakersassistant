@@ -1,4 +1,5 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
+import {Button, Modal} from "react-bootstrap";
 
 interface Props {
     children: JSX.Element
@@ -14,14 +15,11 @@ interface Props {
     // What the button and Modal Header displays
     title: string
 
-    // Whether the modal is being called within another Modal
-    modalception?: undefined | boolean
+    // Close function from outside
+    setClose?: any
 
-    // Styling for the button
+    //Class Name
     className?: string
-
-    // setSubmit binds the submit button to an object, allowing you to submit after code has been run
-    setSubmit?: Function
 
     // A function to be called after the Modal is closed.
     onClick?: Function
@@ -33,84 +31,47 @@ export const ModalFB: FC<Props> = ({
                                        children,
                                        handleSubmit,
                                        onSubmit,
-                                       modalception,
-                                       className,
-                                       setSubmit,
-                                       onClick
+                                       onClick,
+                                       setClose,
+                                       className
                                    }) => {
-    // If modalception isn't specified, assume false
-    if (!modalception) {
-        modalception = false;
+    const [show, setShow] = useState(false);
+
+    const handleOpen = () => setShow(true);
+    const handleClose = () => {
+        setShow(false);
+        onClick && onClick();
     }
 
-    // If no class is given, create one
-    if (!className) {
-        className = ""
-    }
-    className += " btn btn-primary";
-
-    // Button used for closing modal
-    let button: HTMLButtonElement | null;
+    useEffect(() => {
+        setClose && setClose(handleClose)
+    }, [])
 
 
     return (
         <>
-            <div className="modal fade" id={`${id}`}>
-                <div className="modal-dialog modal-dialog-centered modal-lg modal-fullscreen-md-down">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h3 className="modal-title">{title}: </h3>
-                        </div>
-                        <form className="container" onSubmit={handleSubmit(onSubmit)}>
-                            <div className="modal-body">
-                                {children}
-                            </div>
-                            <div className="modal-footer">
-                                <button onClick={() => setSubmit ? setSubmit(button) : button?.click()}
-                                        type="submit"
-                                        className="btn btn-primary m-1">Add
-                                </button>
-                                {
-                                    modalception ? (
-                                            <>
-
-                                                <button ref={b => button = b} type="button" className="invisible"
-                                                        data-bs-target={`#${id}`}
-                                                        data-bs-toggle="modal">Add
-                                                </button>
-                                                <button type="button" className="btn btn-secondary"
-                                                        data-bs-target={`#${id}`}
-                                                        data-bs-toggle="modal">Go Back
-                                                </button>
-                                            </>
-
-                                        ) :
-                                        (
-                                            <>
-                                                <button ref={b => button = b} type="button"
-                                                        className="invisible" data-bs-dismiss="modal">Add
-                                                </button>
-                                                <button type="button" className="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close
-                                                </button>
-                                            </>
-                                        )
-                                }
-
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-            <button type="button" className={className}
-                    data-bs-toggle="modal" data-bs-target={`#${id}`}
-                    onClick={() => {
-                        onClick && onClick();
-                    }}
+            <Modal show={show}
+                   onHide={handleClose} centered
+                   size={"lg"}
+                   fullscreen={"md-down"}
+                   className={className}
             >
-                {title}
-            </button>
+                <Modal.Header>
+                    <Modal.Title>{title}: </Modal.Title>
+                </Modal.Header>
+                <form className={"container"} onSubmit={handleSubmit(onSubmit)}>
+                    <Modal.Body>
+                        {children}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button type={"submit"}>Add</Button>
+                        <Button onClick={handleClose}>Return</Button>
+                    </Modal.Footer>
+                </form>
+
+            </Modal>
+
+            <Button onClick={handleOpen}>{title}</Button>
         </>
 
     );

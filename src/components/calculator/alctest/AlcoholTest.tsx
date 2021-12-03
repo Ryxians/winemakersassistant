@@ -107,8 +107,7 @@ export     const factors = (
 
 export const AlcoholTest: FC<Props> = () => {
     const {handleSubmit, register} = useForm<Inputs>();
-    const [ALC, setALC] = useState(<h4>Alcohol %: </h4>)
-    const [submitButton, setSubmit] = useState<HTMLButtonElement>();
+    const [ALC, setALC] = useState(<h4>Alcohol %: </h4>);
 
 
     const onSubmit = (inputs:Inputs) => {
@@ -125,7 +124,6 @@ export const AlcoholTest: FC<Props> = () => {
             onSubmit={onSubmit}
             id={"AlcoholTest"}
             title={"Alcohol Test"}
-            setSubmit={setSubmit}
         >
             <>
                 <div className={"input-group"}>

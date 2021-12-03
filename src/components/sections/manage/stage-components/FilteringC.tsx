@@ -23,8 +23,9 @@ interface Props {
 
 export const FilteringC: FC<Props> = ({batch}) => {
     const {handleSubmit, register, formState: {errors}} = useForm<Filtering>();
-    const [submitButton, setSubmit] = useState<HTMLButtonElement>();
 
+
+    const [close, setClose] = useState<Function>(() => {});
     const onSubmit = async (filter: Filtering) => {
         // @ts-ignore
         // There is an error in which batch may be undefined
@@ -34,13 +35,13 @@ export const FilteringC: FC<Props> = ({batch}) => {
         let res = await Axios.post('/wine/add/filtering', filter);
 
         if (res.status === 201) {
-            submitButton?.click();
+            close();
         }
     }
     return (
-        <ModalFB modalception={true} id={`filtering-${batch.batch_id}`} handleSubmit={handleSubmit} onSubmit={onSubmit}
+        <ModalFB id={`filtering-${batch.batch_id}`} handleSubmit={handleSubmit} onSubmit={onSubmit}
                  title={"Filtering"}
-                 setSubmit={setSubmit}
+                 setClose={setClose}
         >
             <>
                 <div className="input-group">

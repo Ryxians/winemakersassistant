@@ -17,7 +17,6 @@ interface Inputs {
 export const PortCalculator : FC<Props> = () => {
     const {handleSubmit, register} = useForm<Inputs>();
     const [ALC, setALC] = useState(<h4>Alcohol %: </h4>)
-    const [submitButton, setSubmit] = useState<HTMLButtonElement>();
 
     const onSubmit = ({Alcohol, BrandyProof, TotalBrandy, TotalWine}:Inputs) => {
 
@@ -29,7 +28,6 @@ export const PortCalculator : FC<Props> = () => {
          onSubmit={onSubmit}
          id={"PortCalc"}
          title={"Port Calculator"}
-         setSubmit={setSubmit}
      >
          <>
              <div className={"input-group"}>

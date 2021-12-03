@@ -33,14 +33,15 @@ export const NewBatchC: FC<Props> = () => {
     }
 
     const [wines, setWines] = useState<wine[]>([]);
-    const [isNew, setNew] = useState(false);
-    const [submitButton, setSubmit] = useState<HTMLButtonElement>()
 
+
+
+    const [close, setClose] = useState<Function>(() => {});
     const {handleSubmit, register, setValue, formState: {errors}} = useForm<Inputs>();
     const onSubmit: SubmitHandler<Inputs> = async newBatch => {
         Axios.post('/wine/add/batch', newBatch).then(res => {
             if (res.status === 201) {
-                submitButton?.click();
+                close();
             }
         });
     }
@@ -86,7 +87,7 @@ export const NewBatchC: FC<Props> = () => {
                      onSubmit={onSubmit}
                      title={"New Batch"}
                      id={"CreateBatchModal"}
-                     setSubmit={setSubmit}
+                     setClose={setClose}
                      onClick={() => {
                          getWines().then();
                      }}

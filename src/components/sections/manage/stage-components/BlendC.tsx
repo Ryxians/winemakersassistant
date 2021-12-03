@@ -30,7 +30,7 @@ interface Blending {
 export const BlendC: FC<Props> = ({batch, blends}) => {
     const {handleSubmit, register, setValue, setError, formState: {errors}} = useForm<Blending & BlendedBatch>();
 
-    const [submitButton, setSubmit] = useState<HTMLButtonElement>()
+    const [close, setClose] = useState<Function>(() => {});
 
     interface wine {
         wine_id: number
@@ -67,12 +67,13 @@ export const BlendC: FC<Props> = ({batch, blends}) => {
 
     const onSubmit = (blend: Blending & BlendedBatch) => {
 
+
         blend.batch_id = batch.batch_id;
         if (blend.blend_id && blend.blend_id > -1) {
             Axios.post('/wine/add/blend/to/batch/', blend)
                 .then(res => {
                     if (res.status === 201) {
-                        submitButton?.click();
+                        close();
                     }
                 });
 
@@ -88,7 +89,7 @@ export const BlendC: FC<Props> = ({batch, blends}) => {
                         .then(res => {
                             if (res.status === 201) {
                                 console.log(res.data)
-                                submitButton?.click();
+                                close();
                             }
                         });
                 }
@@ -101,8 +102,7 @@ export const BlendC: FC<Props> = ({batch, blends}) => {
     return (
         <ModalFB handleSubmit={handleSubmit}
                  onSubmit={onSubmit} title={"Blending"} id={`blending-${batch.batch_id}`}
-                 modalception={true}
-                 setSubmit={setSubmit}
+                 setClose={setClose}
         >
             <>
                 <InputGroup>

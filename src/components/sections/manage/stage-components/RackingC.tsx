@@ -33,8 +33,8 @@ interface Props {
 }
 
 export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
-    const [submitButton, setSubmit] = useState<HTMLButtonElement>()
 
+    const [close, setClose] = useState<Function>(() => {});
     const {handleSubmit, register} = useForm<Racking>();
     let modalId = `racking-${batch.batch_id}`
     const groupClass = 'input-group';
@@ -52,7 +52,7 @@ export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
         }
 
         if (res.status === 201) {
-            submitButton?.click();
+            close();
         }
     }
     return (
@@ -60,9 +60,7 @@ export const RackingC: FC<Props> = ({batch, racking, name, className}) => {
                  title={name ? name : "Racking"}
                  onSubmit={onSubmit}
                  handleSubmit={handleSubmit}
-                 modalception={true}
-                 className={className}
-                 setSubmit={setSubmit}
+                 setClose={setClose}
         >
             <>
                 <div className={groupClass}>
