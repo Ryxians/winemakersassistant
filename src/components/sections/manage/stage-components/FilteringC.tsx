@@ -61,6 +61,7 @@ export const FilteringC: FC<Props> = ({batch}) => {
                                  body={sgBody}>
 
                         <input type="number"
+                               step={.001}
                                className="form-control"
                                {...register("sg", {required: true})}
                         />
