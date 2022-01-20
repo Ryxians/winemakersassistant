@@ -1,51 +1,35 @@
 # Wine Maker's Assistant
+The Wine Maker’s Assistant is freely available on GitHub, the following instructions assumes GIT is installed locally on the system.
 
-# The Client must be present within the Server
-./winemakersassistant-server/winemakersassistant-client
+The Wine Maker's Assistant is my senior project, representing the culmination of my college career. For its future implementation, I would recommend a rebuild utilizing a web framework such as Next.js or Remix. In its current state it is inefficient and insecure.
 
-# Getting Started with Create React App
+### 1.	Navigate to the directory you wish to install the Wine Maker’s Assistant and run the following command:
+#### `git clone https://github.com/Ryxians/winemakersassistant-server.git`
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 2.	A new directory named ‘winemakersassistant-server’ will be generated, change to the directory.
 
-## Available Scripts
+### 3.	Once in the directory, run the following command:
+#### `npm run getClient`
 
-In the project directory, you can run:
+### 4.	A new directory named ‘winemakersassistant-client’ has been generated. Proceed to building and deploying instructions.
 
-### `npm start`
+# Building and Deploying
+### A deployable build of the Wine Maker’s Assistant can be built by running the following command within the ‘winemakersassistant-server’ directory:
+#### `npm run buildServer`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### To get start the server, a .env file must first be instantiated. Create a .env file with the following options:
+##### `DB_HOST=localhost`
+##### `DB_USER=root`
+##### `DB_PASS=root`
+##### `DB_NAME=Schema`
+##### `PORT=3001`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 1.	The DB_HOST refers to where the database is running.
 
-### `npm test`
+### 2.	 A username and password must be provided for the Wine Maker’s Assistant to connect with the database. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 3.	Finally, the DB_Name is the Schema name created in the Database requirement.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 4.	PORT defines what port the server listens to. When starting the server, a crash may mean an unavailable port was defined.
+Once the Wine Maker’s Assistant has been built and the .env file has been generated run the following command:
+#### `npm run run`
