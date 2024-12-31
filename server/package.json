@@ -6,14 +6,8 @@
   "scripts": {
     "run": "node ./dist/app.js",
     "dev": "ts-node-dev ./src/app.ts",
-    "cleanClient": "rm -rf ./winemakersassistant-client",
-    "pregetClient": "npm run cleanClient",
-    "getClient": "git clone https://github.com/Ryxians/winemakersassistant-client.git",
     "fatInstall": "npm install",
-    "postfatInstall": "npm --prefix ./winemakersassistant-client install",
     "clean": "rm -rf ./src/build && rm -rf ./dist",
-    "buidClient": "npm --prefix ./winemakersassistant-client run build",
-    "buidClientDev": "npm --prefix ./winemakersassistant-client run buildDev",
     "prebuildServer": "npm run fatInstall && npm run clean",
     "buildServer": "npx tsc",
     "postbuildServer": "npm run buidClient && npm prune --production"

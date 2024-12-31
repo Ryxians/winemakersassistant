@@ -1,35 +1,102 @@
 # Wine Maker's Assistant
-The Wine Maker’s Assistant is freely available on GitHub, the following instructions assumes GIT is installed locally on the system.
 
-The Wine Maker's Assistant is my senior project, representing the culmination of my college career. For its future implementation, I would recommend a rebuild utilizing a web framework such as Next.js or Remix. In its current state it is inefficient and insecure.
+The Wine Maker’s Assistant is a senior project that demonstrates key learnings and skills. It is freely available on GitHub. The following instructions assume GIT is installed locally on your system.
 
-### 1.	Navigate to the directory you wish to install the Wine Maker’s Assistant and run the following command:
-#### `git clone https://github.com/Ryxians/winemakersassistant-server.git`
+## Table of Contents
+1. [Overview](#overview)
+2. [To-Do](#to-do)
+3. [Installation](#installation)
+4. [Building and Deploying](#building-and-deploying)
+5. [Environment Configuration](#environment-configuration)
+6. [Docker Setup](#docker-setup)
 
-### 2.	A new directory named ‘winemakersassistant-server’ will be generated, change to the directory.
+## Overview
+The Wine Maker’s Assistant is a tool designed to assist winemakers in managing their processes efficiently. The project now exists as a unified repository, with the client code under `/client` and the server code under `/server`.
 
-### 3.	Once in the directory, run the following command:
-#### `npm run getClient`
+## To-Do
+### Planned Updates
+- Upgrade from **Node.js 16** to **Node.js 22**.
+- Upgrade from **MySQL 5.7** to **MySQL 8.3**.
+- Add Dockerfile for `/server`.
+- Add Dockerfile for `/client`.
+- Replace **TypeORM** with **DrizzleORM**.
+- Upgrade from **TypeScript 4.3.4** to **TypeScript 5.x**.
 
-### 4.	A new directory named ‘winemakersassistant-client’ has been generated. Proceed to building and deploying instructions.
+## Installation
 
-# Building and Deploying
-### A deployable build of the Wine Maker’s Assistant can be built by running the following command within the ‘winemakersassistant-server’ directory:
-#### `npm run buildServer`
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Ryxians/winemakersassistant.git
+   ```
 
-### To get start the server, a .env file must first be instantiated. Create a .env file with the following options:
-##### `DB_HOST=localhost`
-##### `DB_USER=root`
-##### `DB_PASS=root`
-##### `DB_NAME=Schema`
-##### `PORT=3001`
+2. Navigate to the project directory:
+   ```bash
+   cd winemakersassistant
+   ```
 
-### 1.	The DB_HOST refers to where the database is running.
+3. Install dependencies for both server and client:
+   ```bash
+   cd server
+   npm install
+   cd ../client
+   npm install
+   ```
 
-### 2.	 A username and password must be provided for the Wine Maker’s Assistant to connect with the database. 
+## Building and Deploying
 
-### 3.	Finally, the DB_Name is the Schema name created in the Database requirement.
+### Building the Server
+1. Build the server code:
+   ```bash
+   cd server
+   npm run build
+   ```
 
-### 4.	PORT defines what port the server listens to. When starting the server, a crash may mean an unavailable port was defined.
-Once the Wine Maker’s Assistant has been built and the .env file has been generated run the following command:
-#### `npm run run`
+2. Ensure the `.env` file is properly configured (see [Environment Configuration](#environment-configuration)).
+
+### Building the Client
+1. Build the client code:
+   ```bash
+   cd client
+   npm run build
+   ```
+
+2. Deploy the built client as per your hosting solution.
+
+### Running the Server
+1. Start the server:
+   ```bash
+   cd server
+   npm start
+   ```
+
+## Environment Configuration
+
+Create a `.env` file in the `/server` directory with the following variables:
+
+```env
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=root
+DB_NAME=Schema
+PORT=3001
+```
+
+- **DB_HOST:** Specifies the database host.
+- **DB_USER:** Username for database authentication.
+- **DB_PASS:** Password for database authentication.
+- **DB_NAME:** Name of the database schema.
+- **PORT:** Port on which the server will listen. Ensure the port is not in use to prevent conflicts.
+
+## Docker Setup
+
+A `docker-compose` file has been provided to quickly set up a MySQL 5.7 database for development.
+
+### Steps
+1. Ensure Docker and Docker Compose are installed on your system.
+2. Start the database:
+   ```bash
+   docker-compose up -d
+   ```
+
+3. The database will now be accessible on `localhost:3306` with the credentials specified in the `environment` section of the `compose.yaml` file.
+

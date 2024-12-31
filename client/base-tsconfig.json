@@ -2,8 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@server/*": ["../src/*"],
-      "@entities/*": ["../src/database/entities/*"]
+      "@server/*": ["../server/src/*"],
+      "@entities/*": ["../server/src/database/entities/*"]
     }
   }
 }
