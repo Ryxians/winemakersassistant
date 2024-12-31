@@ -21,6 +21,7 @@ The Wine Maker’s Assistant is a tool designed to assist winemakers in managing
 - Add Dockerfile for `/client`.
 - Replace **TypeORM** with **DrizzleORM**.
 - Upgrade from **TypeScript 4.3.4** to **TypeScript 5.x**.
+- Replace Create React App with Vite
 
 ## Installation
 
